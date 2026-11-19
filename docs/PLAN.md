@@ -13,12 +13,25 @@ kalaa, no GitHub design system with that name.
 | D3 | **Private now, public later** (making the repo public, publishing to npm or a docs site needs a separate OK) |
 | D4 | Sample app = **mini catalog admin** that uses only Kalaa components |
 | D5 | Career Compass is the first real app to adopt it (its UI restyle waits for Kalaa v0.1) |
+| D6 | Accent: **Neel** (indigo #2E3A8C, dark #9EA9F2) is the default for apps; **Geru** (red ochre #9A3E21) is the brand colour outside apps; Kalaa ships Neel, Geru and Mayur (peacock teal #0E676D) as switchable accent themes. Comparison: https://claude.ai/artifact/PaBdXZ8CbiQq2UmxeDhZkD |
 
 ## Visual direction
 Calm ops-console / product-tool look (Linear, Grafana): neutral surfaces, one accent colour, sentence case, status
 colours only for status, consistent 4 px spacing, light and dark themes from day one. No ALL-CAPS letter-spaced labels,
 decorative pills, gradients or glows. Starting point: [foundations draft](foundations-draft.md) (tokens, layout,
 component rules and copy rules written for Career Compass; becomes the v0.1 spec after review).
+
+## Token architecture (makes colour decisions reversible)
+1. **Palette** (primitives): 50-950 ramps for neel, geru, mayur, a neutral ramp per accent (slight hue bias), status
+   ramps (green, amber, red, crimson). Never used directly by components.
+2. **Roles** (semantic): `--kalaa-accent`, `-accent-hover`, `-accent-soft`, `-on-accent`, `-bg`, `-surface`,
+   `-surface-alt`, `-border`, `-text`, `-text-muted`, `-success`, `-warning`, `-danger` (+ `-soft`). A theme = a
+   mapping from roles to palette steps, for light and dark.
+3. **Components**: reference roles only (no hex values in component CSS; a lint rule enforces it).
+Switching: the default accent is one mapping in `@kalaa/tokens`; an app or page can override with
+`<html data-accent="geru|mayur">` at runtime. Theme-specific fixes live in the theme (e.g. Geru maps danger to crimson
+and status badges always carry an icon). The build runs a WCAG check on every role pair for every theme in light and
+dark and fails below AA (4.5:1 text, 3:1 UI). Adding a colour = add a ramp + a mapping.
 
 ## Stack (versions checked on the npm registry 2026-11-19)
 | Part | Choice | Version (last publish) | Why |
@@ -89,6 +102,5 @@ Main Claude session plans, writes briefs and verifies. Ideation and design criti
 sample app). Review: `--kind review` (codex read-only) + screenshot checks. Briefs in `docs/agent-briefs/`.
 
 ## Open decisions for Shashank
-1. Accent colour: keep the calm blue (#2f5bd3) or choose a signature colour for the brand.
-2. Typeface: Inter (safe, free) or a more distinctive free family; must have tabular numbers.
-3. Distribution: vendored tarballs (recommended) vs GitHub Packages vs Verdaccio.
+1. Typeface: Inter (safe, free) or a more distinctive free family; must have tabular numbers.
+2. Distribution: vendored tarballs (recommended) vs GitHub Packages vs Verdaccio.
