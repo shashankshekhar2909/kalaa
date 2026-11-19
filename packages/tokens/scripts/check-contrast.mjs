@@ -1,23 +1,6 @@
 import { readFileSync } from "node:fs";
 const themes = JSON.parse(readFileSync(new URL("../dist/tokens.json", import.meta.url)));
-const pairs = [
-  ["text", "bg", 4.5],
-  ["text", "surface", 4.5],
-  ["text-muted", "bg", 4.5],
-  ["text-muted", "surface", 4.5],
-  ["text-subtle", "surface", 4.5],
-  ["text-subtle", "bg", 4.5],
-  ["accent", "bg", 4.5],
-  ["accent", "surface", 4.5],
-  ["on-accent", "accent", 4.5],
-  ["accent", "accent-soft", 4.5],
-  ["success", "success-soft", 4.5],
-  ["warning", "warning-soft", 4.5],
-  ["danger", "danger-soft", 4.5],
-  ["danger", "surface", 4.5],
-  ["border-strong", "surface", 3],
-  ["focus", "bg", 3],
-];
+const pairs = JSON.parse(readFileSync(new URL("../src/contrast-pairs.json", import.meta.url))).pairs;
 function luminance(hex) {
   const rgb = hex
     .slice(1)
