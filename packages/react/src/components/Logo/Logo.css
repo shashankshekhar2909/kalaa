@@ -1,0 +1,32 @@
+/* Font size is the mark height in px (set by the component), so the mark is 1em and the wordmark 0.75em. */
+.kl-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  line-height: 1;
+  color: var(--kalaa-text);
+}
+.kl-logo__mark {
+  display: block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+.kl-logo__frame {
+  fill: var(--kalaa-text);
+}
+.kl-logo__lit {
+  fill: var(--kalaa-accent);
+}
+.kl-logo__frame--mono,
+.kl-logo__lit--mono {
+  fill: currentColor;
+}
+.kl-logo__text {
+  font-family: var(--kalaa-font-serif);
+  font-weight: var(--kalaa-font-weight-medium);
+  font-size: 0.75em;
+  letter-spacing: -0.01em;
+  /* Baseline sits on the bottom edge of the L (26/32 of the mark height). */
+  margin-top: 0.14em;
+}

@@ -8,10 +8,15 @@ type ControlProps = {
   "aria-describedby"?: string;
 };
 export interface FieldProps extends Omit<ComponentProps<"div">, "children"> {
+  /** Visible label above the control, in sentence case. */
   label: ReactNode;
+  /** Help text below the control. */
   hint?: ReactNode;
+  /** Error message; marks the control invalid. */
   error?: ReactNode;
+  /** Adds "(required)" to the label. */
   required?: boolean;
+  /** Exactly one control (Input, Textarea, Select). */
   children: ReactElement<ControlProps>;
 }
 export function Field({ label, hint, error, required, children, className, ...props }: FieldProps) {

@@ -1,8 +1,11 @@
 import { useRef, useLayoutEffect, type ComponentProps } from "react";
 import { cx } from "../../util";
 export interface TextareaProps extends Omit<ComponentProps<"textarea">, "size"> {
+  /** Text size and padding: sm or md (default). */
   size?: "sm" | "md";
+  /** Shows the danger border and sets `aria-invalid`. */
   invalid?: boolean;
+  /** Grows with its content instead of scrolling. */
   autoResize?: boolean;
 }
 export function Textarea({

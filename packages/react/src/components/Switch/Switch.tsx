@@ -2,7 +2,9 @@ import { Switch as BaseSwitch } from "@base-ui/react/switch";
 import { useId, type ComponentProps, type ReactNode } from "react";
 import { cx } from "../../util";
 export interface SwitchProps extends Omit<ComponentProps<typeof BaseSwitch.Root>, "className" | "children"> {
+  /** Visible label, shown to the right of the switch. */
   label: ReactNode;
+  /** Optional help text under the label, linked with `aria-describedby`. */
   description?: ReactNode;
   className?: string;
 }

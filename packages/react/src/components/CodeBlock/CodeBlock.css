@@ -1,0 +1,31 @@
+.kl-code-block {
+  display: grid;
+  background: var(--kalaa-surface-alt);
+  border: 1px solid var(--kalaa-border);
+  border-radius: var(--kalaa-radius-md);
+  font-family: var(--kalaa-font-sans);
+}
+.kl-code-block__pre {
+  margin: 0;
+  padding: var(--kalaa-space-4);
+  overflow-x: auto;
+  color: var(--kalaa-text);
+  font: var(--kalaa-font-size-sm)/var(--kalaa-line-height-body) var(--kalaa-font-mono);
+  tab-size: 2;
+}
+.kl-code-block__pre:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: -2px;
+}
+.kl-code-block__bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--kalaa-space-3);
+  padding: var(--kalaa-space-1) var(--kalaa-space-2);
+  border-top: 1px solid var(--kalaa-border);
+}
+.kl-code-block__status {
+  color: var(--kalaa-text-muted);
+  font-size: var(--kalaa-font-size-sm);
+}

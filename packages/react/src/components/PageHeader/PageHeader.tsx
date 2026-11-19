@@ -1,10 +1,15 @@
 import type { ComponentPropsWithRef, ReactNode } from "react";
 import { cx } from "../../util";
 export type PageHeaderProps = Omit<ComponentPropsWithRef<"header">, "title"> & {
+  /** The page `h1`. */
   title: ReactNode;
+  /** Muted line under the title. */
   description?: ReactNode;
+  /** Link above the title to the parent page. */
   back?: { href: string; label: string };
+  /** Buttons on the right of the title row; at most one primary. */
   actions?: ReactNode;
+  /** "brand" sets the title in serif for marketing pages. */
   variant?: "default" | "brand";
 };
 export function PageHeader({

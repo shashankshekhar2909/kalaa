@@ -1,7 +1,17 @@
 import { useId, useState, type ComponentPropsWithRef, type ReactNode } from "react";
 import { cx } from "../../util";
-export type AppShellProps = ComponentPropsWithRef<"div"> & { nav: ReactNode; header?: ReactNode };
-export type AppShellNavItemProps = ComponentPropsWithRef<"a"> & { icon?: ReactNode; active?: boolean };
+export type AppShellProps = ComponentPropsWithRef<"div"> & {
+  /** Sidebar content, usually `AppShell.NavItem` links. */
+  nav: ReactNode;
+  /** Optional content above the main area (for example a page header). */
+  header?: ReactNode;
+};
+export type AppShellNavItemProps = ComponentPropsWithRef<"a"> & {
+  /** Decorative icon shown before the label. */
+  icon?: ReactNode;
+  /** Marks the current page (sets `aria-current="page"`). */
+  active?: boolean;
+};
 function NavItem({ icon, active, className, children, ...props }: AppShellNavItemProps) {
   return (
     <a

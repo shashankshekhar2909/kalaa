@@ -1,8 +1,11 @@
 import type { ComponentPropsWithRef, ReactNode } from "react";
 import { cx } from "../../util";
 export type EmptyStateProps = Omit<ComponentPropsWithRef<"div">, "title"> & {
+  /** What is missing, for example "No products yet". */
   title: ReactNode;
+  /** What to do about it. */
   description?: ReactNode;
+  /** One next step, usually a Button. */
   action?: ReactNode;
 };
 export function EmptyState({ title, description, action, className, ...props }: EmptyStateProps) {

@@ -1,7 +1,9 @@
 import type { ComponentPropsWithRef, ReactNode } from "react";
 import { cx } from "../../util";
 export type KeyValueProps = ComponentPropsWithRef<"dl"> & {
+  /** Label and value pairs; an empty value shows an em dash. */
   items: Array<{ label: ReactNode; value: ReactNode }>;
+  /** "rows" (label column with dividers, default) or "grid" (compact summary). */
   layout?: "rows" | "grid";
 };
 export function KeyValue({ items, layout = "rows", className, ...props }: KeyValueProps) {

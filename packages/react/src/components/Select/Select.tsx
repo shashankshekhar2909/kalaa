@@ -10,14 +10,23 @@ export interface SelectProps extends Omit<
   ComponentProps<"button">,
   "value" | "defaultValue" | "onChange" | "size"
 > {
+  /** Choices as value and label pairs. */
   options: SelectOption[];
+  /** Controlled value. */
   value?: string;
+  /** Initial value when uncontrolled. */
   defaultValue?: string;
+  /** Called with the new value. */
   onValueChange?: (value: string | null) => void;
+  /** Text shown when nothing is selected. */
   placeholder?: string;
+  /** Height: sm 30px, md 36px (default). */
   size?: "sm" | "md";
+  /** Shows the danger border and sets `aria-invalid`. */
   invalid?: boolean;
+  /** Form field name. */
   name?: string;
+  /** Marks the field required in forms. */
   required?: boolean;
 }
 export function Select({

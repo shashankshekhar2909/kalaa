@@ -1,8 +1,11 @@
 import type { ComponentPropsWithRef, ReactNode } from "react";
 import { cx } from "../../util";
 export type BannerProps = Omit<ComponentPropsWithRef<"div">, "title"> & {
+  /** Meaning and colour. Warning and danger use `role="alert"`, the others `role="status"`. */
   tone: "info" | "success" | "warning" | "danger";
+  /** Bold first line. */
   title?: ReactNode;
+  /** Buttons on the right. */
   actions?: ReactNode;
 };
 export function Banner({ tone, title, actions, children, className, ...props }: BannerProps) {

@@ -2,10 +2,15 @@ import type { ComponentPropsWithRef } from "react";
 import { Progress } from "@base-ui/react/progress";
 import { cx } from "../../util";
 export type ProgressBarProps = Omit<ComponentPropsWithRef<"div">, "label"> & {
+  /** Current value. */
   value: number;
+  /** Value that means complete (default 100). */
   max?: number;
+  /** Accessible name; shown unless `hideLabel`. */
   label: string;
+  /** Hides the label visually but keeps it for screen readers. */
   hideLabel?: boolean;
+  /** Fill colour: accent (default), success, warning or danger. */
   tone?: "accent" | "success" | "warning" | "danger";
 };
 export function ProgressBar({

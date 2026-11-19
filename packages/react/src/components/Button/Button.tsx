@@ -2,8 +2,21 @@ import type { ComponentPropsWithRef, ReactNode } from "react";
 import { cx } from "../../util";
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md";
-type Shared = { variant?: ButtonVariant; size?: ButtonSize; iconStart?: ReactNode; iconEnd?: ReactNode };
-export type ButtonProps = ComponentPropsWithRef<"button"> & Shared & { loading?: boolean };
+type Shared = {
+  /** primary (main next step), secondary (default), ghost (low emphasis) or danger (destructive). */
+  variant?: ButtonVariant;
+  /** Height: sm 30px, md 36px (default). */
+  size?: ButtonSize;
+  /** Decorative icon before the label. */
+  iconStart?: ReactNode;
+  /** Decorative icon after the label. */
+  iconEnd?: ReactNode;
+};
+export type ButtonProps = ComponentPropsWithRef<"button"> &
+  Shared & {
+    /** Shows a spinner, disables the button and sets `aria-busy`; keeps its width. */
+    loading?: boolean;
+  };
 export function Button({
   variant = "secondary",
   size = "md",

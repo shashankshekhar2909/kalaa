@@ -8,10 +8,15 @@ export interface TabItem {
   disabled?: boolean;
 }
 export interface TabsProps extends Omit<ComponentProps<"div">, "onChange"> {
+  /** Tabs with their panel content. */
   items: TabItem[];
+  /** Controlled selected tab. */
   value?: string;
+  /** Initially selected tab when uncontrolled (default: first enabled). */
   defaultValue?: string;
+  /** Called with the selected tab value. */
   onValueChange?: (value: string) => void;
+  /** "segmented" (default) or "underline". */
   variant?: "segmented" | "underline";
 }
 export function Tabs({

@@ -5,7 +5,9 @@ export interface CheckboxProps extends Omit<
   ComponentProps<typeof BaseCheckbox.Root>,
   "className" | "children"
 > {
+  /** Visible label, shown to the right of the box. */
   label: ReactNode;
+  /** Optional help text under the label, linked with `aria-describedby`. */
   description?: ReactNode;
   className?: string;
 }
