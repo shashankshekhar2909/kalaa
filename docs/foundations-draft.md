@@ -30,7 +30,7 @@ Sizes: --fs-xs 12px, --fs-sm 13px, --fs-base 14px, --fs-md 16px, --fs-lg 20px, -
 Weights: 400 body and all form controls (inputs, textareas, selects are never bold), 500 labels and nav, 600 titles
 and buttons. Line height 1.5 (1.25 for titles).
 Space (4 px scale): --sp-1 4, --sp-2 8, --sp-3 12, --sp-4 16, --sp-5 20, --sp-6 24, --sp-8 32.
-Radius: --r-sm 6px (badges, small controls), --r-md 8px (controls), --r-lg 12px (cards, dialogs).
+Radius (Kalaa, 2026-11-20): square by default, so sm/md/lg/pill are all 0; `data-shape="soft"` restores 6px (badges, small controls), 8px (controls), 12px (cards, dialogs) and 999px (pill). Career Compass originally used the soft values.
 Shadow: --shadow-1 `0 1px 2px rgb(16 24 40 / 0.05)` on cards only. Focus: 2px solid var(--accent), offset 2px, on every
 interactive element via :focus-visible.
 Control height: 36px (md), 30px (sm).

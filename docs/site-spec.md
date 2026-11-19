@@ -168,3 +168,14 @@ icons; manager UI is default Storybook look; contrast pairs duplicated; `.exampl
 2. Self-hosted fonts and moving Storybook to `/storybook/` on deploy-server? **Default: build both locally; no deploy
    without OK.**
 3. Is `soft` a long-term mode or only a migration aid? **Default: long-term supported mode.**
+
+## 6. Status checklist (2026-11-20, built locally, not deployed)
+
+Decisions applied: Geru logo and favicon with a Neel site UI; self-hosted Plex (SIL OFL, versions in `docs/tokens.md`); soft is a long-term mode.
+
+- [x] 2 Logo: `Logo` component, `brand/assets` (mark, dark mark, mono, wordmark and dark wordmark, favicon svg and ico, apple-touch-icon, 512px mark), generator `brand/build.mjs` with a 3:1 contrast gate. Static files use Geru-neutral 900 and 100 for the frame (warm, matching Geru surfaces) instead of the spec's Neel-neutral hex values; both are ramp values.
+- [x] 2 `CodeBlock` component (and Card `titleLevel`, a small addition for correct heading order).
+- [x] 3 `apps/site`: Home (7 sections), getting-started, brand, 404; Vite multi-page, prerendered; configurable `SITE_BASE` and `SITE_STORYBOOK_URL`; axe over pages x light/dark x 3 accents x square/soft.
+- [x] 4.1-4.2 Introduction first, `storySort`, Examples/Product editor. 4.3 toolbar icons. 4.4 smoke subset (soft, geru, mayur). 4.5-4.8 Kalaa manager theme, manager config, static dirs, docs theme. 4.9 autodocs, prop JSDoc, usage and do/don't, controls for every component. 4.10 Logo and Shape pages, Accents story. 4.11 contrast pairs exported once. 4.12 Typography. 4.13 Space and Motion. 4.14 self-hosted fonts. 4.15 foundations.css reviewed (nothing unused; added page helpers). 4.17 docs.
+- [ ] 4.16 Hosting layout (site at `/`, Storybook at `/storybook/` on deploy-server): needs approval, proposed diff is in the hand-off report.
+- Deviation: the header collapses to the Menu button at 960px, not 720px, because logo, four links and three selects do not fit between 720 and 960px. Padding and hero title changes stay at 720px.
