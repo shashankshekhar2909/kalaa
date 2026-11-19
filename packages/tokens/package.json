@@ -1,1 +1,25 @@
-{"name":"@kalaa/tokens","version":"0.0.0","private":true,"type":"module","devDependencies":{"style-dictionary":"5.8.0"}}
+{
+  "name": "@kalaa/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "style-dictionary": "5.8.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./tokens.json": "./dist/tokens.json"
+  },
+  "scripts": {
+    "build": "node scripts/ramps.mjs && node build.mjs && node scripts/check-contrast.mjs",
+    "check": "node scripts/check-contrast.mjs"
+  }
+}
