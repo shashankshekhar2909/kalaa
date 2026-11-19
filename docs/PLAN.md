@@ -14,6 +14,8 @@ kalaa, no GitHub design system with that name.
 | D4 | Sample app = **mini catalog admin** that uses only Kalaa components |
 | D5 | Career Compass is the first real app to adopt it (its UI restyle waits for Kalaa v0.1) |
 | D6 | Accent: **Neel** (indigo #2E3A8C, dark #9EA9F2) is the default for apps; **Geru** (red ochre #9A3E21) is the brand colour outside apps; Kalaa ships Neel, Geru and Mayur (peacock teal #0E676D) as switchable accent themes. Comparison: https://claude.ai/artifact/PaBdXZ8CbiQq2UmxeDhZkD |
+| D7 | Type: **IBM Plex Sans** (UI, tabular figures by default), **IBM Plex Serif** (headings, brand), IBM Plex Mono (code), IBM Plex Sans Devanagari (Hindi); font roles are tokens so the family is swappable like the accent. Comparison: https://claude.ai/artifact/AY3MXDsX1BQeKUzFo5ynwc |
+| D8 | Distribution: release tarballs vendored into each app (default; revisit at P5) |
 
 ## Visual direction
 Calm ops-console / product-tool look (Linear, Grafana): neutral surfaces, one accent colour, sentence case, status
@@ -102,5 +104,4 @@ Main Claude session plans, writes briefs and verifies. Ideation and design criti
 sample app). Review: `--kind review` (codex read-only) + screenshot checks. Briefs in `docs/agent-briefs/`.
 
 ## Open decisions for Shashank
-1. Typeface: Inter (safe, free) or a more distinctive free family; must have tabular numbers.
-2. Distribution: vendored tarballs (recommended) vs GitHub Packages vs Verdaccio.
+None before P0.
