@@ -26,13 +26,19 @@ function Space() {
         </div>
       ))}
       <h2>Radius</h2>
-      <div className="grid">
-        {["sm", "md", "lg", "full"].map((n) => (
-          <div key={n} className="example" style={{ borderRadius: `var(--kalaa-radius-${n})` }}>
-            {n}
+      <p>Square is the default; set data-shape="soft" for rounded corners. Both are shown here.</p>
+      {["square", "soft"].map((shape) => (
+        <section key={shape} data-shape={shape}>
+          <h3>{shape}</h3>
+          <div className="grid">
+            {["sm", "md", "lg", "pill", "full"].map((n) => (
+              <div key={n} className="example" style={{ borderRadius: `var(--kalaa-radius-${n})` }}>
+                {n}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </section>
+      ))}
       <h2>Shadow</h2>
       <div className="grid">
         {[1, 2].map((n) => (

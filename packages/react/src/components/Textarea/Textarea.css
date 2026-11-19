@@ -28,3 +28,8 @@
   resize: vertical;
   line-height: var(--kalaa-line-height-body);
 }
+
+.kl-textarea--sm {
+  padding: var(--kalaa-space-1) var(--kalaa-space-2);
+  font-size: var(--kalaa-font-size-sm);
+}

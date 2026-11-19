@@ -18,3 +18,14 @@ describe("Field", () => {
     expect(ref.current).toBe(input);
   });
 });
+
+it("forwards root class and ref", () => {
+  const ref = createRef<HTMLDivElement>();
+  render(
+    <Field label="Product" ref={ref} className="custom">
+      <Input />
+    </Field>,
+  );
+  expect(ref.current).toHaveClass("kl-field", "custom");
+  expect(ref.current).toContainElement(screen.getByRole("textbox", { name: "Product" }));
+});

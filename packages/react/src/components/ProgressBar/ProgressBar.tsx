@@ -24,9 +24,10 @@ export function ProgressBar({
       max={max}
       className={cx("kl-progress", `kl-progress--${tone}`, className)}
     >
-      <Progress.Label className={cx("kl-progress__label", hideLabel && "kl-progress__label--hidden")}>
-        {label}
-      </Progress.Label>
+      <div className={cx("kl-progress__header", hideLabel && "kl-progress__label--hidden")}>
+        <Progress.Label className="kl-progress__label">{label}</Progress.Label>
+        <Progress.Value className="kl-progress__value" />
+      </div>
       <Progress.Track className="kl-progress__track">
         <Progress.Indicator
           className="kl-progress__indicator"

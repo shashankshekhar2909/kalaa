@@ -4,21 +4,25 @@
   border-radius: var(--kalaa-radius-lg);
   box-shadow: var(--kalaa-shadow-1);
   padding: var(--kalaa-space-5);
+  display: grid;
+  gap: var(--kalaa-space-4);
+  align-content: start;
+  font-family: var(--kalaa-font-sans);
 }
 .kl-card__header {
   display: flex;
   justify-content: space-between;
   align-items: start;
   gap: var(--kalaa-space-4);
-  margin-bottom: var(--kalaa-space-4);
 }
 .kl-card__title {
   margin: 0;
+  font-family: var(--kalaa-font-sans);
   font-size: var(--kalaa-font-size-md);
   font-weight: var(--kalaa-font-weight-semibold);
   line-height: var(--kalaa-line-height-heading);
 }
 .kl-card__description {
   color: var(--kalaa-text-muted);
-  margin-top: var(--kalaa-space-1);
+  margin: var(--kalaa-space-1) 0 0;
 }

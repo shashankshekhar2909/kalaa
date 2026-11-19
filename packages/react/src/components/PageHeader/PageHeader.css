@@ -1,3 +1,6 @@
+.kl-page-header {
+  font-family: var(--kalaa-font-sans);
+}
 .kl-page-header__row {
   display: flex;
   justify-content: space-between;
@@ -20,10 +23,24 @@
   margin: var(--kalaa-space-2) 0 0;
 }
 .kl-page-header__back {
-  display: inline-block;
-  color: var(--kalaa-accent);
+  display: inline-flex;
+  gap: var(--kalaa-space-1);
+  color: var(--kalaa-text-muted);
   font-size: var(--kalaa-font-size-sm);
+  font-weight: var(--kalaa-font-weight-medium);
+  text-decoration: none;
   margin-bottom: var(--kalaa-space-2);
+}
+.kl-page-header__back::before {
+  content: "←";
+}
+.kl-page-header__back:hover {
+  color: var(--kalaa-accent);
+}
+.kl-page-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-2);
 }
 .kl-page-header__back:focus-visible {
   outline: 2px solid var(--kalaa-focus);

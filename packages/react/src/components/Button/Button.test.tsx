@@ -30,3 +30,28 @@ describe("Button", () => {
     expect(screen.getByRole("link", { name: "Products" })).toHaveAttribute("href", "/products");
   });
 });
+
+describe("Button variants", () => {
+  it("applies variant and size classes and does not fire when disabled", async () => {
+    const onClick = vi.fn();
+    render(
+      <Button variant="danger" size="sm" disabled onClick={onClick}>
+        Delete
+      </Button>,
+    );
+    const button = screen.getByRole("button", { name: "Delete" });
+    expect(button).toHaveClass("kl-button--danger", "kl-button--sm");
+    await userEvent.click(button);
+    expect(onClick).not.toHaveBeenCalled();
+  });
+  it("does not fire while loading", async () => {
+    const onClick = vi.fn();
+    render(
+      <Button loading onClick={onClick}>
+        Import
+      </Button>,
+    );
+    await userEvent.click(screen.getByRole("button", { name: "Import" }));
+    expect(onClick).not.toHaveBeenCalled();
+  });
+});

@@ -1,11 +1,13 @@
 import { useRef, useLayoutEffect, type ComponentProps } from "react";
 import { cx } from "../../util";
-export interface TextareaProps extends ComponentProps<"textarea"> {
+export interface TextareaProps extends Omit<ComponentProps<"textarea">, "size"> {
+  size?: "sm" | "md";
   invalid?: boolean;
   autoResize?: boolean;
 }
 export function Textarea({
   invalid,
+  size = "md",
   autoResize,
   className,
   rows = 3,
@@ -37,7 +39,7 @@ export function Textarea({
         onChange?.(event);
       }}
       aria-invalid={invalid || props["aria-invalid"]}
-      className={cx("kl-textarea", className)}
+      className={cx("kl-textarea", `kl-textarea--${size}`, className)}
     />
   );
 }

@@ -14,8 +14,12 @@ const preview: Preview = {
       description: "Accent colour",
       toolbar: { title: "Accent", items: ["neel", "geru", "mayur"], dynamicTitle: true },
     },
+    shape: {
+      description: "Corner shape",
+      toolbar: { title: "Shape", items: ["square", "soft"], dynamicTitle: true },
+    },
   },
-  initialGlobals: { theme: "system", accent: "neel" },
+  initialGlobals: { theme: "system", accent: "neel", shape: "square" },
   decorators: [
     (Story, context) => {
       const root = document.documentElement;
@@ -23,6 +27,8 @@ const preview: Preview = {
       else root.dataset.theme = context.globals.theme;
       if (context.globals.accent === "neel") root.removeAttribute("data-accent");
       else root.dataset.accent = context.globals.accent;
+      if (context.globals.shape === "soft") root.dataset.shape = "soft";
+      else root.removeAttribute("data-shape");
       return <Story />;
     },
   ],

@@ -1,15 +1,22 @@
 .kl-field {
   display: grid;
-  gap: var(--kalaa-space-1);
+  gap: var(--kalaa-space-2);
+  font-family: var(--kalaa-font-sans);
 }
 .kl-field__label {
   color: var(--kalaa-text-muted);
   font-size: var(--kalaa-font-size-sm);
   font-weight: var(--kalaa-font-weight-medium);
 }
+.kl-field__label,
+.kl-field__hint,
+.kl-field__error {
+  margin: 0;
+}
 .kl-field__hint,
 .kl-field__error {
   font-size: var(--kalaa-font-size-xs);
+  margin-top: calc(var(--kalaa-space-1) * -1);
 }
 .kl-field__hint {
   color: var(--kalaa-text-subtle);

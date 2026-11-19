@@ -1,26 +1,26 @@
 import { Dialog } from "./Dialog";
-
+import { Button } from "../Button/Button";
 const meta = { title: "Components/Dialog", component: Dialog };
 export default meta;
-export const Default = {
-  render: () => (
+function ReviewDialog({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
+  return (
     <Dialog
-      trigger={<button>Review import</button>}
+      defaultOpen
+      size={size}
+      trigger={<Button>Review import</Button>}
       title="Review import"
       description="Check the products before importing."
+      footer={
+        <>
+          <Button variant="secondary">Cancel</Button>
+          <Button variant="primary">Confirm</Button>
+        </>
+      }
     >
-      Ready to import.
+      Twelve products are ready to import into the catalog.
     </Dialog>
-  ),
-};
-export const States = {
-  render: () => (
-    <Dialog
-      trigger={<button>Review import</button>}
-      title="Review import"
-      description="Check the products before importing."
-    >
-      Ready to import.
-    </Dialog>
-  ),
-};
+  );
+}
+export const Default = { render: () => <ReviewDialog /> };
+export const Small = { render: () => <ReviewDialog size="sm" /> };
+export const Large = { render: () => <ReviewDialog size="lg" /> };

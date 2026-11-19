@@ -10,3 +10,13 @@ describe("ProgressBar", () => {
     );
   });
 });
+
+describe("ProgressBar details", () => {
+  it("shows the visible label and clamps range attributes", () => {
+    render(<ProgressBar label="Upload" value={30} />);
+    const bar = screen.getByRole("progressbar", { name: "Upload" });
+    expect(bar).toHaveAttribute("aria-valuemin", "0");
+    expect(bar).toHaveAttribute("aria-valuenow", "30");
+    expect(screen.getByText("Upload")).toBeVisible();
+  });
+});

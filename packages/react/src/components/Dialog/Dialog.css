@@ -18,6 +18,7 @@
   max-height: 100%;
   overflow-y: auto;
   padding: var(--kalaa-space-6);
+  border: 1px solid var(--kalaa-border-strong);
   border-radius: var(--kalaa-radius-lg);
   background: var(--kalaa-surface);
   color: var(--kalaa-text);

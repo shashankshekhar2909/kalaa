@@ -1,7 +1,17 @@
-.kl-progress__label {
-  display: block;
-  margin-bottom: var(--kalaa-space-2);
+.kl-progress {
+  display: grid;
+  gap: var(--kalaa-space-2);
+  font-family: var(--kalaa-font-sans);
+}
+.kl-progress__header {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--kalaa-space-4);
   font-size: var(--kalaa-font-size-sm);
+}
+.kl-progress__value {
+  color: var(--kalaa-text-muted);
+  font-variant-numeric: tabular-nums;
 }
 .kl-progress__label--hidden {
   position: absolute;
@@ -14,9 +24,9 @@
   white-space: nowrap;
 }
 .kl-progress__track {
-  height: var(--kalaa-radius-sm);
+  height: var(--kalaa-space-2);
   background: var(--kalaa-border);
-  border-radius: var(--kalaa-radius-full);
+  border-radius: var(--kalaa-radius-pill);
   overflow: hidden;
 }
 .kl-progress__indicator {
