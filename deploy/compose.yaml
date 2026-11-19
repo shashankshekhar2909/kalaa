@@ -1,0 +1,16 @@
+# Kalaa Storybook on deploy-server (LAN + Tailscale only, port 8100). Static files only; updated by scripts/deploy-storybook.sh.
+name: kalaa-storybook
+services:
+  web:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:8100:8100"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./site:/srv:ro
+    mem_limit: 64m
+    read_only: true
+    tmpfs:
+      - /data
+      - /config
