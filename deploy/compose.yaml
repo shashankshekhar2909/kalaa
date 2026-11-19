@@ -1,4 +1,5 @@
-# Kalaa Storybook on deploy-server (LAN + Tailscale only, port 8100). Static files only; updated by scripts/deploy-storybook.sh.
+# Kalaa site (/) + Storybook (/storybook/) on deploy-server port 8100; public via kalaa.buildwithshashank.com (Cloudflare tunnel).
+# Static files only; updated by scripts/deploy-storybook.sh.
 name: kalaa-storybook
 services:
   web:
