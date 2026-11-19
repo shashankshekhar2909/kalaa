@@ -1,0 +1,35 @@
+.kl-progress__label {
+  display: block;
+  margin-bottom: var(--kalaa-space-2);
+  font-size: var(--kalaa-font-size-sm);
+}
+.kl-progress__label--hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.kl-progress__track {
+  height: var(--kalaa-radius-sm);
+  background: var(--kalaa-border);
+  border-radius: var(--kalaa-radius-full);
+  overflow: hidden;
+}
+.kl-progress__indicator {
+  height: 100%;
+  background: var(--kalaa-accent);
+  transition: width var(--kalaa-duration-base) var(--kalaa-easing-standard);
+}
+.kl-progress--success .kl-progress__indicator {
+  background: var(--kalaa-success);
+}
+.kl-progress--warning .kl-progress__indicator {
+  background: var(--kalaa-warning);
+}
+.kl-progress--danger .kl-progress__indicator {
+  background: var(--kalaa-danger);
+}

@@ -1,0 +1,24 @@
+.kl-key-value {
+  margin: 0;
+}
+.kl-key-value__item {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: var(--kalaa-space-3);
+  padding: var(--kalaa-space-3) 0;
+  border-bottom: 1px solid var(--kalaa-border);
+}
+.kl-key-value__label {
+  color: var(--kalaa-text-muted);
+}
+.kl-key-value__value {
+  margin: 0;
+}
+.kl-key-value--grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--kalaa-space-4);
+}
+.kl-key-value--grid .kl-key-value__item {
+  display: block;
+}

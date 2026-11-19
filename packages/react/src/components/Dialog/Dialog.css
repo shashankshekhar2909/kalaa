@@ -1,0 +1,64 @@
+.kl-dialog__backdrop {
+  position: fixed;
+  inset: 0;
+  background: color-mix(in srgb, var(--kalaa-text) 40%, transparent);
+}
+.kl-dialog__viewport {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--kalaa-space-4);
+  overflow-y: auto;
+}
+.kl-dialog {
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: var(--kalaa-space-6);
+  border-radius: var(--kalaa-radius-lg);
+  background: var(--kalaa-surface);
+  color: var(--kalaa-text);
+  box-shadow: var(--kalaa-shadow-2);
+}
+.kl-dialog--sm {
+  max-width: 400px;
+}
+.kl-dialog--md {
+  max-width: 560px;
+}
+.kl-dialog--lg {
+  max-width: 720px;
+}
+.kl-dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--kalaa-space-4);
+}
+.kl-dialog__title {
+  margin: 0;
+  font-size: var(--kalaa-font-size-lg);
+  font-weight: var(--kalaa-font-weight-semibold);
+}
+.kl-dialog__close {
+  border: 0;
+  background: transparent;
+  color: var(--kalaa-text-muted);
+  font-size: var(--kalaa-font-size-lg);
+  cursor: pointer;
+}
+.kl-dialog__close:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}
+.kl-dialog__description {
+  color: var(--kalaa-text-muted);
+  font-size: var(--kalaa-font-size-sm);
+}
+.kl-dialog__body,
+.kl-dialog__footer {
+  margin-top: var(--kalaa-space-4);
+}

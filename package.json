@@ -12,12 +12,15 @@
     "build-storybook": "pnpm --filter @kalaa/storybook run build",
     "test": "pnpm -r run test",
     "test:stories": "playwright test",
-    "test:stories:update": "playwright test --update-snapshots"
+    "test:stories:update": "playwright test --update-snapshots",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
     "@changesets/cli": "3.0.3",
     "@playwright/test": "1.65.1",
+    "prettier": "3.10.1",
     "typescript": "7.0.2"
   }
 }

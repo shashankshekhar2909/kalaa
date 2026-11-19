@@ -1,0 +1,31 @@
+.kl-banner {
+  display: flex;
+  gap: var(--kalaa-space-4);
+  justify-content: space-between;
+  padding: var(--kalaa-space-4);
+  border-inline-start: 3px solid;
+  border-radius: var(--kalaa-radius-md);
+  color: var(--kalaa-text);
+}
+.kl-banner--info {
+  background: var(--kalaa-accent-soft);
+  border-color: var(--kalaa-accent);
+}
+.kl-banner--success {
+  background: var(--kalaa-success-soft);
+  border-color: var(--kalaa-success);
+}
+.kl-banner--warning {
+  background: var(--kalaa-warning-soft);
+  border-color: var(--kalaa-warning);
+}
+.kl-banner--danger {
+  background: var(--kalaa-danger-soft);
+  border-color: var(--kalaa-danger);
+}
+.kl-banner__title {
+  font-weight: var(--kalaa-font-weight-semibold);
+}
+.kl-banner__actions {
+  flex-shrink: 0;
+}

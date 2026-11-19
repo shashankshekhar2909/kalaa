@@ -1,0 +1,86 @@
+.kl-app-shell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--kalaa-bg);
+}
+.kl-app-shell__sidebar {
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 240px;
+  flex-shrink: 0;
+  padding: var(--kalaa-space-4);
+  background: var(--kalaa-surface);
+  border-right: 1px solid var(--kalaa-border);
+}
+.kl-app-shell__body {
+  min-width: 0;
+  flex: 1;
+}
+.kl-app-shell__main {
+  box-sizing: border-box;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: var(--kalaa-space-8);
+}
+.kl-app-shell__nav {
+  display: grid;
+  gap: var(--kalaa-space-1);
+}
+.kl-app-shell__nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--kalaa-space-2);
+  padding: var(--kalaa-space-2) var(--kalaa-space-3);
+  color: var(--kalaa-text-muted);
+  text-decoration: none;
+  font-weight: var(--kalaa-font-weight-medium);
+  border-radius: var(--kalaa-radius-md);
+}
+.kl-app-shell__nav-item:hover {
+  background: var(--kalaa-surface-alt);
+}
+.kl-app-shell__nav-item[aria-current="page"] {
+  color: var(--kalaa-accent);
+  background: var(--kalaa-accent-soft);
+}
+.kl-app-shell__menu {
+  display: none;
+}
+.kl-app-shell__menu:focus-visible,
+.kl-app-shell__nav-item:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}
+@media (max-width: 719px) {
+  .kl-app-shell {
+    display: block;
+  }
+  .kl-app-shell__sidebar {
+    position: static;
+    width: auto;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--kalaa-border);
+  }
+  .kl-app-shell__menu {
+    display: block;
+    background: var(--kalaa-surface);
+    color: var(--kalaa-text);
+    border: 1px solid var(--kalaa-border);
+    border-radius: var(--kalaa-radius-md);
+    padding: var(--kalaa-space-2);
+    cursor: pointer;
+  }
+  .kl-app-shell__nav {
+    display: none;
+    margin-top: var(--kalaa-space-2);
+  }
+  .kl-app-shell__nav--open {
+    display: grid;
+  }
+  .kl-app-shell__main {
+    padding: var(--kalaa-space-4);
+  }
+}

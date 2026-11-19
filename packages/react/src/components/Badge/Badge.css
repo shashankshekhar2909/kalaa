@@ -1,0 +1,28 @@
+.kl-badge {
+  display: inline-flex;
+  padding: var(--kalaa-space-1) var(--kalaa-space-2);
+  border-radius: var(--kalaa-radius-sm);
+  font-size: var(--kalaa-font-size-xs);
+  font-weight: var(--kalaa-font-weight-medium);
+  line-height: var(--kalaa-line-height-body);
+}
+.kl-badge--neutral {
+  background: var(--kalaa-surface-alt);
+  color: var(--kalaa-text);
+}
+.kl-badge--info {
+  background: var(--kalaa-accent-soft);
+  color: var(--kalaa-accent);
+}
+.kl-badge--success {
+  background: var(--kalaa-success-soft);
+  color: var(--kalaa-success);
+}
+.kl-badge--warning {
+  background: var(--kalaa-warning-soft);
+  color: var(--kalaa-warning);
+}
+.kl-badge--danger {
+  background: var(--kalaa-danger-soft);
+  color: var(--kalaa-danger);
+}

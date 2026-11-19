@@ -9,7 +9,7 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./site:/srv:ro
-    network_mode: bridge  # deploy-server has no free address pools for new compose networks
+    network_mode: bridge # deploy-server has no free address pools for new compose networks
     mem_limit: 64m
     read_only: true
     tmpfs:

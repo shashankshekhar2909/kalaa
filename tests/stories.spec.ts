@@ -6,7 +6,10 @@ import { readFileSync } from "node:fs";
 async function scan(page: Page) {
   for (let attempt = 0; ; attempt++) {
     try {
-      return await new AxeBuilder({ page }).include("#storybook-root").withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+      return await new AxeBuilder({ page })
+        .include("#storybook-root")
+        .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
+        .analyze();
     } catch (error) {
       if (attempt >= 10 || !String(error).includes("already running")) throw error;
       await page.waitForTimeout(300);
@@ -15,7 +18,9 @@ async function scan(page: Page) {
 }
 
 const index = JSON.parse(readFileSync("apps/storybook/storybook-static/index.json", "utf8"));
-const stories = Object.values(index.entries as Record<string, { id: string; type: string }>).filter((e) => e.type === "story");
+const stories = Object.values(index.entries as Record<string, { id: string; type: string }>).filter(
+  (e) => e.type === "story",
+);
 
 for (const story of stories) {
   for (const theme of ["light", "dark"] as const) {

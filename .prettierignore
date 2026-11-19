@@ -1,0 +1,5 @@
+dist
+storybook-static
+pnpm-lock.yaml
+packages/tokens/src/palette.json
+tests/__screenshots__

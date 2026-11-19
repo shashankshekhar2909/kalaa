@@ -1,1 +1,60 @@
-{"font":{"sans":{"$type":"fontFamily","$value":"'IBM Plex Sans', 'IBM Plex Sans Devanagari', system-ui, sans-serif"},"serif":{"$type":"fontFamily","$value":"'IBM Plex Serif', Georgia, serif"},"mono":{"$type":"fontFamily","$value":"'IBM Plex Mono', ui-monospace, monospace"}},"font-size":{"xs":{"$type":"dimension","$value":"12px"},"sm":{"$type":"dimension","$value":"13px"},"base":{"$type":"dimension","$value":"14px"},"md":{"$type":"dimension","$value":"16px"},"lg":{"$type":"dimension","$value":"20px"},"xl":{"$type":"dimension","$value":"26px"},"2xl":{"$type":"dimension","$value":"34px"}},"font-weight":{"regular":{"$type":"number","$value":400},"medium":{"$type":"number","$value":500},"semibold":{"$type":"number","$value":600}},"line-height":{"body":{"$type":"number","$value":1.5},"heading":{"$type":"number","$value":1.25}},"space":{"1":{"$type":"dimension","$value":"4px"},"2":{"$type":"dimension","$value":"8px"},"3":{"$type":"dimension","$value":"12px"},"4":{"$type":"dimension","$value":"16px"},"5":{"$type":"dimension","$value":"20px"},"6":{"$type":"dimension","$value":"24px"},"7":{"$type":"dimension","$value":"28px"},"8":{"$type":"dimension","$value":"32px"},"10":{"$type":"dimension","$value":"40px"},"12":{"$type":"dimension","$value":"48px"}},"radius":{"sm":{"$type":"dimension","$value":"6px"},"md":{"$type":"dimension","$value":"8px"},"lg":{"$type":"dimension","$value":"12px"},"full":{"$type":"dimension","$value":"999px"}},"shadow":{"1":{"$type":"shadow","$value":"0 1px 2px rgb(16 24 40 / 0.05)"},"2":{"$type":"shadow","$value":"0 8px 24px rgb(16 24 40 / 0.12)"}},"control-height":{"sm":{"$type":"dimension","$value":"30px"},"md":{"$type":"dimension","$value":"36px"},"lg":{"$type":"dimension","$value":"44px"}},"duration":{"fast":{"$type":"duration","$value":"120ms"},"base":{"$type":"duration","$value":"200ms"}},"easing":{"standard":{"$type":"cubicBezier","$value":"cubic-bezier(0.2, 0, 0, 1)"}}}
+{
+  "font": {
+    "sans": {
+      "$type": "fontFamily",
+      "$value": "'IBM Plex Sans', 'IBM Plex Sans Devanagari', system-ui, sans-serif"
+    },
+    "serif": { "$type": "fontFamily", "$value": "'IBM Plex Serif', Georgia, serif" },
+    "mono": { "$type": "fontFamily", "$value": "'IBM Plex Mono', ui-monospace, monospace" }
+  },
+  "font-size": {
+    "xs": { "$type": "dimension", "$value": "12px" },
+    "sm": { "$type": "dimension", "$value": "13px" },
+    "base": { "$type": "dimension", "$value": "14px" },
+    "md": { "$type": "dimension", "$value": "16px" },
+    "lg": { "$type": "dimension", "$value": "20px" },
+    "xl": { "$type": "dimension", "$value": "26px" },
+    "2xl": { "$type": "dimension", "$value": "34px" }
+  },
+  "font-weight": {
+    "regular": { "$type": "number", "$value": 400 },
+    "medium": { "$type": "number", "$value": 500 },
+    "semibold": { "$type": "number", "$value": 600 }
+  },
+  "line-height": {
+    "body": { "$type": "number", "$value": 1.5 },
+    "heading": { "$type": "number", "$value": 1.25 }
+  },
+  "space": {
+    "1": { "$type": "dimension", "$value": "4px" },
+    "2": { "$type": "dimension", "$value": "8px" },
+    "3": { "$type": "dimension", "$value": "12px" },
+    "4": { "$type": "dimension", "$value": "16px" },
+    "5": { "$type": "dimension", "$value": "20px" },
+    "6": { "$type": "dimension", "$value": "24px" },
+    "7": { "$type": "dimension", "$value": "28px" },
+    "8": { "$type": "dimension", "$value": "32px" },
+    "10": { "$type": "dimension", "$value": "40px" },
+    "12": { "$type": "dimension", "$value": "48px" }
+  },
+  "radius": {
+    "sm": { "$type": "dimension", "$value": "6px" },
+    "md": { "$type": "dimension", "$value": "8px" },
+    "lg": { "$type": "dimension", "$value": "12px" },
+    "full": { "$type": "dimension", "$value": "999px" }
+  },
+  "shadow": {
+    "1": { "$type": "shadow", "$value": "0 1px 2px rgb(16 24 40 / 0.05)" },
+    "2": { "$type": "shadow", "$value": "0 8px 24px rgb(16 24 40 / 0.12)" }
+  },
+  "control-height": {
+    "sm": { "$type": "dimension", "$value": "30px" },
+    "md": { "$type": "dimension", "$value": "36px" },
+    "lg": { "$type": "dimension", "$value": "44px" }
+  },
+  "duration": {
+    "fast": { "$type": "duration", "$value": "120ms" },
+    "base": { "$type": "duration", "$value": "200ms" }
+  },
+  "easing": { "standard": { "$type": "cubicBezier", "$value": "cubic-bezier(0.2, 0, 0, 1)" } }
+}

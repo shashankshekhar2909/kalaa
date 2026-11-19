@@ -1,0 +1,86 @@
+.kl-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: var(--kalaa-radius-md);
+  font: var(--kalaa-font-weight-semibold) var(--kalaa-font-size-sm)/var(--kalaa-line-height-body)
+    var(--kalaa-font-sans);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--kalaa-duration-fast) var(--kalaa-easing-standard),
+    border-color var(--kalaa-duration-fast) var(--kalaa-easing-standard);
+}
+.kl-button--sm {
+  height: var(--kalaa-control-height-sm);
+  padding: 0 var(--kalaa-space-3);
+}
+.kl-button--md {
+  height: var(--kalaa-control-height-md);
+  padding: 0 var(--kalaa-space-4);
+}
+.kl-button--primary {
+  background: var(--kalaa-accent);
+  color: var(--kalaa-on-accent);
+}
+.kl-button--primary:hover:not(:disabled) {
+  background: var(--kalaa-accent-hover);
+}
+.kl-button--secondary {
+  background: var(--kalaa-surface);
+  border-color: var(--kalaa-border);
+  color: var(--kalaa-text);
+}
+.kl-button--secondary:hover:not(:disabled) {
+  border-color: var(--kalaa-border-strong);
+}
+.kl-button--ghost {
+  background: transparent;
+  color: var(--kalaa-text);
+}
+.kl-button--ghost:hover:not(:disabled) {
+  background: var(--kalaa-surface-alt);
+}
+.kl-button--danger {
+  background: var(--kalaa-danger-soft);
+  color: var(--kalaa-danger);
+}
+.kl-button--danger:hover:not(:disabled) {
+  border-color: var(--kalaa-danger);
+}
+.kl-button:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}
+.kl-button:disabled {
+  opacity: 50%;
+  cursor: not-allowed;
+}
+.kl-button__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--kalaa-space-2);
+}
+.kl-button__content--loading {
+  opacity: 0;
+} /* still read by screen readers, unlike visibility: hidden */
+.kl-button__icon {
+  display: inline-flex;
+}
+.kl-button__spinner {
+  position: absolute;
+  width: var(--kalaa-space-4);
+  height: var(--kalaa-space-4);
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--kalaa-radius-full);
+  animation: kl-spin calc(var(--kalaa-duration-base) * 4) linear infinite;
+}
+@keyframes kl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

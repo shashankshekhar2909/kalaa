@@ -1,6 +1,6 @@
 # Kalaa
 
-Shashank's design system: one calm, professional look for every app. *Kalā*: art and craft in Hindi, a phase of the
+Shashank's design system: one calm, professional look for every app. _Kalā_: art and craft in Hindi, a phase of the
 moon in Sanskrit.
 
 - `@kalaa/tokens`: design tokens (CSS custom properties, JSON, TypeScript), light and dark themes.

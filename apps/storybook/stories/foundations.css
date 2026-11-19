@@ -1,12 +1,81 @@
-body { margin: 0; background: var(--kalaa-bg); color: var(--kalaa-text); font: var(--kalaa-font-size-base)/var(--kalaa-line-height-body) var(--kalaa-font-sans); font-variant-numeric: tabular-nums; }
-.foundation { max-width: 1120px; margin: auto; padding: var(--kalaa-space-8); }
-h1, h2 { font-family: var(--kalaa-font-serif); line-height: var(--kalaa-line-height-heading); }
-h1 { font-size: var(--kalaa-font-size-2xl); } h2 { font-size: var(--kalaa-font-size-lg); margin-top: var(--kalaa-space-8); }
-p { color: var(--kalaa-text-muted); }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: var(--kalaa-space-4); }
-.card { background: var(--kalaa-surface); border: 1px solid var(--kalaa-border); border-radius: var(--kalaa-radius-lg); overflow: hidden; }
-.swatch { height: 64px; border-bottom: 1px solid var(--kalaa-border); }
-.card-copy { padding: var(--kalaa-space-3); } .card-copy small { display: block; color: var(--kalaa-text-muted); }
-.ramp { display: flex; flex-wrap: wrap; gap: var(--kalaa-space-2); } .ramp-item { flex: 1 1 65px; min-width: 65px; } .ramp-item .swatch { border: 1px solid var(--kalaa-border); border-radius: var(--kalaa-radius-sm); }
-table { border-collapse: collapse; width: 100%; } td, th { padding: var(--kalaa-space-2); text-align: left; border-bottom: 1px solid var(--kalaa-border); } .number { text-align: right; font-variant-numeric: tabular-nums; }
-.example { background: var(--kalaa-accent-soft); border: 1px solid var(--kalaa-border); padding: var(--kalaa-space-4); }
+body {
+  margin: 0;
+  background: var(--kalaa-bg);
+  color: var(--kalaa-text);
+  font: var(--kalaa-font-size-base)/var(--kalaa-line-height-body) var(--kalaa-font-sans);
+  font-variant-numeric: tabular-nums;
+}
+.foundation {
+  max-width: 1120px;
+  margin: auto;
+  padding: var(--kalaa-space-8);
+}
+h1,
+h2 {
+  font-family: var(--kalaa-font-serif);
+  line-height: var(--kalaa-line-height-heading);
+}
+h1 {
+  font-size: var(--kalaa-font-size-2xl);
+}
+h2 {
+  font-size: var(--kalaa-font-size-lg);
+  margin-top: var(--kalaa-space-8);
+}
+p {
+  color: var(--kalaa-text-muted);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--kalaa-space-4);
+}
+.card {
+  background: var(--kalaa-surface);
+  border: 1px solid var(--kalaa-border);
+  border-radius: var(--kalaa-radius-lg);
+  overflow: hidden;
+}
+.swatch {
+  height: 64px;
+  border-bottom: 1px solid var(--kalaa-border);
+}
+.card-copy {
+  padding: var(--kalaa-space-3);
+}
+.card-copy small {
+  display: block;
+  color: var(--kalaa-text-muted);
+}
+.ramp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-2);
+}
+.ramp-item {
+  flex: 1 1 65px;
+  min-width: 65px;
+}
+.ramp-item .swatch {
+  border: 1px solid var(--kalaa-border);
+  border-radius: var(--kalaa-radius-sm);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+td,
+th {
+  padding: var(--kalaa-space-2);
+  text-align: left;
+  border-bottom: 1px solid var(--kalaa-border);
+}
+.number {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.example {
+  background: var(--kalaa-accent-soft);
+  border: 1px solid var(--kalaa-border);
+  padding: var(--kalaa-space-4);
+}

@@ -1,0 +1,19 @@
+.kl-field {
+  display: grid;
+  gap: var(--kalaa-space-1);
+}
+.kl-field__label {
+  color: var(--kalaa-text-muted);
+  font-size: var(--kalaa-font-size-sm);
+  font-weight: var(--kalaa-font-weight-medium);
+}
+.kl-field__hint,
+.kl-field__error {
+  font-size: var(--kalaa-font-size-xs);
+}
+.kl-field__hint {
+  color: var(--kalaa-text-subtle);
+}
+.kl-field__error {
+  color: var(--kalaa-danger);
+}

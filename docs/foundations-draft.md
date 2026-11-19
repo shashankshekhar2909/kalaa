@@ -6,23 +6,24 @@ labels, no decorative pills, no gradients or glows. Originally written for Caree
 and `apps/web/components/ui.tsx` (components). Pages use the components; they do not invent new one-off styles.
 
 ## Tokens (CSS custom properties on :root, dark values under the existing dark selectors)
-| Token | Light | Dark | Use |
-|---|---|---|---|
-| --bg | #f6f7f9 | #0f141b | page background |
-| --surface | #ffffff | #161d27 | cards, sidebar, inputs |
-| --surface-alt | #f1f3f6 | #1d2632 | hover rows, table heads, tabs track |
-| --border | #e3e7ed | #2a3441 | card and control borders, dividers |
-| --border-strong | #cfd5de | #3a4656 | control hover |
-| --text | #18202b | #e6ebf2 | body text, titles |
-| --text-muted | #5d6878 | #a3adbb | secondary text, labels |
-| --text-subtle | #8590a0 | #7d8898 | timestamps, hints |
-| --accent | #2f5bd3 | #7ea2ff | primary buttons, links, focus, selected nav |
-| --accent-hover | #264bb0 | #9bb7ff | primary hover |
-| --accent-soft | #eaf0fd | #1e2b45 | selected nav background, info banner |
-| --on-accent | #ffffff | #0f141b | text on primary |
-| --success / --success-soft | #1f7a4d / #e7f5ee | #5cc58f / #15301f | done, approved, ok, offer |
-| --warning / --warning-soft | #9a6200 / #fdf3e1 | #e8b44f / #33270f | slipped, unverified, needs review |
-| --danger / --danger-soft | #b42318 / #fdecea | #f0857b / #3a1715 | failed, unsupported, rejected, delete |
+
+| Token                      | Light             | Dark              | Use                                         |
+| -------------------------- | ----------------- | ----------------- | ------------------------------------------- |
+| --bg                       | #f6f7f9           | #0f141b           | page background                             |
+| --surface                  | #ffffff           | #161d27           | cards, sidebar, inputs                      |
+| --surface-alt              | #f1f3f6           | #1d2632           | hover rows, table heads, tabs track         |
+| --border                   | #e3e7ed           | #2a3441           | card and control borders, dividers          |
+| --border-strong            | #cfd5de           | #3a4656           | control hover                               |
+| --text                     | #18202b           | #e6ebf2           | body text, titles                           |
+| --text-muted               | #5d6878           | #a3adbb           | secondary text, labels                      |
+| --text-subtle              | #8590a0           | #7d8898           | timestamps, hints                           |
+| --accent                   | #2f5bd3           | #7ea2ff           | primary buttons, links, focus, selected nav |
+| --accent-hover             | #264bb0           | #9bb7ff           | primary hover                               |
+| --accent-soft              | #eaf0fd           | #1e2b45           | selected nav background, info banner        |
+| --on-accent                | #ffffff           | #0f141b           | text on primary                             |
+| --success / --success-soft | #1f7a4d / #e7f5ee | #5cc58f / #15301f | done, approved, ok, offer                   |
+| --warning / --warning-soft | #9a6200 / #fdf3e1 | #e8b44f / #33270f | slipped, unverified, needs review           |
+| --danger / --danger-soft   | #b42318 / #fdecea | #f0857b / #3a1715 | failed, unsupported, rejected, delete       |
 
 Type: `--font: Inter, system-ui, sans-serif`; numbers and IDs use `font-variant-numeric: tabular-nums` (no mono font).
 Sizes: --fs-xs 12px, --fs-sm 13px, --fs-base 14px, --fs-md 16px, --fs-lg 20px, --fs-xl 26px.
@@ -35,6 +36,7 @@ interactive element via :focus-visible.
 Control height: 36px (md), 30px (sm).
 
 ## Layout
+
 - Sidebar: full viewport height (sticky, `height: 100vh`), surface background, right border.
 - Main: max-width 1120px, padding --sp-8 desktop / --sp-4 mobile.
 - Vertical rhythm: page header, then a stack of cards with gap --sp-4. Grids (two columns) also use gap --sp-4.
@@ -42,6 +44,7 @@ Control height: 36px (md), 30px (sm).
 - Inside a card: padding --sp-5; header row (title left, actions right) then content with gap --sp-4 between groups.
 
 ## Components (components/ui.tsx)
+
 - **PageHeader** `{title, description?, back?: {href, label}, actions?}`: optional small back link above, title
   (--fs-xl, 600), description (--text-muted), actions right-aligned on the title row. No eyebrow labels.
 - **Card** `{title?, description?, actions?, children, className?}`: header row only when title is given; title --fs-md 600.
@@ -64,5 +67,6 @@ Control height: 36px (md), 30px (sm).
 - Keep **ProgressBar**, **Dialog**, **formatDate**, **localDate** (restyle with tokens only).
 
 ## Copy rules
+
 Sentence case for every label, heading and button ("Add a timeline note", "CVs", "Visible on share page").
 Buttons are verbs ("Prepare application", "Approve", "Save changes"). No trailing colons in labels.

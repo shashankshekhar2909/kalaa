@@ -1,0 +1,16 @@
+.kl-empty-state {
+  max-width: 48ch;
+  margin: auto;
+  padding: var(--kalaa-space-8);
+  text-align: center;
+  color: var(--kalaa-text-muted);
+}
+.kl-empty-state__title {
+  margin: 0;
+  color: var(--kalaa-text);
+  font-size: var(--kalaa-font-size-md);
+  font-weight: var(--kalaa-font-weight-semibold);
+}
+.kl-empty-state__description {
+  margin: var(--kalaa-space-2) 0 var(--kalaa-space-4);
+}
