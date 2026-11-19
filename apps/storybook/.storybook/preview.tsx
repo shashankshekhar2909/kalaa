@@ -2,6 +2,8 @@ import type { Preview } from '@storybook/react-vite';
 import '@kalaa/tokens/fonts.css';
 import '@kalaa/tokens/tokens.css';
 import '../stories/foundations.css';
+// Component CSS straight from source (the published package ships the same files joined as styles.css).
+import.meta.glob('../../../packages/react/src/components/*/*.css', { eager: true });
 const preview: Preview = {
   globalTypes: {
     theme: { description: 'Colour scheme', toolbar: { title: 'Theme', items: ['system', 'light', 'dark'], dynamicTitle: true } },

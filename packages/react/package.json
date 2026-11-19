@@ -7,12 +7,18 @@
     "@base-ui/react": "1.9.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "8.0.0",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.13",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "jsdom": "31.0.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "tsup": "9.0.0",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "vitest": "5.1.1"
   },
   "files": [
     "dist"
@@ -29,7 +35,8 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "build": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly && cp src/styles.css dist/styles.css",
-    "check": "tsc --noEmit"
+    "build": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly && node scripts/css.mjs",
+    "check": "tsc --noEmit && node scripts/css.mjs --check",
+    "test": "vitest run"
   }
 }
