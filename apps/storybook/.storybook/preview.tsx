@@ -2,21 +2,48 @@ import type { Preview } from "@storybook/react-vite";
 import "@kalaa/tokens/fonts.css";
 import "@kalaa/tokens/tokens.css";
 import "../stories/foundations.css";
+import { kalaaTheme } from "./kalaa-theme";
 // Component CSS straight from source (the published package ships the same files joined as styles.css).
 import.meta.glob("../../../packages/react/src/components/*/*.css", { eager: true });
 const preview: Preview = {
   globalTypes: {
     theme: {
       description: "Colour scheme",
-      toolbar: { title: "Theme", items: ["system", "light", "dark"], dynamicTitle: true },
+      toolbar: {
+        title: "Theme",
+        icon: "contrast",
+        items: [
+          { value: "system", title: "System" },
+          { value: "light", title: "Light", icon: "sun" },
+          { value: "dark", title: "Dark", icon: "moon" },
+        ],
+        dynamicTitle: true,
+      },
     },
     accent: {
       description: "Accent colour",
-      toolbar: { title: "Accent", items: ["neel", "geru", "mayur"], dynamicTitle: true },
+      toolbar: {
+        title: "Accent",
+        icon: "paintbrush",
+        items: [
+          { value: "neel", title: "Neel (indigo)" },
+          { value: "geru", title: "Geru (red ochre)" },
+          { value: "mayur", title: "Mayur (peacock teal)" },
+        ],
+        dynamicTitle: true,
+      },
     },
     shape: {
       description: "Corner shape",
-      toolbar: { title: "Shape", items: ["square", "soft"], dynamicTitle: true },
+      toolbar: {
+        title: "Shape",
+        icon: "box",
+        items: [
+          { value: "square", title: "Square (default)" },
+          { value: "soft", title: "Soft" },
+        ],
+        dynamicTitle: true,
+      },
     },
   },
   initialGlobals: { theme: "system", accent: "neel", shape: "square" },
@@ -32,6 +59,52 @@ const preview: Preview = {
       return <Story />;
     },
   ],
-  parameters: { a11y: { test: "error" }, backgrounds: { disable: true }, layout: "fullscreen" },
+  parameters: {
+    a11y: { test: "error" },
+    backgrounds: { disable: true },
+    layout: "fullscreen",
+    docs: { theme: kalaaTheme(), toc: true },
+    options: {
+      storySort: {
+        order: [
+          "Introduction",
+          "Foundations",
+          ["Logo", "Colour", "Typography", "Shape", "Space", "Palette"],
+          "Components",
+          [
+            // Layout
+            "AppShell",
+            "PageHeader",
+            "Card",
+            "KeyValue",
+            "EmptyState",
+            // Actions
+            "Button",
+            "ButtonLink",
+            // Forms
+            "Field",
+            "Input",
+            "Textarea",
+            "Select",
+            "Checkbox",
+            "Switch",
+            // Navigation
+            "Tabs",
+            // Feedback
+            "Banner",
+            "Badge",
+            "StatusBadge",
+            "ProgressBar",
+            // Overlays
+            "Dialog",
+            // Content
+            "Logo",
+            "CodeBlock",
+          ],
+          "Examples",
+        ],
+      },
+    },
+  },
 };
 export default preview;

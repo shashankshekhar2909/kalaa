@@ -19,7 +19,7 @@ import {
 } from "@kalaa/react";
 
 // One realistic screen built only from Kalaa components: the visual check that the parts work together.
-const meta: Meta = { title: "Overview/Product editor", parameters: { layout: "fullscreen" } };
+const meta: Meta = { title: "Examples/Product editor", parameters: { layout: "fullscreen" } };
 export default meta;
 
 const nav = (

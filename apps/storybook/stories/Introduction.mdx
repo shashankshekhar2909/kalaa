@@ -1,0 +1,75 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { Logo } from "@kalaa/react";
+
+<Meta title="Introduction" />
+
+<div className="sb-unstyled" style={{ margin: "24px 0" }}>
+  <Logo variant="lockup" size={48} />
+</div>
+
+# Kalaa
+
+Kalaa is a design system for operational software: accessible React components and design tokens with sharp
+corners, three Indian-pigment accents and IBM Plex type (including Devanagari). This is the component reference.
+It is a private preview (v0.1): packages are vendored as tarballs and are not on npm.
+
+## What is here
+
+- **Foundations**: the Logo, Colour roles with live contrast ratios, Typography, Shape, Space and the raw Palette.
+- **Components**: 19 UI components in v0.1, plus the Logo and CodeBlock. Every component page has a live demo, props,
+  usage notes and do/don't guidance.
+- **Examples**: a whole screen (the product editor) built only from Kalaa components.
+
+## Try the switches
+
+The toolbar above the canvas changes the preview live:
+
+- **Theme**: System follows your operating system; Light and Dark force a mode.
+- **Accent**: Neel (indigo, the default for apps), Geru (red ochre, the brand colour) or Mayur (peacock teal).
+- **Shape**: Square (default, no attribute) or Soft (`data-shape="soft"`).
+
+These are plain HTML attributes (`data-theme`, `data-accent`, `data-shape`). They work on `html` or on any wrapper,
+so one page can show two shapes or three accents side by side.
+
+## Installation
+
+<span className="sb-unstyled" style={{ fontSize: 12 }}>
+  v0.1 preview. Kalaa is private and not on npm yet.
+</span>
+
+Packages are vendored as release tarballs into each app (the tarball flow is a decision, not a script yet, so the file
+names below are the intended ones).
+
+```bash
+# 1. Put the tarballs in vendor/ and install them
+pnpm add ./vendor/kalaa-tokens-0.1.0.tgz ./vendor/kalaa-react-0.1.0.tgz
+```
+
+```tsx
+// 2. Load tokens, fonts and component styles once, at your app root
+import "@kalaa/tokens/fonts.css"; // self-hosted IBM Plex, no network
+import "@kalaa/tokens/tokens.css"; // colour, type, space, shape and motion tokens
+import "@kalaa/react/styles.css";
+
+// 3. Use components
+import { Button } from "@kalaa/react";
+
+export const Save = () => <Button variant="primary">Save changes</Button>;
+```
+
+```html
+<!-- 4. Optional: pick accent, theme and shape with plain attributes (omit them for Neel, system theme, square) -->
+<html data-accent="geru" data-theme="dark" data-shape="soft">
+  <!-- data-accent: neel (default) | geru | mayur
+       data-theme:  light | dark   (omit to follow the system)
+       data-shape:  soft           (omit for square) -->
+</html>
+```
+
+The same attributes work on any wrapper element, for example `<div data-shape="soft">`. A wrapper that sets
+`data-theme` should also set `data-accent` unless it is Neel.
+
+## Quality
+
+Every colour pair is checked against WCAG AA at build time, and every story is scanned with axe and compared with a
+screenshot baseline in light and dark. Reduced motion is respected: duration tokens drop to zero.
