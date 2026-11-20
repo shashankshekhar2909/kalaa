@@ -5,7 +5,21 @@ const palette = read("./src/palette.json").palette,
   foundation = read("./src/foundation.json"),
   mappings = read("./src/roles.json"),
   shapeSource = read("./src/shapes.json"),
-  contrastPairs = read("./src/contrast-pairs.json").pairs;
+  contrastSource = read("./src/contrast-pairs.json"),
+  contrastPairs = contrastSource.pairs,
+  chartContrastPairs = contrastSource.chartPairs ?? [];
+const chartPalette = {
+  categorical: ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5", "chart-6", "chart-7", "chart-8"],
+  sequential: ["chart-seq-1", "chart-seq-2", "chart-seq-3", "chart-seq-4", "chart-seq-5"],
+  diverging: ["chart-div-1", "chart-div-2", "chart-div-3", "chart-div-4", "chart-div-5"],
+  roles: [
+    "chart-gridline",
+    "chart-axis-text",
+    "chart-tooltip-surface",
+    "chart-tooltip-text",
+    "chart-tooltip-border",
+  ],
+};
 const accents = ["neel", "geru", "mayur"],
   modes = ["light", "dark"],
   themes = {};
@@ -107,11 +121,11 @@ for (const [pkg, weights, subsets] of families) {
 write("fonts.css", fonts);
 write(
   "index.js",
-  `export const accents = ${JSON.stringify(accents)};\nexport const contrastPairs = ${JSON.stringify(contrastPairs)};\nexport const modes = ${JSON.stringify(modes)};\nexport const shapes = ${JSON.stringify(shapes)};\nexport const tokens = ${JSON.stringify(themes, null, 2)};\n`,
+  `export const accents = ${JSON.stringify(accents)};\nexport const contrastPairs = ${JSON.stringify(contrastPairs)};\nexport const chartContrastPairs = ${JSON.stringify(chartContrastPairs)};\nexport const chartPalette = ${JSON.stringify(chartPalette, null, 2)};\nexport const modes = ${JSON.stringify(modes)};\nexport const shapes = ${JSON.stringify(shapes)};\nexport const tokens = ${JSON.stringify(themes, null, 2)};\n`,
 );
 write(
   "index.d.ts",
-  `export declare const accents: readonly ["neel", "geru", "mayur"];\nexport declare const modes: readonly ["light", "dark"];\nexport declare const shapes: readonly ${JSON.stringify(shapes)};\nexport type ContrastPair = readonly [Role, Role, number];\nexport declare const contrastPairs: readonly ContrastPair[];\nexport type Shape = typeof shapes[number];\nexport type Accent = typeof accents[number];\nexport type Mode = typeof modes[number];\nexport type Role = ${Object.keys(
+  `export declare const accents: readonly ["neel", "geru", "mayur"];\nexport declare const modes: readonly ["light", "dark"];\nexport declare const shapes: readonly ${JSON.stringify(shapes)};\nexport type ContrastPair = readonly [Role, Role, number];\nexport declare const contrastPairs: readonly ContrastPair[];\nexport declare const chartContrastPairs: readonly ContrastPair[];\nexport declare const chartPalette: {\n  readonly categorical: readonly Role[];\n  readonly sequential: readonly Role[];\n  readonly diverging: readonly Role[];\n  readonly roles: readonly Role[];\n};\nexport type Shape = typeof shapes[number];\nexport type Accent = typeof accents[number];\nexport type Mode = typeof modes[number];\nexport type Role = ${Object.keys(
     themes.neel.light,
   )
     .map((x) => JSON.stringify(x))

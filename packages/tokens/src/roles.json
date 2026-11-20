@@ -75,6 +75,98 @@
     "focus": {
       "$type": "color",
       "$value": "{palette.ACCENT.700}"
+    },
+    "chart-1": {
+      "$type": "color",
+      "$value": "{palette.chart-indigo.700}"
+    },
+    "chart-2": {
+      "$type": "color",
+      "$value": "{palette.chart-ochre.700}"
+    },
+    "chart-3": {
+      "$type": "color",
+      "$value": "{palette.chart-teal.700}"
+    },
+    "chart-4": {
+      "$type": "color",
+      "$value": "{palette.chart-plum.700}"
+    },
+    "chart-5": {
+      "$type": "color",
+      "$value": "{palette.chart-gold.700}"
+    },
+    "chart-6": {
+      "$type": "color",
+      "$value": "{palette.chart-cyan.700}"
+    },
+    "chart-7": {
+      "$type": "color",
+      "$value": "{palette.chart-rose.700}"
+    },
+    "chart-8": {
+      "$type": "color",
+      "$value": "{palette.chart-moss.700}"
+    },
+    "chart-seq-1": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.650}"
+    },
+    "chart-seq-2": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.700}"
+    },
+    "chart-seq-3": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.800}"
+    },
+    "chart-seq-4": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.900}"
+    },
+    "chart-seq-5": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.950}"
+    },
+    "chart-div-1": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.450}"
+    },
+    "chart-div-2": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.400}"
+    },
+    "chart-div-3": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.550}"
+    },
+    "chart-div-4": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.700}"
+    },
+    "chart-div-5": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.800}"
+    },
+    "chart-gridline": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.150}"
+    },
+    "chart-axis-text": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.600}"
+    },
+    "chart-tooltip-surface": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.0}"
+    },
+    "chart-tooltip-text": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.900}"
+    },
+    "chart-tooltip-border": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.500}"
     }
   },
   "dark": {
@@ -153,6 +245,98 @@
     "focus": {
       "$type": "color",
       "$value": "{palette.ACCENT.400}"
+    },
+    "chart-1": {
+      "$type": "color",
+      "$value": "{palette.chart-indigo.400}"
+    },
+    "chart-2": {
+      "$type": "color",
+      "$value": "{palette.chart-ochre.400}"
+    },
+    "chart-3": {
+      "$type": "color",
+      "$value": "{palette.chart-teal.400}"
+    },
+    "chart-4": {
+      "$type": "color",
+      "$value": "{palette.chart-plum.400}"
+    },
+    "chart-5": {
+      "$type": "color",
+      "$value": "{palette.chart-gold.400}"
+    },
+    "chart-6": {
+      "$type": "color",
+      "$value": "{palette.chart-cyan.400}"
+    },
+    "chart-7": {
+      "$type": "color",
+      "$value": "{palette.chart-rose.400}"
+    },
+    "chart-8": {
+      "$type": "color",
+      "$value": "{palette.chart-moss.400}"
+    },
+    "chart-seq-1": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.600}"
+    },
+    "chart-seq-2": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.500}"
+    },
+    "chart-seq-3": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.400}"
+    },
+    "chart-seq-4": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.300}"
+    },
+    "chart-seq-5": {
+      "$type": "color",
+      "$value": "{palette.chart-sequential.200}"
+    },
+    "chart-div-1": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.200}"
+    },
+    "chart-div-2": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.300}"
+    },
+    "chart-div-3": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.500}"
+    },
+    "chart-div-4": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.600}"
+    },
+    "chart-div-5": {
+      "$type": "color",
+      "$value": "{palette.chart-diverging.900}"
+    },
+    "chart-gridline": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.800}"
+    },
+    "chart-axis-text": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.400}"
+    },
+    "chart-tooltip-surface": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.900}"
+    },
+    "chart-tooltip-text": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.100}"
+    },
+    "chart-tooltip-border": {
+      "$type": "color",
+      "$value": "{palette.NEUTRAL.550}"
     }
   }
 }

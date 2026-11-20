@@ -22,4 +22,16 @@ Nested accent wrappers without their own `data-theme` follow an ancestor's force
 
 ## Contrast pairs
 
-The list of role pairs and minimum ratios lives in `src/contrast-pairs.json` and is exported as `contrastPairs` from `@kalaa/tokens`. `scripts/check-contrast.mjs` and the Storybook Colour page both read it.
+The list of role pairs and minimum ratios lives in `src/contrast-pairs.json` and is exported as `contrastPairs` (core UI and text roles) and `chartContrastPairs` (data visualisation palette and roles) from `@kalaa/tokens`. `scripts/check-contrast.mjs` checks both lists and fails the build if any text pair drops below 4.5:1 or any UI/chart colour drops below 3.0:1.
+
+## Chart palette and roles
+
+`@kalaa/tokens` includes a dedicated data visualisation palette and chrome roles, exported as CSS custom properties (`--kalaa-chart-*`), resolved values in `tokens.json`, and `chartPalette` / `chartContrastPairs` in JavaScript:
+
+- **Categorical series (`chart-1` .. `chart-8`)**: eight colour-blind distinguishable series colours (indigo, ochre, teal, plum, gold, cyan, rose, moss) generated from the `chart-*` ramps in `scripts/ramps.mjs`. Every categorical colour maintains at least 3.0:1 contrast (in practice >= 4.9:1) against both `surface` and `bg` across all three accents (`neel`, `geru`, `mayur`) in light and dark modes. Charts pair these colours with direct labels, distinct marker shapes, line dash styles, or hatch patterns so meaning never relies on colour alone.
+- **Sequential ramp (`chart-seq-1` .. `chart-seq-5` and `palette.chart-sequential`)**: five ordered intensity steps for heatmaps and density encodings, each maintaining >= 3.0:1 contrast against `surface` in light and dark modes.
+- **Diverging ramp (`chart-div-1` .. `chart-div-5` and `palette.chart-diverging`)**: five bipolar steps from warm ochre (`chart-div-1`, `chart-div-2`) through a neutral slate midpoint (`chart-div-3`) to cool teal (`chart-div-4`, `chart-div-5`), each >= 3.0:1 against `surface`.
+- **Chart roles**:
+  - `chart-gridline` (`--kalaa-chart-gridline`): thin 1px reference lines (`NEUTRAL.150` in light, `NEUTRAL.800` in dark).
+  - `chart-axis-text` (`--kalaa-chart-axis-text`): axis tick labels and annotations (`NEUTRAL.600` in light, `NEUTRAL.400` in dark, >= 4.5:1 against `surface` and `bg`).
+  - `chart-tooltip-surface`, `chart-tooltip-text`, `chart-tooltip-border`: high-contrast bordered tooltip surface (`NEUTRAL.0` / `NEUTRAL.900`) without drop shadows.

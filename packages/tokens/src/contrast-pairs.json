@@ -1,5 +1,5 @@
 {
-  "$comment": "Role pairs checked at build (WCAG AA: 4.5 text, 3 UI). Exported as contrastPairs from @kalaa/tokens.",
+  "$comment": "Role pairs checked at build (WCAG AA: 4.5 text, 3 UI and chart colours). Exported as contrastPairs and chartContrastPairs from @kalaa/tokens.",
   "pairs": [
     ["text", "bg", 4.5],
     ["text", "surface", 4.5],
@@ -17,5 +17,37 @@
     ["danger", "surface", 4.5],
     ["border-strong", "surface", 3.0],
     ["focus", "bg", 3.0]
+  ],
+  "chartPairs": [
+    ["chart-1", "surface", 3.0],
+    ["chart-2", "surface", 3.0],
+    ["chart-3", "surface", 3.0],
+    ["chart-4", "surface", 3.0],
+    ["chart-5", "surface", 3.0],
+    ["chart-6", "surface", 3.0],
+    ["chart-7", "surface", 3.0],
+    ["chart-8", "surface", 3.0],
+    ["chart-1", "bg", 3.0],
+    ["chart-2", "bg", 3.0],
+    ["chart-3", "bg", 3.0],
+    ["chart-4", "bg", 3.0],
+    ["chart-5", "bg", 3.0],
+    ["chart-6", "bg", 3.0],
+    ["chart-7", "bg", 3.0],
+    ["chart-8", "bg", 3.0],
+    ["chart-seq-1", "surface", 3.0],
+    ["chart-seq-2", "surface", 3.0],
+    ["chart-seq-3", "surface", 3.0],
+    ["chart-seq-4", "surface", 3.0],
+    ["chart-seq-5", "surface", 3.0],
+    ["chart-div-1", "surface", 3.0],
+    ["chart-div-2", "surface", 3.0],
+    ["chart-div-3", "surface", 3.0],
+    ["chart-div-4", "surface", 3.0],
+    ["chart-div-5", "surface", 3.0],
+    ["chart-axis-text", "surface", 4.5],
+    ["chart-axis-text", "bg", 4.5],
+    ["chart-tooltip-text", "chart-tooltip-surface", 4.5],
+    ["chart-tooltip-border", "chart-tooltip-surface", 3.0]
   ]
 }

@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 const themes = JSON.parse(readFileSync(new URL("../dist/tokens.json", import.meta.url)));
-const pairs = JSON.parse(readFileSync(new URL("../src/contrast-pairs.json", import.meta.url))).pairs;
+const contrastSource = JSON.parse(readFileSync(new URL("../src/contrast-pairs.json", import.meta.url)));
+const pairs = [...contrastSource.pairs, ...(contrastSource.chartPairs ?? [])];
 function luminance(hex) {
   const rgb = hex
     .slice(1)
