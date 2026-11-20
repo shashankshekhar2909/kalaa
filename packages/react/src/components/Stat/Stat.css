@@ -1,0 +1,52 @@
+.kl-stat {
+  font-family: var(--kalaa-font-sans);
+  color: var(--kalaa-text);
+}
+.kl-stat__label {
+  color: var(--kalaa-text-muted);
+  font-size: var(--kalaa-font-size-sm);
+  font-weight: var(--kalaa-font-weight-medium);
+}
+.kl-stat__row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-2);
+  margin-top: var(--kalaa-space-1);
+}
+.kl-stat__value {
+  font-size: var(--kalaa-font-size-xl);
+  font-weight: var(--kalaa-font-weight-semibold);
+  line-height: var(--kalaa-line-height-heading);
+  font-variant-numeric: tabular-nums;
+}
+.kl-stat__delta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--kalaa-space-2);
+  border-radius: var(--kalaa-radius-sm);
+  font-size: var(--kalaa-font-size-xs);
+  font-weight: var(--kalaa-font-weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+.kl-stat__delta--neutral {
+  background: var(--kalaa-surface-alt);
+  color: var(--kalaa-text-muted);
+}
+.kl-stat__delta--success {
+  background: var(--kalaa-success-soft);
+  color: var(--kalaa-success);
+}
+.kl-stat__delta--warning {
+  background: var(--kalaa-warning-soft);
+  color: var(--kalaa-warning);
+}
+.kl-stat__delta--danger {
+  background: var(--kalaa-danger-soft);
+  color: var(--kalaa-danger);
+}
+.kl-stat__help {
+  margin-top: var(--kalaa-space-1);
+  color: var(--kalaa-text-subtle);
+  font-size: var(--kalaa-font-size-xs);
+}

@@ -1,0 +1,26 @@
+.kl-skeleton {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  background: var(--kalaa-surface-alt);
+  border: 1px solid var(--kalaa-border);
+  animation: kl-skeleton-pulse calc(var(--kalaa-duration-base) * 8) var(--kalaa-easing-standard) infinite;
+}
+.kl-skeleton--text {
+  height: var(--kalaa-space-4);
+  border-radius: var(--kalaa-radius-sm);
+}
+.kl-skeleton--block {
+  height: var(--kalaa-space-10);
+  border-radius: var(--kalaa-radius-md);
+}
+.kl-skeleton--circle {
+  width: var(--kalaa-space-8);
+  height: var(--kalaa-space-8);
+  border-radius: var(--kalaa-radius-full);
+}
+@keyframes kl-skeleton-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}

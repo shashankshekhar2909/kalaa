@@ -1,0 +1,61 @@
+.kl-radio-group {
+  display: grid;
+  gap: var(--kalaa-space-2);
+  font-family: var(--kalaa-font-sans);
+}
+.kl-radio-group--horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-4);
+}
+.kl-radio-group__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--kalaa-space-2);
+}
+.kl-radio {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--kalaa-space-4);
+  height: var(--kalaa-space-4);
+  flex: none;
+  margin-top: var(--kalaa-space-1);
+  padding: 0;
+  border: 1px solid var(--kalaa-border-strong);
+  border-radius: var(--kalaa-radius-full);
+  background: var(--kalaa-surface);
+  cursor: pointer;
+}
+.kl-radio:hover:not([data-disabled]) {
+  border-color: var(--kalaa-accent);
+}
+.kl-radio[data-checked] {
+  border-color: var(--kalaa-accent);
+  background: var(--kalaa-accent);
+}
+.kl-radio:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}
+.kl-radio[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.kl-radio__indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--kalaa-radius-full);
+  background: var(--kalaa-on-accent);
+}
+.kl-radio__label {
+  color: var(--kalaa-text);
+  font-size: var(--kalaa-font-size-base);
+  font-weight: var(--kalaa-font-weight-regular);
+  cursor: pointer;
+}
+.kl-radio__description {
+  color: var(--kalaa-text-subtle);
+  font-size: var(--kalaa-font-size-xs);
+}

@@ -1,0 +1,43 @@
+.kl-avatar {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  overflow: hidden;
+  background: var(--kalaa-accent-soft);
+  color: var(--kalaa-accent);
+  border: 1px solid var(--kalaa-border);
+  font-family: var(--kalaa-font-sans);
+  font-weight: var(--kalaa-font-weight-semibold);
+  user-select: none;
+}
+.kl-avatar--circle {
+  border-radius: var(--kalaa-radius-full);
+}
+.kl-avatar--square {
+  border-radius: var(--kalaa-radius-md);
+}
+.kl-avatar--sm {
+  width: var(--kalaa-space-6);
+  height: var(--kalaa-space-6);
+  font-size: var(--kalaa-font-size-xs);
+}
+.kl-avatar--md {
+  width: var(--kalaa-space-8);
+  height: var(--kalaa-space-8);
+  font-size: var(--kalaa-font-size-sm);
+}
+.kl-avatar--lg {
+  width: var(--kalaa-space-10);
+  height: var(--kalaa-space-10);
+  font-size: var(--kalaa-font-size-base);
+}
+.kl-avatar__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.kl-avatar__initials {
+  line-height: 1;
+}

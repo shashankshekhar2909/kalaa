@@ -1,0 +1,15 @@
+.kl-tooltip__positioner {
+  z-index: 120;
+}
+.kl-tooltip {
+  box-sizing: border-box;
+  max-width: 260px;
+  padding: var(--kalaa-space-1) var(--kalaa-space-2);
+  border: 1px solid var(--kalaa-border-strong);
+  border-radius: var(--kalaa-radius-sm);
+  background: var(--kalaa-surface);
+  color: var(--kalaa-text);
+  box-shadow: var(--kalaa-shadow-1);
+  font: var(--kalaa-font-weight-regular) var(--kalaa-font-size-xs) / var(--kalaa-line-height-body)
+    var(--kalaa-font-sans);
+}

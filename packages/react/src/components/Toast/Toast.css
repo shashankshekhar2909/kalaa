@@ -1,0 +1,89 @@
+.kl-toast__viewport {
+  position: fixed;
+  right: var(--kalaa-space-4);
+  bottom: var(--kalaa-space-4);
+  z-index: 130;
+  display: flex;
+  flex-direction: column;
+  gap: var(--kalaa-space-2);
+  width: 340px;
+  max-width: calc(100vw - var(--kalaa-space-8));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.kl-toast__viewport:focus-visible {
+  outline: none;
+}
+.kl-toast {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--kalaa-space-3);
+  padding: var(--kalaa-space-3) var(--kalaa-space-4);
+  border: 1px solid var(--kalaa-border-strong);
+  border-inline-start-width: 3px;
+  border-radius: var(--kalaa-radius-md);
+  background: var(--kalaa-surface);
+  color: var(--kalaa-text);
+  box-shadow: var(--kalaa-shadow-2);
+  font-family: var(--kalaa-font-sans);
+}
+.kl-toast[data-limited] {
+  display: none;
+}
+.kl-toast--info {
+  border-inline-start-color: var(--kalaa-accent);
+}
+.kl-toast--success {
+  border-inline-start-color: var(--kalaa-success);
+}
+.kl-toast--warning {
+  border-inline-start-color: var(--kalaa-warning);
+}
+.kl-toast--danger {
+  border-inline-start-color: var(--kalaa-danger);
+}
+.kl-toast__body {
+  min-width: 0;
+  flex: 1;
+}
+.kl-toast__title {
+  margin: 0;
+  font-size: var(--kalaa-font-size-sm);
+  font-weight: var(--kalaa-font-weight-semibold);
+}
+.kl-toast__description {
+  margin: var(--kalaa-space-1) 0 0;
+  color: var(--kalaa-text-muted);
+  font-size: var(--kalaa-font-size-xs);
+}
+.kl-toast__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--kalaa-space-2);
+  flex-shrink: 0;
+}
+.kl-toast__action {
+  padding: var(--kalaa-space-1) var(--kalaa-space-2);
+  border: 1px solid var(--kalaa-border-strong);
+  border-radius: var(--kalaa-radius-sm);
+  background: var(--kalaa-surface-alt);
+  color: var(--kalaa-text);
+  font: var(--kalaa-font-weight-medium) var(--kalaa-font-size-xs) var(--kalaa-font-sans);
+  cursor: pointer;
+}
+.kl-toast__close {
+  border: 0;
+  background: transparent;
+  color: var(--kalaa-text-muted);
+  font-size: var(--kalaa-font-size-md);
+  line-height: 1;
+  cursor: pointer;
+}
+.kl-toast__action:focus-visible,
+.kl-toast__close:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}

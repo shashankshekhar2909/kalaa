@@ -1,0 +1,17 @@
+.kl-icon {
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+}
+.kl-icon--sm {
+  width: var(--kalaa-space-4);
+  height: var(--kalaa-space-4);
+}
+.kl-icon--md {
+  width: var(--kalaa-space-5);
+  height: var(--kalaa-space-5);
+}
+.kl-icon--lg {
+  width: var(--kalaa-space-6);
+  height: var(--kalaa-space-6);
+}
