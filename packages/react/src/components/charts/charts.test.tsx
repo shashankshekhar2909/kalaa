@@ -44,6 +44,28 @@ describe("Chart scales", () => {
       expect(tick).toBeGreaterThanOrEqual(73);
       expect(tick).toBeLessThanOrEqual(100);
     }
+
+    // Nice domain keeps nice maximums exact and overshoots by at most one tick step
+    const [min100, max100, step100] = niceDomain(0, 100, 5);
+    expect([min100, max100, step100]).toEqual([0, 100, 25]);
+    expect(linearScale([min100, max100], [200, 0]).ticks(5)).toEqual([0, 25, 50, 75, 100]);
+
+    const [min98, max98, step98] = niceDomain(0, 98, 5);
+    expect(min98).toBe(0);
+    expect(max98).toBe(100);
+    expect(max98 - 98).toBeLessThanOrEqual(step98);
+    expect(linearScale([min98, max98], [200, 0]).ticks(5).at(-1)).toBe(100);
+
+    const [min7, max7, step7] = niceDomain(0, 7, 5);
+    expect([min7, max7, step7]).toEqual([0, 8, 2]);
+    expect(linearScale([min7, max7], [200, 0]).ticks(5)).toEqual([0, 2, 4, 6, 8]);
+
+    for (const sampleMax of [5, 7, 10, 25, 50, 98, 100, 212]) {
+      const [nMin, nMax, step] = niceDomain(0, sampleMax, 5);
+      expect(nMin).toBe(0);
+      expect(nMax).toBeGreaterThanOrEqual(sampleMax);
+      expect(nMax - sampleMax).toBeLessThan(step);
+    }
   });
 
   it("falls back to window resize when ResizeObserver is unavailable and ignores zero-width measurements", () => {
@@ -210,6 +232,66 @@ describe("BarChart", () => {
     expect(screen.getByText("-15")).toBeInTheDocument();
     expect(screen.getByText("-30")).toBeInTheDocument();
   });
+
+  it("keeps top tick at 100 for max 100 and max 98, chooses sensible ticks for max 7, and respects explicit bounds without clipping", () => {
+    const getAxisTicks = (root: HTMLElement) =>
+      Array.from(root.querySelectorAll("svg g > line + text.kl-chart__axis-label")).map((el) =>
+        Number(el.textContent),
+      );
+
+    const { container, rerender } = render(
+      <BarChart
+        label="Completion rate"
+        categories={["Q1", "Q2", "Q3"]}
+        series={[{ label: "Rate", data: [25, 50, 100] }]}
+      />,
+    );
+    expect(getAxisTicks(container)).toEqual([0, 25, 50, 75, 100]);
+
+    rerender(
+      <BarChart
+        label="Completion rate"
+        categories={["Q1", "Q2", "Q3"]}
+        series={[{ label: "Rate", data: [25, 60, 98] }]}
+      />,
+    );
+    expect(getAxisTicks(container)).toEqual([0, 25, 50, 75, 100]);
+
+    rerender(
+      <BarChart
+        label="Weekly interviews"
+        categories={["W1", "W2", "W3"]}
+        series={[{ label: "Interviews", data: [2, 5, 7] }]}
+      />,
+    );
+    expect(getAxisTicks(container)).toEqual([0, 2, 4, 6, 8]);
+
+    // Explicit max pins a 0..60 percentage series to 0..100
+    rerender(
+      <BarChart
+        label="Pinned percentage"
+        categories={["W1", "W2"]}
+        series={[{ label: "Coverage", data: [35, 60] }]}
+        yMin={0}
+        yMax={100}
+      />,
+    );
+    expect(getAxisTicks(container)).toEqual([0, 25, 50, 75, 100]);
+
+    // Values outside explicit min/max expand the domain instead of clipping silently
+    rerender(
+      <BarChart
+        label="Out-of-bounds percentage"
+        categories={["W1", "W2", "W3"]}
+        series={[{ label: "Delta", data: [-15, 60, 120] }]}
+        min={0}
+        max={100}
+      />,
+    );
+    const expandedTicks = getAxisTicks(container);
+    expect(expandedTicks[0]).toBeLessThanOrEqual(-15);
+    expect(expandedTicks.at(-1)).toBeGreaterThanOrEqual(120);
+  });
 });
 
 describe("LineChart", () => {
@@ -286,6 +368,37 @@ describe("LineChart", () => {
     fireEvent.focus(w3Point);
     expect(screen.getByRole("tooltip")).toHaveTextContent("No data");
     expect(screen.getAllByText("No data").length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("respects explicit min/max bounds and expands rather than clipping out-of-range values", () => {
+    const getAxisTicks = (root: HTMLElement) =>
+      Array.from(root.querySelectorAll("svg g > line + text.kl-chart__axis-label")).map((el) =>
+        Number(el.textContent),
+      );
+
+    const { container, rerender } = render(
+      <LineChart
+        label="Percentage trend"
+        categories={["W1", "W2", "W3"]}
+        series={[{ label: "Score", data: [20, 45, 60] }]}
+        min={0}
+        max={100}
+      />,
+    );
+    expect(getAxisTicks(container)).toEqual([0, 25, 50, 75, 100]);
+
+    rerender(
+      <LineChart
+        label="Overflow trend"
+        categories={["W1", "W2", "W3"]}
+        series={[{ label: "Score", data: [-10, 45, 120] }]}
+        yMin={0}
+        yMax={100}
+      />,
+    );
+    const ticks = getAxisTicks(container);
+    expect(ticks[0]).toBeLessThanOrEqual(-10);
+    expect(ticks.at(-1)).toBeGreaterThanOrEqual(120);
   });
 });
 

@@ -15,22 +15,63 @@ export type BandScale = {
   step: number;
 };
 
+const NICE_STEPS = [1, 2, 2.5, 5, 10] as const;
+
+function pickNiceStep(rawStep: number): number {
+  const mag = 10 ** Math.floor(Math.log10(rawStep));
+  const residual = rawStep / mag;
+  const allowTwoPointFive = mag !== 1;
+  const niceFactor =
+    residual > 6.25
+      ? 10
+      : residual > 2.5
+        ? 5
+        : residual > 2
+          ? allowTwoPointFive
+            ? 2.5
+            : 2
+          : residual > 1.25
+            ? 2
+            : 1;
+  return niceFactor * mag;
+}
+
+function nextNiceStep(step: number): number {
+  const mag = 10 ** Math.floor(Math.log10(step));
+  const norm = Number((step / mag).toFixed(6));
+  const allowTwoPointFive = mag !== 1;
+  for (const candidate of NICE_STEPS) {
+    if (!allowTwoPointFive && candidate === 2.5) continue;
+    if (candidate > norm + 1e-6) {
+      return candidate * mag;
+    }
+  }
+  return 10 * mag;
+}
+
 /** Computes nice axis bounds and tick step for a numeric domain. */
 export function niceDomain(minValue: number, maxValue: number, tickCount = 5): [number, number, number] {
   const lo = Number.isFinite(minValue) ? minValue : 0;
   const hi = Number.isFinite(maxValue) ? maxValue : 1;
   const span = hi - lo;
+  const targetIntervals = Math.max(1, tickCount - 1);
   if (span <= 0) {
     const top = hi <= 0 ? 1 : hi;
-    return [0, top, top / Math.max(1, tickCount - 1)];
+    return [0, top, top / targetIntervals];
   }
-  const rawStep = span / Math.max(1, tickCount - 1);
-  const mag = 10 ** Math.floor(Math.log10(rawStep));
-  const residual = rawStep / mag;
-  const niceFactor = residual > 5 ? 10 : residual > 2.5 ? 5 : residual > 2 ? 2.5 : residual > 1 ? 2 : 1;
-  const step = niceFactor * mag;
-  const niceMin = Math.floor(lo / step) * step;
-  const niceMax = Math.ceil(hi / step) * step;
+  const maxIntervals = Math.max(targetIntervals, tickCount);
+  let step = pickNiceStep(span / targetIntervals);
+  const computeBounds = (s: number): [number, number] => {
+    const eps = s * 1e-9;
+    const nMin = Number((Math.floor((lo + eps) / s) * s).toFixed(10));
+    const nMax = Number((Math.ceil((hi - eps) / s) * s).toFixed(10));
+    return [Object.is(nMin, -0) ? 0 : nMin, Object.is(nMax, -0) ? 0 : nMax];
+  };
+  let [niceMin, niceMax] = computeBounds(step);
+  while ((niceMax - niceMin) / step > maxIntervals + 1e-6) {
+    step = nextNiceStep(step);
+    [niceMin, niceMax] = computeBounds(step);
+  }
   return [niceMin, niceMax, step];
 }
 

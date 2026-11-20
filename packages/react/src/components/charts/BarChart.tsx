@@ -50,6 +50,14 @@ export type BarChartProps = Omit<ComponentPropsWithRef<"div">, "children"> & {
   defaultShowData?: boolean;
   /** Plot height in px (default 260). */
   height?: number;
+  /** Optional explicit minimum value-axis bound. */
+  yMin?: number;
+  /** Optional explicit maximum value-axis bound. */
+  yMax?: number;
+  /** Optional explicit minimum value-axis bound (alias for `yMin`). */
+  min?: number;
+  /** Optional explicit maximum value-axis bound (alias for `yMax`). */
+  max?: number;
   /** Custom value formatter. */
   formatValue?: (value: number) => string;
 };
@@ -75,6 +83,10 @@ export function BarChart({
   showDataToggle = true,
   defaultShowData = false,
   height = 260,
+  yMin,
+  yMax,
+  min,
+  max,
   formatValue = formatChartNumber,
   className,
   ...props
@@ -108,22 +120,31 @@ export function BarChart({
   );
 
   const finiteValues = safeSeries.flatMap((s) => s.data.filter(Number.isFinite));
-  const rawMin = stacked ? Math.min(0, ...negSumsByCategory) : Math.min(0, ...finiteValues);
-  const rawMax = stacked ? Math.max(0, ...posSumsByCategory) : Math.max(0, ...finiteValues);
+  const dataMin = stacked ? Math.min(0, ...negSumsByCategory) : Math.min(0, ...finiteValues);
+  const dataMax = stacked ? Math.max(0, ...posSumsByCategory) : Math.max(0, ...finiteValues);
+
+  const explicitMin = yMin ?? min;
+  const explicitMax = yMax ?? max;
+  const targetMin = explicitMin !== undefined ? Math.min(0, explicitMin, dataMin) : dataMin;
+  const targetMax = explicitMax !== undefined ? Math.max(0, explicitMax, dataMax) : dataMax;
 
   let domainMin = 0;
   let domainMax = 1;
-  if (rawMin < 0) {
-    const paddedMin = rawMin * 1.08;
-    const paddedMax = rawMax > 0 ? rawMax * 1.08 : 0;
-    const [nMin, nMax] = niceDomain(paddedMin, paddedMax || 1, 5);
-    domainMin = Math.min(0, nMin);
-    domainMax = Math.max(0, rawMax > 0 ? nMax : 0);
-    if (domainMax === domainMin) domainMax = 1;
+  if (targetMin < 0) {
+    const [nMin, nMax] = niceDomain(targetMin, targetMax > 0 ? targetMax : 0, 5);
+    domainMin =
+      explicitMin !== undefined && dataMin >= explicitMin && explicitMin <= 0
+        ? explicitMin
+        : Math.min(0, nMin);
+    domainMax =
+      explicitMax !== undefined && dataMax <= explicitMax && explicitMax > domainMin
+        ? explicitMax
+        : Math.max(0, targetMax > 0 ? nMax : 0);
+    if (domainMax <= domainMin) domainMax = domainMin + 1;
   } else {
-    const [, nMax] = niceDomain(0, Math.max(1, rawMax) * 1.08, 5);
+    const [, nMax] = niceDomain(0, Math.max(1, targetMax), 5);
     domainMin = 0;
-    domainMax = nMax;
+    domainMax = explicitMax !== undefined && dataMax <= explicitMax && explicitMax > 0 ? explicitMax : nMax;
   }
 
   const pad =

@@ -50,6 +50,10 @@ export type LineChartProps = Omit<ComponentPropsWithRef<"div">, "children"> & {
   yMin?: number;
   /** Optional explicit maximum y-axis bound. */
   yMax?: number;
+  /** Optional explicit minimum y-axis bound (alias for `yMin`). */
+  min?: number;
+  /** Optional explicit maximum y-axis bound (alias for `yMax`). */
+  max?: number;
   /** Custom value formatter. */
   formatValue?: (value: number) => string;
 };
@@ -87,6 +91,8 @@ export function LineChart({
   height = 260,
   yMin,
   yMax,
+  min,
+  max,
   formatValue = formatChartNumber,
   className,
   ...props
@@ -109,11 +115,18 @@ export function LineChart({
   const allVals = safeSeries.flatMap((s) =>
     safeCategories.map((_, idx) => s.data[idx]).filter(isValidNumber),
   );
-  const rawMin = yMin ?? Math.min(0, ...(allVals.length ? allVals : [0]));
-  const rawMax = yMax ?? Math.max(1, ...(allVals.length ? allVals : [1]));
+  const explicitMin = yMin ?? min;
+  const explicitMax = yMax ?? max;
+  const dataMin = allVals.length ? Math.min(...allVals) : 0;
+  const dataMax = allVals.length ? Math.max(...allVals) : 1;
+  const rawMin = explicitMin !== undefined ? Math.min(explicitMin, dataMin) : Math.min(0, dataMin);
+  const rawMax = explicitMax !== undefined ? Math.max(explicitMax, dataMax) : Math.max(1, dataMax);
   const [niceMin, niceMax] = niceDomain(rawMin, rawMax, 5);
-  const domainMin = yMin ?? niceMin;
-  const domainMax = yMax ?? niceMax;
+  const domainMin =
+    explicitMin !== undefined && (allVals.length === 0 || dataMin >= explicitMin) ? explicitMin : niceMin;
+  const rawDomainMax =
+    explicitMax !== undefined && (allVals.length === 0 || dataMax <= explicitMax) ? explicitMax : niceMax;
+  const domainMax = rawDomainMax > domainMin ? rawDomainMax : domainMin + 1;
 
   // Hide direct end labels at narrow widths (<360px) so small charts preserve their plot area.
   const effectiveDirectLabels = showDirectLabels && width >= 360;
