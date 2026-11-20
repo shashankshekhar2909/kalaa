@@ -78,7 +78,7 @@ export function ChartFrame({
 }: ChartFrameProps) {
   const [uncontrolledShowData, setUncontrolledShowData] = useState(defaultShowData);
   const isDataVisible = controlledShowData ?? uncontrolledShowData;
-  const tableId = useId();
+  const tableId = `${useId().replace(/:/g, "")}-table`;
   const Heading = `h${titleLevel}` as "h2" | "h3" | "h4";
 
   const resolvedState =
@@ -143,34 +143,36 @@ export function ChartFrame({
 
       {resolvedState === "default" && children}
 
-      {resolvedState === "default" && dataTable && isDataVisible && (
-        <div id={tableId}>
-          <Table caption={dataTable.caption}>
-            <thead>
-              <tr>
-                {dataTable.headers.map((header, idx) => (
-                  <th key={idx} scope="col">
-                    {header}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {dataTable.rows.map((row, rIdx) => (
-                <tr key={rIdx}>
-                  {row.map((cell, cIdx) =>
-                    cIdx === 0 ? (
-                      <th key={cIdx} scope="row">
-                        {cell}
-                      </th>
-                    ) : (
-                      <td key={cIdx}>{cell}</td>
-                    ),
-                  )}
+      {resolvedState === "default" && dataTable && (
+        <div id={tableId} hidden={!isDataVisible}>
+          {isDataVisible && (
+            <Table caption={dataTable.caption}>
+              <thead>
+                <tr>
+                  {dataTable.headers.map((header, idx) => (
+                    <th key={idx} scope="col">
+                      {header}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {dataTable.rows.map((row, rIdx) => (
+                  <tr key={rIdx}>
+                    {row.map((cell, cIdx) =>
+                      cIdx === 0 ? (
+                        <th key={cIdx} scope="row">
+                          {cell}
+                        </th>
+                      ) : (
+                        <td key={cIdx}>{cell}</td>
+                      ),
+                    )}
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
         </div>
       )}
     </section>

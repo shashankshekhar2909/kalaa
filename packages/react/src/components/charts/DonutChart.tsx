@@ -101,26 +101,44 @@ export function DonutChart({
 }: DonutChartProps) {
   const [showData, setShowData] = useState(defaultShowData);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [pinnedIndex, setPinnedIndex] = useState<number | null>(null);
+  const [focusedIndex, setFocusedIndex] = useState(0);
   const hitRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const uid = useId().replace(/:/g, "");
   const tableId = `${uid}-table`;
+  const tooltipId = `${uid}-tooltip`;
+  const instructionsId = `${uid}-instructions`;
 
-  // Enforce max ~6 slices by rolling excess slices into "Other".
-  const normalized: DonutChartSlice[] =
-    data.length <= MAX_SLICES
-      ? [...data]
-      : [
-          ...data.slice(0, MAX_SLICES - 1),
-          {
-            id: "other",
-            label: "Other",
-            value: data.slice(MAX_SLICES - 1).reduce((s, d) => s + Math.max(0, d.value), 0),
-          },
-        ];
+  const isAggregated = data.length > MAX_SLICES;
+  // Enforce max ~6 slices in the graphic by rolling excess slices into "Other".
+  const normalized: DonutChartSlice[] = !isAggregated
+    ? [...data]
+    : [
+        ...data.slice(0, MAX_SLICES - 1),
+        {
+          id: "other",
+          label: "Other",
+          value: data.slice(MAX_SLICES - 1).reduce((s, d) => s + Math.max(0, d.value), 0),
+        },
+      ];
 
   const safeData = normalized.length > 0 ? normalized : [{ id: "empty", label: "No data", value: 0 }];
   const total = safeData.reduce((sum, item) => sum + Math.max(0, item.value), 0);
   const resolvedCenter = centerValue ?? formatValue(total);
+
+  const rawTableSource = data.length > 0 ? data : safeData;
+  const tableRows = rawTableSource.map((d, idx) => {
+    const val = Math.max(0, d.value);
+    const pct = total > 0 ? Math.round((val / total) * 100) : 0;
+    const groupedInOther = isAggregated && idx >= MAX_SLICES - 1;
+    return {
+      key: d.id ?? `${d.label}-${idx}`,
+      label: d.label,
+      val,
+      pct,
+      groupedInOther,
+    };
+  });
 
   const margin = showDirectLabels ? 36 : 12;
   const svgW = size + margin * 2;
@@ -158,19 +176,33 @@ export function DonutChart({
     .map((s) => `${s.label} ${formatValue(s.val)} (${s.pct}%)`)
     .join(", ")}.`;
 
+  const activeFocusIndex = slices.length > 0 ? Math.min(focusedIndex, slices.length - 1) : 0;
+
   function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     if (event.key === "Escape") {
+      setPinnedIndex(null);
       setActiveIndex(null);
       return;
     }
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
       event.preventDefault();
       const next = (index + 1) % slices.length;
+      setFocusedIndex(next);
       hitRefs.current[next]?.focus();
     } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
       event.preventDefault();
       const prev = (index - 1 + slices.length) % slices.length;
+      setFocusedIndex(prev);
       hitRefs.current[prev]?.focus();
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      setFocusedIndex(0);
+      hitRefs.current[0]?.focus();
+    } else if (event.key === "End") {
+      event.preventDefault();
+      const last = Math.max(0, slices.length - 1);
+      setFocusedIndex(last);
+      hitRefs.current[last]?.focus();
     }
   }
 
@@ -195,6 +227,9 @@ export function DonutChart({
 
       <div className="kl-donut-chart__layout">
         <div className="kl-chart__stage" style={{ inlineSize: svgW, maxInlineSize: "100%" }}>
+          <span id={instructionsId} className="kl-chart__sr-only">
+            Use arrow keys to navigate slices, Enter or Space to pin the tooltip, and Escape to dismiss.
+          </span>
           <svg
             role="img"
             aria-label={summary}
@@ -255,10 +290,12 @@ export function DonutChart({
             )}
           </svg>
 
-          <div className="kl-chart__overlay">
+          <div className="kl-chart__overlay" role="group" aria-label={`${label} slices`}>
             {slices.map((s, idx) => {
               const xPct = (s.centroid.x / svgW) * 100;
               const yPct = (s.centroid.y / svgH) * 100;
+              const isThisActive = activeIndex === idx;
+              const isThisPinned = pinnedIndex === idx;
               return (
                 <button
                   key={s.id ?? s.label}
@@ -266,13 +303,44 @@ export function DonutChart({
                     hitRefs.current[idx] = el;
                   }}
                   type="button"
+                  tabIndex={idx === activeFocusIndex ? 0 : -1}
+                  aria-pressed={isThisPinned}
+                  aria-describedby={isThisActive ? `${tooltipId} ${instructionsId}` : instructionsId}
                   className="kl-chart__hit kl-chart__hit--point"
                   aria-label={`${s.label}: ${formatValue(s.val)} (${s.pct}%)`}
                   style={{ left: `${xPct}%`, top: `${yPct}%` }}
-                  onFocus={() => setActiveIndex(idx)}
-                  onBlur={() => setActiveIndex(null)}
-                  onMouseEnter={() => setActiveIndex(idx)}
-                  onMouseLeave={() => setActiveIndex(null)}
+                  onFocus={() => {
+                    setFocusedIndex(idx);
+                    if (pinnedIndex !== null && pinnedIndex !== idx) {
+                      setPinnedIndex(null);
+                    }
+                    setActiveIndex(idx);
+                  }}
+                  onBlur={() => {
+                    if (pinnedIndex !== idx) {
+                      setActiveIndex(null);
+                    }
+                  }}
+                  onMouseEnter={() => {
+                    if (pinnedIndex === null) {
+                      setActiveIndex(idx);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (pinnedIndex === null) {
+                      setActiveIndex(null);
+                    }
+                  }}
+                  onClick={() => {
+                    setFocusedIndex(idx);
+                    if (isThisActive && isThisPinned) {
+                      setPinnedIndex(null);
+                      setActiveIndex(null);
+                    } else {
+                      setPinnedIndex(idx);
+                      setActiveIndex(idx);
+                    }
+                  }}
                   onKeyDown={(e) => handleKeyDown(e, idx)}
                 />
               );
@@ -281,6 +349,7 @@ export function DonutChart({
 
           {activeSlice && (
             <ChartTooltip
+              id={tooltipId}
               floating
               x={(activeSlice.centroid.x / svgW) * 100}
               y={(activeSlice.centroid.y / svgH) * 100}
@@ -310,8 +379,8 @@ export function DonutChart({
         )}
       </div>
 
-      {showData && (
-        <div id={tableId}>
+      <div id={tableId} hidden={!showData}>
+        {showData && (
           <Table caption={`${label} data`}>
             <thead>
               <tr>
@@ -321,17 +390,20 @@ export function DonutChart({
               </tr>
             </thead>
             <tbody>
-              {slices.map((s) => (
-                <tr key={s.id ?? s.label}>
-                  <th scope="row">{s.label}</th>
-                  <td>{formatValue(s.val)}</td>
-                  <td>{s.pct}%</td>
+              {tableRows.map((row) => (
+                <tr key={row.key}>
+                  <th scope="row">
+                    {row.label}
+                    {row.groupedInOther ? " (grouped in Other)" : ""}
+                  </th>
+                  <td>{formatValue(row.val)}</td>
+                  <td>{row.pct}%</td>
                 </tr>
               ))}
             </tbody>
           </Table>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

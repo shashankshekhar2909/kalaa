@@ -55,6 +55,7 @@ export type BarChartProps = Omit<ComponentPropsWithRef<"div">, "children"> & {
 };
 
 type ActiveBar = {
+  key: string;
   categoryIndex: number;
   seriesIndex: number;
   xPct: number;
@@ -81,24 +82,50 @@ export function BarChart({
   const { containerRef, width } = useChartWidth(560);
   const [showData, setShowData] = useState(defaultShowData);
   const [active, setActive] = useState<ActiveBar | null>(null);
+  const [pinnedKey, setPinnedKey] = useState<string | null>(null);
+  const [focusedIndex, setFocusedIndex] = useState(0);
   const hitRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const uid = useId().replace(/:/g, "");
   const tableId = `${uid}-table`;
+  const tooltipId = `${uid}-tooltip`;
+  const instructionsId = `${uid}-instructions`;
 
   const safeCategories = categories.length > 0 ? categories : ["—"];
   const safeSeries =
     series.length > 0 ? series : [{ id: "empty", label: "Value", data: safeCategories.map(() => 0) }];
 
-  const rawMax = stacked
-    ? Math.max(
-        1,
-        ...safeCategories.map((_, cIdx) =>
-          safeSeries.reduce((sum, s) => sum + Math.max(0, s.data[cIdx] ?? 0), 0),
-        ),
-      )
-    : Math.max(1, ...safeSeries.flatMap((s) => s.data.map((v) => (Number.isFinite(v) ? Math.max(0, v) : 0))));
+  const posSumsByCategory = safeCategories.map((_, cIdx) =>
+    safeSeries.reduce((sum, s) => {
+      const v = s.data[cIdx] ?? 0;
+      return Number.isFinite(v) && v > 0 ? sum + v : sum;
+    }, 0),
+  );
+  const negSumsByCategory = safeCategories.map((_, cIdx) =>
+    safeSeries.reduce((sum, s) => {
+      const v = s.data[cIdx] ?? 0;
+      return Number.isFinite(v) && v < 0 ? sum + v : sum;
+    }, 0),
+  );
 
-  const [, niceMax] = niceDomain(0, rawMax * 1.08, 5);
+  const finiteValues = safeSeries.flatMap((s) => s.data.filter(Number.isFinite));
+  const rawMin = stacked ? Math.min(0, ...negSumsByCategory) : Math.min(0, ...finiteValues);
+  const rawMax = stacked ? Math.max(0, ...posSumsByCategory) : Math.max(0, ...finiteValues);
+
+  let domainMin = 0;
+  let domainMax = 1;
+  if (rawMin < 0) {
+    const paddedMin = rawMin * 1.08;
+    const paddedMax = rawMax > 0 ? rawMax * 1.08 : 0;
+    const [nMin, nMax] = niceDomain(paddedMin, paddedMax || 1, 5);
+    domainMin = Math.min(0, nMin);
+    domainMax = Math.max(0, rawMax > 0 ? nMax : 0);
+    if (domainMax === domainMin) domainMax = 1;
+  } else {
+    const [, nMax] = niceDomain(0, Math.max(1, rawMax) * 1.08, 5);
+    domainMin = 0;
+    domainMax = nMax;
+  }
+
   const pad =
     orientation === "horizontal"
       ? { top: 16, right: 44, bottom: 32, left: 104 }
@@ -113,8 +140,8 @@ export function BarChart({
 
   const valScale =
     orientation === "vertical"
-      ? linearScale([0, niceMax], [pad.top + plotH, pad.top])
-      : linearScale([0, niceMax], [pad.left, pad.left + plotW]);
+      ? linearScale([domainMin, domainMax], [pad.top + plotH, pad.top])
+      : linearScale([domainMin, domainMax], [pad.left, pad.left + plotW]);
 
   const ticks = valScale.ticks(5);
 
@@ -138,24 +165,48 @@ export function BarChart({
     hitX: number;
     hitY: number;
     color: string;
+    showStackLabel: boolean;
+    stackTotal: number;
   };
 
   const bars: BarRect[] = [];
   safeCategories.forEach((cat, cIdx) => {
     const bandStart = catScale(cat);
     const bw = catScale.bandwidth;
-    let running = 0;
+    let runningPos = 0;
+    let runningNeg = 0;
     const categoryBars: BarRect[] = [];
 
+    const hasNegativeInCategory = safeSeries.some((s) => (s.data[cIdx] ?? 0) < 0);
+    let lastNonNegIdx = -1;
+    let lastNegIdx = -1;
     safeSeries.forEach((s, sIdx) => {
-      const value = Math.max(0, s.data[cIdx] ?? 0);
+      const v = Number.isFinite(s.data[cIdx]) ? (s.data[cIdx] as number) : 0;
+      if (v < 0) {
+        lastNegIdx = sIdx;
+      } else if (v > 0 || !hasNegativeInCategory) {
+        lastNonNegIdx = sIdx;
+      }
+    });
+
+    safeSeries.forEach((s, sIdx) => {
+      const rawVal = s.data[cIdx] ?? 0;
+      const value = Number.isFinite(rawVal) ? rawVal : 0;
       const color = s.color ?? chartColor(sIdx);
+      const isNeg = value < 0;
+      const showStackLabel = !stacked ? true : isNeg ? sIdx === lastNegIdx : sIdx === lastNonNegIdx;
+      const stackTotal = !stacked ? value : isNeg ? negSumsByCategory[cIdx] : posSumsByCategory[cIdx];
+
       if (orientation === "vertical") {
         if (stacked) {
-          const y1 = valScale(running + value);
-          const y0 = valScale(running);
-          running += value;
-          const h = Math.max(2, y0 - y1);
+          const startVal = isNeg ? runningNeg : runningPos;
+          const endVal = startVal + value;
+          if (isNeg) runningNeg = endVal;
+          else runningPos = endVal;
+          const y0 = valScale(startVal);
+          const y1 = valScale(endVal);
+          const h = Math.max(2, Math.abs(y0 - y1));
+          const y = isNeg ? y0 : y1;
           categoryBars.push({
             key: `${cIdx}-${sIdx}`,
             cIdx,
@@ -164,19 +215,22 @@ export function BarChart({
             seriesLabel: s.label,
             value,
             x: bandStart,
-            y: y1,
+            y,
             w: bw,
             h,
             hitX: bandStart + bw / 2,
-            hitY: y1 + h / 2,
+            hitY: y + h / 2,
             color,
+            showStackLabel,
+            stackTotal,
           });
         } else {
           const subW = Math.max(2, (bw - (safeSeries.length - 1) * 2) / safeSeries.length);
           const x = bandStart + sIdx * (subW + 2);
-          const y1 = valScale(value);
           const y0 = valScale(0);
-          const h = Math.max(2, y0 - y1);
+          const y1 = valScale(value);
+          const h = Math.max(2, Math.abs(y0 - y1));
+          const y = isNeg ? y0 : y1;
           categoryBars.push({
             key: `${cIdx}-${sIdx}`,
             cIdx,
@@ -185,19 +239,25 @@ export function BarChart({
             seriesLabel: s.label,
             value,
             x,
-            y: y1,
+            y,
             w: subW,
             h,
             hitX: x + subW / 2,
-            hitY: y1 + h / 2,
+            hitY: y + h / 2,
             color,
+            showStackLabel,
+            stackTotal,
           });
         }
       } else if (stacked) {
-        const x0 = valScale(running);
-        const x1 = valScale(running + value);
-        running += value;
-        const w = Math.max(2, x1 - x0);
+        const startVal = isNeg ? runningNeg : runningPos;
+        const endVal = startVal + value;
+        if (isNeg) runningNeg = endVal;
+        else runningPos = endVal;
+        const x0 = valScale(startVal);
+        const x1 = valScale(endVal);
+        const w = Math.max(2, Math.abs(x1 - x0));
+        const x = isNeg ? x1 : x0;
         categoryBars.push({
           key: `${cIdx}-${sIdx}`,
           cIdx,
@@ -205,20 +265,23 @@ export function BarChart({
           category: cat,
           seriesLabel: s.label,
           value,
-          x: x0,
+          x,
           y: bandStart,
           w,
           h: bw,
-          hitX: x0 + w / 2,
+          hitX: x + w / 2,
           hitY: bandStart + bw / 2,
           color,
+          showStackLabel,
+          stackTotal,
         });
       } else {
         const subH = Math.max(2, (bw - (safeSeries.length - 1) * 2) / safeSeries.length);
         const y = bandStart + sIdx * (subH + 2);
         const x0 = valScale(0);
         const x1 = valScale(value);
-        const w = Math.max(2, x1 - x0);
+        const w = Math.max(2, Math.abs(x1 - x0));
+        const x = isNeg ? x1 : x0;
         categoryBars.push({
           key: `${cIdx}-${sIdx}`,
           cIdx,
@@ -226,13 +289,15 @@ export function BarChart({
           category: cat,
           seriesLabel: s.label,
           value,
-          x: x0,
+          x,
           y,
           w,
           h: subH,
-          hitX: x0 + w / 2,
+          hitX: x + w / 2,
           hitY: y + subH / 2,
           color,
+          showStackLabel,
+          stackTotal,
         });
       }
     });
@@ -261,19 +326,33 @@ export function BarChart({
     bars.push(...categoryBars);
   });
 
+  const activeFocusIndex = bars.length > 0 ? Math.min(focusedIndex, bars.length - 1) : 0;
+
   function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     if (event.key === "Escape") {
+      setPinnedKey(null);
       setActive(null);
       return;
     }
     if (event.key === "ArrowRight" || event.key === "ArrowDown") {
       event.preventDefault();
       const next = (index + 1) % bars.length;
+      setFocusedIndex(next);
       hitRefs.current[next]?.focus();
     } else if (event.key === "ArrowLeft" || event.key === "ArrowUp") {
       event.preventDefault();
       const prev = (index - 1 + bars.length) % bars.length;
+      setFocusedIndex(prev);
       hitRefs.current[prev]?.focus();
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      setFocusedIndex(0);
+      hitRefs.current[0]?.focus();
+    } else if (event.key === "End") {
+      event.preventDefault();
+      const last = Math.max(0, bars.length - 1);
+      setFocusedIndex(last);
+      hitRefs.current[last]?.focus();
     }
   }
 
@@ -308,6 +387,9 @@ export function BarChart({
       )}
 
       <div className="kl-chart__stage">
+        <span id={instructionsId} className="kl-chart__sr-only">
+          Use arrow keys to navigate bars, Enter or Space to pin the tooltip, and Escape to dismiss.
+        </span>
         <svg
           role="img"
           aria-label={summary}
@@ -384,25 +466,25 @@ export function BarChart({
 
           {bars.map((b) => {
             const patIdx = ((b.sIdx % 8) + 8) % 8;
-            const isLastInStack = !stacked || b.sIdx === safeSeries.length - 1;
-            const totalForStack = stacked
-              ? safeSeries.reduce((sum, s) => sum + Math.max(0, s.data[b.cIdx] ?? 0), 0)
-              : b.value;
+            const isNeg = b.value < 0;
+            const labelX = orientation === "vertical" ? b.x + b.w / 2 : isNeg ? b.x - 6 : b.x + b.w + 6;
+            const labelY = orientation === "vertical" ? (isNeg ? b.y + b.h + 12 : b.y - 6) : b.y + b.h / 2;
+            const labelAnchor = orientation === "vertical" ? "middle" : isNeg ? "end" : "start";
             return (
               <g key={b.key}>
                 <rect x={b.x} y={b.y} width={b.w} height={b.h} fill={b.color} />
                 {showPatterns && patIdx > 0 && (
                   <rect x={b.x} y={b.y} width={b.w} height={b.h} fill={`url(#${uid}-pat-${patIdx})`} />
                 )}
-                {showValues && isLastInStack && (
+                {showValues && b.showStackLabel && (
                   <text
-                    x={orientation === "vertical" ? b.x + b.w / 2 : b.x + b.w + 6}
-                    y={orientation === "vertical" ? b.y - 6 : b.y + b.h / 2}
-                    textAnchor={orientation === "vertical" ? "middle" : "start"}
+                    x={labelX}
+                    y={labelY}
+                    textAnchor={labelAnchor}
                     dominantBaseline={orientation === "vertical" ? "auto" : "central"}
                     className="kl-chart__value-label"
                   >
-                    {formatValue(totalForStack)}
+                    {formatValue(b.stackTotal)}
                   </text>
                 )}
               </g>
@@ -410,12 +492,15 @@ export function BarChart({
           })}
         </svg>
 
-        <div className="kl-chart__overlay">
+        <div className="kl-chart__overlay" role="group" aria-label={`${label} data points`}>
           {bars.map((b, idx) => {
             const xPct = (b.hitX / width) * 100;
             const yPct = (b.hitY / height) * 100;
+            const isThisActive = active?.key === b.key;
+            const isThisPinned = pinnedKey === b.key;
             const activate = () =>
               setActive({
+                key: b.key,
                 categoryIndex: b.cIdx,
                 seriesIndex: b.sIdx,
                 xPct: ((b.x + b.w / 2) / width) * 100,
@@ -428,16 +513,47 @@ export function BarChart({
                   hitRefs.current[idx] = el;
                 }}
                 type="button"
+                tabIndex={idx === activeFocusIndex ? 0 : -1}
+                aria-pressed={isThisPinned}
+                aria-describedby={isThisActive ? `${tooltipId} ${instructionsId}` : instructionsId}
                 className="kl-chart__hit kl-chart__hit--point"
                 aria-label={`${b.category}, ${b.seriesLabel}: ${formatValue(b.value)}`}
                 style={{
                   left: `${xPct}%`,
                   top: `${yPct}%`,
                 }}
-                onFocus={activate}
-                onBlur={() => setActive(null)}
-                onMouseEnter={activate}
-                onMouseLeave={() => setActive(null)}
+                onFocus={() => {
+                  setFocusedIndex(idx);
+                  if (pinnedKey !== null && pinnedKey !== b.key) {
+                    setPinnedKey(null);
+                  }
+                  activate();
+                }}
+                onBlur={() => {
+                  if (pinnedKey !== b.key) {
+                    setActive(null);
+                  }
+                }}
+                onMouseEnter={() => {
+                  if (pinnedKey === null) {
+                    activate();
+                  }
+                }}
+                onMouseLeave={() => {
+                  if (pinnedKey === null) {
+                    setActive(null);
+                  }
+                }}
+                onClick={() => {
+                  setFocusedIndex(idx);
+                  if (isThisActive && isThisPinned) {
+                    setPinnedKey(null);
+                    setActive(null);
+                  } else {
+                    setPinnedKey(b.key);
+                    activate();
+                  }
+                }}
                 onKeyDown={(e) => handleKeyDown(e, idx)}
               />
             );
@@ -446,6 +562,7 @@ export function BarChart({
 
         {active !== null && (
           <ChartTooltip
+            id={tooltipId}
             floating
             x={active.xPct}
             y={active.yPct}
@@ -460,8 +577,8 @@ export function BarChart({
         )}
       </div>
 
-      {showData && (
-        <div id={tableId}>
+      <div id={tableId} hidden={!showData}>
+        {showData && (
           <Table caption={`${label} data`}>
             <thead>
               <tr>
@@ -484,8 +601,8 @@ export function BarChart({
               ))}
             </tbody>
           </Table>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

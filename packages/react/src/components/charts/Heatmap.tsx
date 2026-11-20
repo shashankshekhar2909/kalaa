@@ -18,6 +18,8 @@ export type HeatmapProps = Omit<ComponentPropsWithRef<"div">, "children"> & {
   label?: string;
   /** Colour ramp: `"sequential"` (default) or `"diverging"`. */
   ramp?: HeatmapRamp;
+  /** Neutral midpoint for `"diverging"` ramps (default 0). */
+  center?: number;
   /** Renders direct numeric labels inside cells so meaning never relies on colour alone (default true). */
   showValues?: boolean;
   /** Shows the 5-step intensity scale legend (default true). */
@@ -31,6 +33,7 @@ export type HeatmapProps = Omit<ComponentPropsWithRef<"div">, "children"> & {
 };
 
 type ActiveCell = {
+  key: string;
   rIdx: number;
   cIdx: number;
   xPct: number;
@@ -43,6 +46,7 @@ export function Heatmap({
   values,
   label = "Activity heatmap",
   ramp = "sequential",
+  center = 0,
   showValues = true,
   showLegend = true,
   showDataToggle = true,
@@ -54,8 +58,13 @@ export function Heatmap({
   const { containerRef, width } = useChartWidth(560);
   const [showData, setShowData] = useState(defaultShowData);
   const [active, setActive] = useState<ActiveCell | null>(null);
+  const [pinnedKey, setPinnedKey] = useState<string | null>(null);
+  const [focusedIndex, setFocusedIndex] = useState(0);
   const hitRefs = useRef<Array<HTMLButtonElement | null>>([]);
-  const tableId = `${useId().replace(/:/g, "")}-table`;
+  const uid = useId().replace(/:/g, "");
+  const tableId = `${uid}-table`;
+  const tooltipId = `${uid}-tooltip`;
+  const instructionsId = `${uid}-instructions`;
 
   const safeRows = rows.length > 0 ? rows : ["Row 1"];
   const safeCols = columns.length > 0 ? columns : ["Col 1"];
@@ -81,7 +90,23 @@ export function Heatmap({
   const maxVal = flat.length ? Math.max(...flat) : 1;
   const span = maxVal - minVal || 1;
 
+  const negMin = Math.min(minVal, center);
+  const posMax = Math.max(maxVal, center);
+  const negSpan = center - negMin;
+  const posSpan = posMax - center;
+  const negMid = center - negSpan / 2;
+  const posMid = center + posSpan / 2;
+
   function bucketLevel(v: number): 1 | 2 | 3 | 4 | 5 {
+    if (ramp === "diverging") {
+      if (v === center) return 3;
+      if (v < center) {
+        if (negSpan <= 0) return 2;
+        return v < negMid ? 1 : 2;
+      }
+      if (posSpan <= 0) return 4;
+      return v <= posMid ? 4 : 5;
+    }
     const norm = Math.max(0, Math.min(1, (v - minVal) / span));
     if (norm <= 0.2) return 1;
     if (norm <= 0.4) return 2;
@@ -98,6 +123,8 @@ export function Heatmap({
   const plotW = Math.max(120, width - pad.left - pad.right);
   const cellGap = 3;
   const cellW = Math.max(18, (plotW - (safeCols.length - 1) * cellGap) / safeCols.length);
+  const actualPlotW = safeCols.length * cellW + Math.max(0, safeCols.length - 1) * cellGap;
+  const svgW = Math.max(width, Math.ceil(pad.left + actualPlotW + pad.right));
   const cellH = 28;
   const plotH = safeRows.length * cellH + (safeRows.length - 1) * cellGap;
   const svgH = pad.top + plotH + pad.bottom;
@@ -105,44 +132,123 @@ export function Heatmap({
   const summary = `${label} (${safeRows.length} rows by ${safeCols.length} columns, total ${formatValue(sum)}, peak ${formatValue(Number.isFinite(peakVal) ? peakVal : 0)} at ${peakCell || "none"}).`;
 
   const totalCells = safeRows.length * safeCols.length;
+  const activeFocusIndex = totalCells > 0 ? Math.min(focusedIndex, totalCells - 1) : 0;
+
   function handleKeyDown(event: KeyboardEvent<HTMLButtonElement>, rIdx: number, cIdx: number) {
     if (event.key === "Escape") {
+      setPinnedKey(null);
       setActive(null);
       return;
     }
     const index = rIdx * safeCols.length + cIdx;
     if (event.key === "ArrowRight") {
       event.preventDefault();
-      hitRefs.current[(index + 1) % totalCells]?.focus();
+      const next = (index + 1) % totalCells;
+      setFocusedIndex(next);
+      hitRefs.current[next]?.focus();
     } else if (event.key === "ArrowLeft") {
       event.preventDefault();
-      hitRefs.current[(index - 1 + totalCells) % totalCells]?.focus();
+      const prev = (index - 1 + totalCells) % totalCells;
+      setFocusedIndex(prev);
+      hitRefs.current[prev]?.focus();
     } else if (event.key === "ArrowDown") {
       event.preventDefault();
       const nextR = (rIdx + 1) % safeRows.length;
-      hitRefs.current[nextR * safeCols.length + cIdx]?.focus();
+      const next = nextR * safeCols.length + cIdx;
+      setFocusedIndex(next);
+      hitRefs.current[next]?.focus();
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       const prevR = (rIdx - 1 + safeRows.length) % safeRows.length;
-      hitRefs.current[prevR * safeCols.length + cIdx]?.focus();
+      const prev = prevR * safeCols.length + cIdx;
+      setFocusedIndex(prev);
+      hitRefs.current[prev]?.focus();
+    } else if (event.key === "Home") {
+      event.preventDefault();
+      setFocusedIndex(0);
+      hitRefs.current[0]?.focus();
+    } else if (event.key === "End") {
+      event.preventDefault();
+      const last = Math.max(0, totalCells - 1);
+      setFocusedIndex(last);
+      hitRefs.current[last]?.focus();
     }
   }
+
+  const seqThresholds = [
+    minVal,
+    minVal + span * 0.2,
+    minVal + span * 0.4,
+    minVal + span * 0.6,
+    minVal + span * 0.8,
+    maxVal,
+  ];
 
   const legendItems =
     ramp === "diverging"
       ? [
-          { id: "1", label: "Low", color: "var(--kalaa-chart-div-1)", seriesIndex: 0 },
-          { id: "2", label: "Below avg", color: "var(--kalaa-chart-div-2)", seriesIndex: 0 },
-          { id: "3", label: "Neutral", color: "var(--kalaa-chart-div-3)", seriesIndex: 0 },
-          { id: "4", label: "Above avg", color: "var(--kalaa-chart-div-4)", seriesIndex: 0 },
-          { id: "5", label: "High", color: "var(--kalaa-chart-div-5)", seriesIndex: 0 },
+          {
+            id: "1",
+            label: `${formatValue(negMin)} to <${formatValue(negMid)}`,
+            color: "var(--kalaa-chart-div-1)",
+            seriesIndex: 0,
+          },
+          {
+            id: "2",
+            label: `${formatValue(negMid)} to <${formatValue(center)}`,
+            color: "var(--kalaa-chart-div-2)",
+            seriesIndex: 0,
+          },
+          {
+            id: "3",
+            label: `Neutral (${formatValue(center)})`,
+            color: "var(--kalaa-chart-div-3)",
+            seriesIndex: 0,
+          },
+          {
+            id: "4",
+            label: `>${formatValue(center)} to ${formatValue(posMid)}`,
+            color: "var(--kalaa-chart-div-4)",
+            seriesIndex: 0,
+          },
+          {
+            id: "5",
+            label: `>${formatValue(posMid)} to ${formatValue(posMax)}`,
+            color: "var(--kalaa-chart-div-5)",
+            seriesIndex: 0,
+          },
         ]
       : [
-          { id: "1", label: "Level 1 (low)", color: "var(--kalaa-chart-seq-1)", seriesIndex: 0 },
-          { id: "2", label: "Level 2", color: "var(--kalaa-chart-seq-2)", seriesIndex: 0 },
-          { id: "3", label: "Level 3", color: "var(--kalaa-chart-seq-3)", seriesIndex: 0 },
-          { id: "4", label: "Level 4", color: "var(--kalaa-chart-seq-4)", seriesIndex: 0 },
-          { id: "5", label: "Level 5 (high)", color: "var(--kalaa-chart-seq-5)", seriesIndex: 0 },
+          {
+            id: "1",
+            label: `${formatValue(seqThresholds[0])}–${formatValue(seqThresholds[1])}`,
+            color: "var(--kalaa-chart-seq-1)",
+            seriesIndex: 0,
+          },
+          {
+            id: "2",
+            label: `${formatValue(seqThresholds[1])}–${formatValue(seqThresholds[2])}`,
+            color: "var(--kalaa-chart-seq-2)",
+            seriesIndex: 0,
+          },
+          {
+            id: "3",
+            label: `${formatValue(seqThresholds[2])}–${formatValue(seqThresholds[3])}`,
+            color: "var(--kalaa-chart-seq-3)",
+            seriesIndex: 0,
+          },
+          {
+            id: "4",
+            label: `${formatValue(seqThresholds[3])}–${formatValue(seqThresholds[4])}`,
+            color: "var(--kalaa-chart-seq-4)",
+            seriesIndex: 0,
+          },
+          {
+            id: "5",
+            label: `${formatValue(seqThresholds[4])}–${formatValue(seqThresholds[5])}`,
+            color: "var(--kalaa-chart-seq-5)",
+            seriesIndex: 0,
+          },
         ];
 
   return (
@@ -164,146 +270,188 @@ export function Heatmap({
         </div>
       )}
 
-      <div className="kl-chart__stage">
-        <svg
-          role="img"
-          aria-label={summary}
-          width={width}
-          height={svgH}
-          viewBox={`0 0 ${width} ${svgH}`}
-          className="kl-chart__svg"
-        >
-          {safeCols.map((col, cIdx) => {
-            const x = pad.left + cIdx * (cellW + cellGap) + cellW / 2;
-            return (
-              <text key={col} x={x} y={pad.top - 10} textAnchor="middle" className="kl-chart__axis-label">
-                {col}
-              </text>
-            );
-          })}
-
-          {safeRows.map((row, rIdx) => {
-            const y = pad.top + rIdx * (cellH + cellGap);
-            return (
-              <g key={row}>
-                <text
-                  x={pad.left - 8}
-                  y={y + cellH / 2}
-                  textAnchor="end"
-                  dominantBaseline="central"
-                  className="kl-chart__axis-label"
-                >
-                  {row}
-                </text>
-                {safeCols.map((col, cIdx) => {
-                  const x = pad.left + cIdx * (cellW + cellGap);
-                  const val = values[rIdx]?.[cIdx] ?? 0;
-                  const level = bucketLevel(val);
-                  const fill = cellColor(level);
-                  return (
-                    <g key={col}>
-                      <rect
-                        x={x}
-                        y={y}
-                        width={cellW}
-                        height={cellH}
-                        fill={fill}
-                        stroke="var(--kalaa-surface)"
-                        strokeWidth="1"
-                      />
-                      {showValues && (
-                        <g>
-                          <rect
-                            x={x + cellW / 2 - 13}
-                            y={y + cellH / 2 - 8}
-                            width={26}
-                            height={16}
-                            fill="var(--kalaa-surface)"
-                          />
-                          <text
-                            x={x + cellW / 2}
-                            y={y + cellH / 2}
-                            textAnchor="middle"
-                            dominantBaseline="central"
-                            fill="var(--kalaa-text)"
-                            className="kl-heatmap__cell-text"
-                          >
-                            {formatValue(val)}
-                          </text>
-                        </g>
-                      )}
-                    </g>
-                  );
-                })}
-              </g>
-            );
-          })}
-        </svg>
-
-        <div className="kl-chart__overlay">
-          {safeRows.map((row, rIdx) =>
-            safeCols.map((col, cIdx) => {
-              const idx = rIdx * safeCols.length + cIdx;
-              const x = pad.left + cIdx * (cellW + cellGap);
-              const y = pad.top + rIdx * (cellH + cellGap);
-              const val = values[rIdx]?.[cIdx] ?? 0;
-              const level = bucketLevel(val);
-              const leftPct = (x / width) * 100;
-              const topPct = (y / svgH) * 100;
-              const wPct = (cellW / width) * 100;
-              const hPct = (cellH / svgH) * 100;
-              const activate = () =>
-                setActive({
-                  rIdx,
-                  cIdx,
-                  xPct: leftPct + wPct / 2,
-                  yPct: topPct,
-                });
+      <div className="kl-chart__stage kl-heatmap__stage">
+        <span id={instructionsId} className="kl-chart__sr-only">
+          Use arrow keys to navigate heatmap cells, Enter or Space to pin the tooltip, and Escape to dismiss.
+        </span>
+        <div className="kl-heatmap__canvas" style={{ inlineSize: svgW, blockSize: svgH }}>
+          <svg
+            role="img"
+            aria-label={summary}
+            width={svgW}
+            height={svgH}
+            viewBox={`0 0 ${svgW} ${svgH}`}
+            className="kl-chart__svg"
+            style={{ inlineSize: svgW, blockSize: svgH }}
+          >
+            {safeCols.map((col, cIdx) => {
+              const x = pad.left + cIdx * (cellW + cellGap) + cellW / 2;
               return (
-                <button
-                  key={`${rIdx}-${cIdx}`}
-                  ref={(el) => {
-                    hitRefs.current[idx] = el;
-                  }}
-                  type="button"
-                  className="kl-chart__hit"
-                  aria-label={`${row}, ${col}: ${formatValue(val)} (level ${level} of 5)`}
-                  style={{
-                    left: `${leftPct}%`,
-                    top: `${topPct}%`,
-                    width: `${wPct}%`,
-                    height: `${hPct}%`,
-                  }}
-                  onFocus={activate}
-                  onBlur={() => setActive(null)}
-                  onMouseEnter={activate}
-                  onMouseLeave={() => setActive(null)}
-                  onKeyDown={(e) => handleKeyDown(e, rIdx, cIdx)}
-                />
+                <text key={col} x={x} y={pad.top - 10} textAnchor="middle" className="kl-chart__axis-label">
+                  {col}
+                </text>
               );
-            }),
+            })}
+
+            {safeRows.map((row, rIdx) => {
+              const y = pad.top + rIdx * (cellH + cellGap);
+              return (
+                <g key={row}>
+                  <text
+                    x={pad.left - 8}
+                    y={y + cellH / 2}
+                    textAnchor="end"
+                    dominantBaseline="central"
+                    className="kl-chart__axis-label"
+                  >
+                    {row}
+                  </text>
+                  {safeCols.map((col, cIdx) => {
+                    const x = pad.left + cIdx * (cellW + cellGap);
+                    const val = values[rIdx]?.[cIdx] ?? 0;
+                    const level = bucketLevel(val);
+                    const fill = cellColor(level);
+                    return (
+                      <g key={col}>
+                        <rect
+                          x={x}
+                          y={y}
+                          width={cellW}
+                          height={cellH}
+                          fill={fill}
+                          stroke="var(--kalaa-surface)"
+                          strokeWidth="1"
+                        />
+                        {showValues && (
+                          <g>
+                            <rect
+                              x={x + cellW / 2 - 13}
+                              y={y + cellH / 2 - 8}
+                              width={26}
+                              height={16}
+                              fill="var(--kalaa-surface)"
+                            />
+                            <text
+                              x={x + cellW / 2}
+                              y={y + cellH / 2}
+                              textAnchor="middle"
+                              dominantBaseline="central"
+                              fill="var(--kalaa-text)"
+                              className="kl-heatmap__cell-text"
+                            >
+                              {formatValue(val)}
+                            </text>
+                          </g>
+                        )}
+                      </g>
+                    );
+                  })}
+                </g>
+              );
+            })}
+          </svg>
+
+          <div className="kl-chart__overlay" role="group" aria-label={`${label} cells`}>
+            {safeRows.map((row, rIdx) =>
+              safeCols.map((col, cIdx) => {
+                const idx = rIdx * safeCols.length + cIdx;
+                const cellKey = `${rIdx}-${cIdx}`;
+                const x = pad.left + cIdx * (cellW + cellGap);
+                const y = pad.top + rIdx * (cellH + cellGap);
+                const val = values[rIdx]?.[cIdx] ?? 0;
+                const level = bucketLevel(val);
+                const leftPct = (x / svgW) * 100;
+                const topPct = (y / svgH) * 100;
+                const wPct = (cellW / svgW) * 100;
+                const hPct = (cellH / svgH) * 100;
+                const isThisActive = active?.key === cellKey;
+                const isThisPinned = pinnedKey === cellKey;
+                const activate = () =>
+                  setActive({
+                    key: cellKey,
+                    rIdx,
+                    cIdx,
+                    xPct: leftPct + wPct / 2,
+                    yPct: topPct,
+                  });
+                return (
+                  <button
+                    key={cellKey}
+                    ref={(el) => {
+                      hitRefs.current[idx] = el;
+                    }}
+                    type="button"
+                    tabIndex={idx === activeFocusIndex ? 0 : -1}
+                    aria-pressed={isThisPinned}
+                    aria-describedby={isThisActive ? `${tooltipId} ${instructionsId}` : instructionsId}
+                    className="kl-chart__hit"
+                    aria-label={`${row}, ${col}: ${formatValue(val)} (level ${level} of 5)`}
+                    style={{
+                      left: `${leftPct}%`,
+                      top: `${topPct}%`,
+                      width: `${wPct}%`,
+                      height: `${hPct}%`,
+                    }}
+                    onFocus={() => {
+                      setFocusedIndex(idx);
+                      if (pinnedKey !== null && pinnedKey !== cellKey) {
+                        setPinnedKey(null);
+                      }
+                      activate();
+                    }}
+                    onBlur={() => {
+                      if (pinnedKey !== cellKey) {
+                        setActive(null);
+                      }
+                    }}
+                    onMouseEnter={() => {
+                      if (pinnedKey === null) {
+                        activate();
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (pinnedKey === null) {
+                        setActive(null);
+                      }
+                    }}
+                    onClick={() => {
+                      setFocusedIndex(idx);
+                      if (isThisActive && isThisPinned) {
+                        setPinnedKey(null);
+                        setActive(null);
+                      } else {
+                        setPinnedKey(cellKey);
+                        activate();
+                      }
+                    }}
+                    onKeyDown={(e) => handleKeyDown(e, rIdx, cIdx)}
+                  />
+                );
+              }),
+            )}
+          </div>
+
+          {active !== null && (
+            <ChartTooltip
+              id={tooltipId}
+              floating
+              x={active.xPct}
+              y={active.yPct}
+              label={`${safeRows[active.rIdx]} · ${safeCols[active.cIdx]}`}
+              items={[
+                {
+                  label: label,
+                  value: formatValue(values[active.rIdx]?.[active.cIdx] ?? 0),
+                  color: cellColor(bucketLevel(values[active.rIdx]?.[active.cIdx] ?? 0)),
+                },
+              ]}
+            />
           )}
         </div>
-
-        {active !== null && (
-          <ChartTooltip
-            floating
-            x={active.xPct}
-            y={active.yPct}
-            label={`${safeRows[active.rIdx]} · ${safeCols[active.cIdx]}`}
-            items={[
-              {
-                label: label,
-                value: formatValue(values[active.rIdx]?.[active.cIdx] ?? 0),
-                color: cellColor(bucketLevel(values[active.rIdx]?.[active.cIdx] ?? 0)),
-              },
-            ]}
-          />
-        )}
       </div>
 
-      {showData && (
-        <div id={tableId}>
+      <div id={tableId} hidden={!showData}>
+        {showData && (
           <Table caption={`${label} data`}>
             <thead>
               <tr>
@@ -326,8 +474,8 @@ export function Heatmap({
               ))}
             </tbody>
           </Table>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

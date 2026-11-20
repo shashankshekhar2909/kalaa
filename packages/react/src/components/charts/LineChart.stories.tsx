@@ -16,7 +16,7 @@ export default {
     docs: {
       description: {
         component:
-          'Multi-series line and optional area chart with distinct stroke dash patterns, geometric point markers, direct end-of-series labels, keyboard-focusable points, and a "Show data" Kalaa Table toggle.\n\n**Do:** keep distinct markers and dash styles so series remain clear without colour. **Don\'t:** plot more than 4–5 overlapping lines in a single frame.\n\n**Usage**\n\n```tsx\nimport { LineChart } from "@kalaa/react";\n\n<LineChart\n  label="Field accuracy over time"\n  categories={["v0.1", "v0.2", "v0.3", "v0.4"]}\n  series={[{ label: "Title extraction", data: [91.4, 94.1, 96.2, 97.1] }]}\n/>\n```',
+          'Multi-series line and optional area chart with distinct stroke dash patterns, geometric point markers, collision-avoiding direct end-of-series labels with leader lines, explicit gap breaks for missing values, roving-tabIndex keyboard navigation, and a "Show data" Kalaa Table toggle.\n\n**Do:** keep distinct markers and dash styles so series remain clear without colour. **Don\'t:** plot more than 4–5 overlapping lines in a single frame.\n\n**Usage**\n\n```tsx\nimport { LineChart } from "@kalaa/react";\n\n<LineChart\n  label="Field accuracy over time"\n  categories={["v0.1", "v0.2", "v0.3", "v0.4"]}\n  series={[{ label: "Title extraction", data: [91.4, 94.1, 96.2, 97.1] }]}\n/>\n```',
       },
     },
   },

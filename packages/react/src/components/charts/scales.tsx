@@ -46,12 +46,31 @@ export function linearScale(
   fn.domain = domain;
   fn.range = range;
   fn.ticks = (count = 5) => {
-    const [nMin, nMax, step] = niceDomain(Math.min(d0, d1), Math.max(d0, d1), count);
-    const out: number[] = [];
-    for (let v = nMin; v <= nMax + step * 0.001; v += step) {
-      out.push(Number(v.toFixed(6)));
+    const lo = Math.min(d0, d1);
+    const hi = Math.max(d0, d1);
+    if (!Number.isFinite(lo) || !Number.isFinite(hi) || hi <= lo) {
+      return [Number.isFinite(lo) ? lo : 0];
     }
-    return out;
+    const buildWithinDomain = (targetCount: number) => {
+      const [, , step] = niceDomain(lo, hi, targetCount);
+      const eps = step * 1e-6;
+      const first = Math.ceil((lo - eps) / step) * step;
+      const last = Math.floor((hi + eps) / step) * step;
+      const out: number[] = [];
+      for (let v = first; v <= last + eps; v += step) {
+        const rounded = Number(v.toFixed(6));
+        if (rounded >= lo - eps && rounded <= hi + eps) {
+          out.push(Object.is(rounded, -0) ? 0 : rounded);
+        }
+      }
+      return out;
+    };
+    const primary = buildWithinDomain(count);
+    if (primary.length >= Math.max(2, count - 1)) {
+      return primary;
+    }
+    const denser = buildWithinDomain(count + 2);
+    return denser.length >= primary.length ? denser : primary;
   };
   return fn;
 }
@@ -136,7 +155,7 @@ export function separateVerticalCenters(
   return out;
 }
 
-/** SSR-safe container width hook using ResizeObserver without layout jumps. */
+/** SSR-safe container width hook using ResizeObserver with window resize fallback. */
 export function useChartWidth(defaultWidth = 560) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(defaultWidth);
@@ -144,20 +163,30 @@ export function useChartWidth(defaultWidth = 560) {
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-    if (el.clientWidth > 0) {
-      setWidth(el.clientWidth);
-    }
-    if (typeof ResizeObserver === "undefined") return;
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const nextWidth = Math.round(entry.contentRect.width);
-        if (nextWidth > 0) {
-          setWidth(nextWidth);
-        }
+    const measure = () => {
+      const rectW = typeof el.getBoundingClientRect === "function" ? el.getBoundingClientRect().width : 0;
+      const nextWidth = Math.round(el.clientWidth || rectW);
+      if (nextWidth > 0) {
+        setWidth(nextWidth);
       }
-    });
-    observer.observe(el);
-    return () => observer.disconnect();
+    };
+    measure();
+    if (typeof ResizeObserver !== "undefined") {
+      const observer = new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          const nextWidth = Math.round(entry.contentRect.width || el.clientWidth);
+          if (nextWidth > 0) {
+            setWidth(nextWidth);
+          }
+        }
+      });
+      observer.observe(el);
+      return () => observer.disconnect();
+    }
+    if (typeof window !== "undefined") {
+      window.addEventListener("resize", measure);
+      return () => window.removeEventListener("resize", measure);
+    }
   }, []);
 
   return { containerRef, width };

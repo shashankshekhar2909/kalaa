@@ -8,7 +8,7 @@ export default {
     docs: {
       description: {
         component:
-          'Calendar and grid activity matrix using the 5-step sequential or diverging token ramp, with direct cell values, 2D arrow-key focus navigation, and a "Show data" Kalaa Table toggle.\n\n**Do:** keep direct cell figures visible so intensity is readable without colour. **Don\'t:** use a diverging ramp unless the data has a meaningful midpoint.\n\n**Usage**\n\n```tsx\nimport { Heatmap } from "@kalaa/react";\n\n<Heatmap\n  label="Catalog imports by weekday and week"\n  rows={["Mon", "Tue", "Wed", "Thu", "Fri"]}\n  columns={["W1", "W2", "W3", "W4"]}\n  values={[\n    [24, 32, 28, 41],\n    [19, 27, 35, 38],\n    [31, 44, 39, 52],\n    [22, 29, 33, 45],\n    [14, 18, 21, 26],\n  ]}\n/>\n```',
+          'Calendar and grid activity matrix using the 5-step sequential or diverging token ramp (with an explicit neutral `center` midpoint and threshold legend), direct cell values, horizontally scrollable wide matrices, 2D arrow-key roving-tabIndex navigation, and a "Show data" Kalaa Table toggle.\n\n**Do:** keep direct cell figures visible so intensity is readable without colour. **Don\'t:** use a diverging ramp unless the data has a meaningful midpoint.\n\n**Usage**\n\n```tsx\nimport { Heatmap } from "@kalaa/react";\n\n<Heatmap\n  label="Catalog imports by weekday and week"\n  rows={["Mon", "Tue", "Wed", "Thu", "Fri"]}\n  columns={["W1", "W2", "W3", "W4"]}\n  values={[\n    [24, 32, 28, 41],\n    [19, 27, 35, 38],\n    [31, 44, 39, 52],\n    [22, 29, 33, 45],\n    [14, 18, 21, 26],\n  ]}\n/>\n```',
       },
     },
   },
@@ -31,6 +31,7 @@ export default {
   argTypes: {
     label: { control: "text" },
     ramp: { control: "inline-radio", options: ["sequential", "diverging"] },
+    center: { control: "number" },
     showValues: { control: "boolean" },
     showLegend: { control: "boolean" },
     showDataToggle: { control: "boolean" },

@@ -16,7 +16,7 @@ export default {
     docs: {
       description: {
         component:
-          'Vertical or horizontal, grouped or stacked SVG bar chart with hatch pattern overlays, direct value labels, keyboard-focusable bars, and a "Show data" Kalaa Table toggle.\n\n**Do:** keep direct value labels or patterns enabled when comparing multiple series. **Don\'t:** truncate the value axis above zero.\n\n**Usage**\n\n```tsx\nimport { BarChart } from "@kalaa/react";\n\n<BarChart\n  label="Weekly catalog imports"\n  categories={["W1", "W2", "W3", "W4"]}\n  series={[{ label: "Approved", data: [142, 168, 154, 189] }]}\n/>\n```',
+          'Vertical or horizontal, grouped or stacked SVG bar chart supporting positive and negative domains around a zero baseline, hatch pattern overlays, direct value labels, roving-tabIndex keyboard navigation, and a "Show data" Kalaa Table toggle.\n\n**Do:** keep direct value labels or patterns enabled when comparing multiple series. **Don\'t:** truncate the value axis above zero.\n\n**Usage**\n\n```tsx\nimport { BarChart } from "@kalaa/react";\n\n<BarChart\n  label="Weekly catalog imports"\n  categories={["W1", "W2", "W3", "W4"]}\n  series={[{ label: "Approved", data: [142, 168, 154, 189] }]}\n/>\n```',
       },
     },
   },

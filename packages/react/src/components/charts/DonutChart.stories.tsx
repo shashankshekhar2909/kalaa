@@ -8,7 +8,7 @@ export default {
     docs: {
       description: {
         component:
-          'Part-to-whole ring chart capped at 6 slices (excess slices roll into "Other"), with a centred tabular total, SVG hatch pattern overlays, direct percentage labels, keyboard-focusable slices, and a "Show data" Kalaa Table toggle.\n\n**Do:** use for up to 6 slices that sum to a meaningful total. **Don\'t:** use for comparing fine differences across many categories; use a horizontal `BarChart` instead.\n\n**Usage**\n\n```tsx\nimport { DonutChart } from "@kalaa/react";\n\n<DonutChart\n  label="Catalog records by review state"\n  centerLabel="Records"\n  data={[\n    { label: "Approved", value: 840 },\n    { label: "Needs review", value: 190 },\n    { label: "Rejected", value: 52 },\n  ]}\n/>\n```',
+          'Part-to-whole ring chart capped at 6 visual slices (excess slices roll into "Other" in the graphic while the "Show data" table lists all original rows), with a centred tabular total, SVG hatch pattern overlays, direct percentage labels, and roving-tabIndex slice navigation.\n\n**Do:** use for up to 6 slices that sum to a meaningful total. **Don\'t:** use for comparing fine differences across many categories; use a horizontal `BarChart` instead.\n\n**Usage**\n\n```tsx\nimport { DonutChart } from "@kalaa/react";\n\n<DonutChart\n  label="Catalog records by review state"\n  centerLabel="Records"\n  data={[\n    { label: "Approved", value: 840 },\n    { label: "Needs review", value: 190 },\n    { label: "Rejected", value: 52 },\n  ]}\n/>\n```',
       },
     },
   },
