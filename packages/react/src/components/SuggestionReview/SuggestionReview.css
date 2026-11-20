@@ -1,0 +1,23 @@
+.kl-suggestion-review {
+  display: grid;
+  gap: var(--kalaa-space-3);
+  padding: var(--kalaa-space-4);
+  border: 1px solid var(--kalaa-border);
+  border-radius: var(--kalaa-radius-lg);
+  background: var(--kalaa-surface);
+  color: var(--kalaa-text);
+  overflow-wrap: anywhere;
+}
+
+.kl-suggestion-review__proposal {
+  font-weight: 600;
+}
+
+.kl-suggestion-review__source {
+  color: var(--kalaa-text-muted);
+}
+
+.kl-suggestion-review__alternatives {
+  margin-block: var(--kalaa-space-1) 0;
+  padding-inline-start: var(--kalaa-space-5);
+}

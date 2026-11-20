@@ -4,7 +4,9 @@ import "@kalaa/tokens/tokens.css";
 import "../stories/foundations.css";
 import { kalaaTheme } from "./kalaa-theme";
 // Component CSS straight from source (the published package ships the same files joined as styles.css).
-import.meta.glob("../../../packages/react/src/components/*/*.css", { eager: true });
+import.meta.glob("../../../packages/react/src/components/*/*.css", {
+  eager: true,
+});
 const preview: Preview = {
   globalTypes: {
     theme: {
@@ -77,6 +79,7 @@ const preview: Preview = {
             "PageHeader",
             "Card",
             "KeyValue",
+            "ValueComparison",
             "EmptyState",
             // Actions
             "Button",

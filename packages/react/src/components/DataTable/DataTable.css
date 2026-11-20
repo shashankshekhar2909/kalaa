@@ -1,0 +1,15 @@
+.kl-data-table {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--kalaa-space-3);
+}
+
+.kl-data-table__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-2);
+}
+
+.kl-data-table__confirmation {
+  margin: 0 0 var(--kalaa-space-2);
+}

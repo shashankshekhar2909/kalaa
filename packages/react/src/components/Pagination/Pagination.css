@@ -1,0 +1,8 @@
+.kl-pagination {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-3);
+  color: var(--kalaa-text);
+  font-size: var(--kalaa-font-size-sm);
+}

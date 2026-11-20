@@ -1,0 +1,11 @@
+.kl-meter {
+  display: grid;
+  gap: var(--kalaa-space-1);
+  color: var(--kalaa-text);
+  font-size: var(--kalaa-font-size-sm);
+}
+
+.kl-meter meter {
+  inline-size: 100%;
+  accent-color: var(--kalaa-accent);
+}
