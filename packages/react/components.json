@@ -1,0 +1,2978 @@
+{
+  "package": "@kalaa/react",
+  "version": "0.1.0",
+  "schemas": {
+    "ResumeData": "@kalaa/react/resume.schema.json",
+    "PortfolioData": "@kalaa/react/portfolio.schema.json"
+  },
+  "components": [
+    {
+      "name": "ResumePage",
+      "category": "Templates",
+      "purpose": "Complete web and print resume template driven by a single `ResumeData` JSON object. Provides `",
+      "props": [
+        {
+          "name": "data",
+          "type": "ResumeData",
+          "required": true,
+          "default": null,
+          "description": "Complete JSON-serialisable resume data object conforming to `ResumeData`."
+        },
+        {
+          "name": "layout",
+          "type": "ResumePageLayout",
+          "required": false,
+          "default": "\"single-column\"",
+          "description": "Page layout: \"single-column\" (linear ATS flow, default) or \"sidebar\" (two-column print/web layout)."
+        },
+        {
+          "name": "paperSize",
+          "type": "ResumePaperSize",
+          "required": false,
+          "default": "\"a4\"",
+          "description": "Target print paper geometry: \"a4\" (210mm, default) or \"letter\" (8.5in)."
+        },
+        {
+          "name": "forcePrintPreview",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Forces black-on-white print tokens on screen (useful for previewing print output in dark mode)."
+        }
+      ],
+      "example": "import { ResumePage } from \"@kalaa/react\";\n\n<ResumePage />"
+    },
+    {
+      "name": "PortfolioPage",
+      "category": "Templates",
+      "purpose": "Complete personal portfolio page template driven by a single `PortfolioData` JSON object. Composes `ProfileCard`, `CaseStudyCard`, `ProjectList`, `Timeline`, `SkillGroups`, `TestimonialCard`, `LinkList`, `ContactCard` and `PageFooter` with semantic landmarks.",
+      "props": [
+        {
+          "name": "data",
+          "type": "PortfolioData",
+          "required": true,
+          "default": null,
+          "description": "Complete JSON-serialisable portfolio data object conforming to `PortfolioData`."
+        }
+      ],
+      "example": "import { PortfolioPage } from \"@kalaa/react\";\n\n<PortfolioPage />"
+    },
+    {
+      "name": "LandingPage",
+      "category": "Templates",
+      "purpose": "Complete product and marketing landing page template driven by a single `LandingPageData` JSON object. Composes `Hero`, `StatsBand`, `FeatureGrid`, `TestimonialCard`, `FAQ`, `CTA` and `PageFooter` with accessible landmarks.",
+      "props": [
+        {
+          "name": "data",
+          "type": "LandingPageData",
+          "required": true,
+          "default": null,
+          "description": "Complete JSON-serialisable marketing page data object conforming to `LandingPageData`."
+        }
+      ],
+      "example": "import { LandingPage } from \"@kalaa/react\";\n\n<LandingPage />"
+    },
+    {
+      "name": "ResumeHeader",
+      "category": "Blocks/Resume",
+      "purpose": "Top identity block for a web or print resume with candidate name (`h1`), professional title, location and contact links.",
+      "props": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Candidate full name (rendered as `h1`)."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Primary professional title or headline."
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "City, region or timezone."
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Contact email address."
+        },
+        {
+          "name": "phone",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Contact phone number."
+        },
+        {
+          "name": "website",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Personal website URL."
+        },
+        {
+          "name": "links",
+          "type": "ResumeContactLink[]",
+          "required": false,
+          "default": "[]",
+          "description": "Additional profile or portfolio links."
+        },
+        {
+          "name": "badge",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional availability or status label shown in a badge."
+        }
+      ],
+      "example": "import { ResumeHeader } from \"@kalaa/react\";\n\n<ResumeHeader />"
+    },
+    {
+      "name": "Summary",
+      "category": "Blocks/Resume",
+      "purpose": "Executive summary block with a section heading, concise narrative paragraph and optional bulleted highlights.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Summary\"",
+          "description": "Section heading text (default \"Summary\")."
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Primary summary paragraph."
+        },
+        {
+          "name": "highlights",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "description": "Optional factual highlights shown as a bulleted list."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Heading level (default 2)."
+        }
+      ],
+      "example": "import { Summary } from \"@kalaa/react\";\n\n<Summary />"
+    },
+    {
+      "name": "ExperienceList",
+      "category": "Blocks/Resume",
+      "purpose": "Chronological work history block composed of `ExperienceItem` entries with role, organisation, semantic `<time>` dates, outcome bullets and technology `Badge` tags.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Experience\"",
+          "description": "Section heading (default \"Experience\")."
+        },
+        {
+          "name": "items",
+          "type": "ResumeExperienceItem[]",
+          "required": true,
+          "default": null,
+          "description": "Chronological experience entries."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2; items render one level deeper)."
+        }
+      ],
+      "example": "import { ExperienceList } from \"@kalaa/react\";\n\n<ExperienceList />"
+    },
+    {
+      "name": "ExperienceItem",
+      "category": "Blocks/Resume",
+      "purpose": "Chronological work history block composed of `ExperienceItem` entries with role, organisation, semantic `<time>` dates, outcome bullets and technology `Badge` tags.",
+      "props": [
+        {
+          "name": "role",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Job title or role name."
+        },
+        {
+          "name": "org",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Company or organisation name."
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "City, region or remote status."
+        },
+        {
+          "name": "startDate",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "ISO or human-readable start date (rendered inside `<time>`)."
+        },
+        {
+          "name": "endDate",
+          "type": "string",
+          "required": false,
+          "default": "\"Present\"",
+          "description": "ISO or human-readable end date, or \"Present\" if current."
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional one-line role overview."
+        },
+        {
+          "name": "bullets",
+          "type": "string[]",
+          "required": true,
+          "default": null,
+          "description": "Impact bullets in sentence case."
+        },
+        {
+          "name": "tags",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "description": "Technology or domain tags shown as badges."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4",
+          "required": false,
+          "default": "2",
+          "description": "Heading level for the role title (default 2 when standalone, 3 inside ExperienceList)."
+        }
+      ],
+      "example": "import { ExperienceItem } from \"@kalaa/react\";\n\n<ExperienceItem />"
+    },
+    {
+      "name": "EducationList",
+      "category": "Blocks/Resume",
+      "purpose": "Academic qualifications block showing degrees, institutions, graduation `<time>` dates, thesis notes and honours badges.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Education\"",
+          "description": "Section heading (default \"Education\")."
+        },
+        {
+          "name": "items",
+          "type": "ResumeEducationItem[]",
+          "required": true,
+          "default": null,
+          "description": "Academic credentials list."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2; degree titles render one level deeper)."
+        }
+      ],
+      "example": "import { EducationList } from \"@kalaa/react\";\n\n<EducationList />"
+    },
+    {
+      "name": "SkillGroups",
+      "category": "Blocks/Resume",
+      "purpose": "Categorised skill groups rendered inside a semantic `<dl>` with Kalaa `Badge` items. Supports responsive `",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Skills\"",
+          "description": "Section heading (default \"Skills\")."
+        },
+        {
+          "name": "groups",
+          "type": "ResumeSkillGroup[]",
+          "required": true,
+          "default": null,
+          "description": "Categorised skill groups."
+        },
+        {
+          "name": "layout",
+          "type": "\"grid\" | \"stacked\"",
+          "required": false,
+          "default": "\"grid\"",
+          "description": "Visual arrangement: \"grid\" (default) or \"stacked\" for narrow sidebars."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2)."
+        }
+      ],
+      "example": "import { SkillGroups } from \"@kalaa/react\";\n\n<SkillGroups />"
+    },
+    {
+      "name": "ProjectList",
+      "category": "Blocks/Resume",
+      "purpose": "Grid or stack of `ProjectCard` blocks built on Kalaa `Card`, `KeyValue` and `Badge` with impact numbers, technology tags and links.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Projects\"",
+          "description": "Section heading (default \"Projects\")."
+        },
+        {
+          "name": "items",
+          "type": "ResumeProjectItem[]",
+          "required": true,
+          "default": null,
+          "description": "Project entries to render."
+        },
+        {
+          "name": "columns",
+          "type": "1 | 2",
+          "required": false,
+          "default": "2",
+          "description": "Number of columns on wide screens (default 2)."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2; project titles render one level deeper)."
+        }
+      ],
+      "example": "import { ProjectList } from \"@kalaa/react\";\n\n<ProjectList />"
+    },
+    {
+      "name": "ProjectCard",
+      "category": "Blocks/Resume",
+      "purpose": "Grid or stack of `ProjectCard` blocks built on Kalaa `Card`, `KeyValue` and `Badge` with impact numbers, technology tags and links.",
+      "props": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Project name."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Concise explanation of what was built and why."
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional role on the project."
+        },
+        {
+          "name": "startDate",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Start date or year."
+        },
+        {
+          "name": "endDate",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "End date or year."
+        },
+        {
+          "name": "impact",
+          "type": "ResumeProjectImpact[]",
+          "required": false,
+          "default": "[]",
+          "description": "Quantified outcomes and impact metrics."
+        },
+        {
+          "name": "tags",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "description": "Technology tags."
+        },
+        {
+          "name": "links",
+          "type": "ResumeContactLink[]",
+          "required": false,
+          "default": "[]",
+          "description": "External links (repository, live demo, paper)."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4",
+          "required": false,
+          "default": "2",
+          "description": "Heading level for the project title (default 2 when standalone, 3 inside ProjectList)."
+        }
+      ],
+      "example": "import { ProjectCard } from \"@kalaa/react\";\n\n<ProjectCard />"
+    },
+    {
+      "name": "Certifications",
+      "category": "Blocks/Resume",
+      "purpose": "Professional certifications block with issuer name, `<time>` dates, optional verification link and credential ID `Badge`.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Certifications\"",
+          "description": "Section heading (default \"Certifications\")."
+        },
+        {
+          "name": "items",
+          "type": "ResumeCertificationItem[]",
+          "required": true,
+          "default": null,
+          "description": "Certification entries."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2)."
+        }
+      ],
+      "example": "import { Certifications } from \"@kalaa/react\";\n\n<Certifications />"
+    },
+    {
+      "name": "Languages",
+      "category": "Blocks/Resume",
+      "purpose": "Spoken and written languages block pairing each language name with a proficiency `Badge`.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Languages\"",
+          "description": "Section heading (default \"Languages\")."
+        },
+        {
+          "name": "items",
+          "type": "ResumeLanguageItem[]",
+          "required": true,
+          "default": null,
+          "description": "Spoken or written languages with proficiency labels."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2)."
+        }
+      ],
+      "example": "import { Languages } from \"@kalaa/react\";\n\n<Languages />"
+    },
+    {
+      "name": "Awards",
+      "category": "Blocks/Resume",
+      "purpose": "Honours, awards and peer-reviewed publications list (`Awards` and `Publications`) with `<time>` dates, issuer details and category `Badge`.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Awards & publications\"",
+          "description": "Section heading (default \"Awards & publications\")."
+        },
+        {
+          "name": "items",
+          "type": "ResumeAwardItem[]",
+          "required": true,
+          "default": null,
+          "description": "Award and publication entries."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2; entry titles render one level deeper)."
+        }
+      ],
+      "example": "import { Awards } from \"@kalaa/react\";\n\n<Awards />"
+    },
+    {
+      "name": "Publications",
+      "category": "Blocks/Resume",
+      "purpose": "Honours, awards and peer-reviewed publications list (`Awards` and `Publications`) with `<time>` dates, issuer details and category `Badge`.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Publications\"",
+          "description": "Section heading (default \"Awards & publications\")."
+        },
+        {
+          "name": "items",
+          "type": "ResumeAwardItem[]",
+          "required": true,
+          "default": null,
+          "description": "Award and publication entries."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": null,
+          "description": "Section heading level (default 2; entry titles render one level deeper)."
+        }
+      ],
+      "example": "import { Publications } from \"@kalaa/react\";\n\n<Publications />"
+    },
+    {
+      "name": "ProfileCard",
+      "category": "Blocks/Profile & portfolio",
+      "purpose": "Personal identity and bio card with monogram avatar, availability `Badge`, tabular-figure stats, skill tags and `ButtonLink` actions (at most one primary).",
+      "props": [],
+      "example": "import { ProfileCard } from \"@kalaa/react\";\n\n<ProfileCard />"
+    },
+    {
+      "name": "CaseStudyCard",
+      "category": "Blocks/Profile & portfolio",
+      "purpose": "Portfolio case study card built on Kalaa `Card`, `KeyValue`, `Badge` and `ButtonLink` with structured Challenge/Outcome rows and `<time>` year.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Case study title."
+        },
+        {
+          "name": "client",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Client or organisation name."
+        },
+        {
+          "name": "year",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Year or date completed."
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Overview of the engagement."
+        },
+        {
+          "name": "challenge",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Key problem addressed."
+        },
+        {
+          "name": "outcome",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Result delivered."
+        },
+        {
+          "name": "metrics",
+          "type": "ResumeProjectImpact[]",
+          "required": false,
+          "default": "[]",
+          "description": "Quantified impact metrics."
+        },
+        {
+          "name": "tags",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "description": "Domain or technology tags."
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Link to full write-up."
+        },
+        {
+          "name": "ctaLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Read case study\"",
+          "description": "Link button label."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4",
+          "required": false,
+          "default": "2",
+          "description": "Heading level for the case study title (default 2 when standalone, 3 inside a section)."
+        }
+      ],
+      "example": "import { CaseStudyCard } from \"@kalaa/react\";\n\n<CaseStudyCard />"
+    },
+    {
+      "name": "Timeline",
+      "category": "Blocks/Profile & portfolio",
+      "purpose": "Chronological milestone list rendered as a semantic `<ol>` with `<time>` dates, role/project titles, subtitles and `Badge` tags.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Timeline\"",
+          "description": "Optional section heading (default \"Timeline\")."
+        },
+        {
+          "name": "items",
+          "type": "PortfolioTimelineItem[]",
+          "required": true,
+          "default": null,
+          "description": "Chronological milestones."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2; milestone titles render one level deeper)."
+        }
+      ],
+      "example": "import { Timeline } from \"@kalaa/react\";\n\n<Timeline />"
+    },
+    {
+      "name": "TestimonialCard",
+      "category": "Blocks/Profile & portfolio",
+      "purpose": "Endorsement card built on Kalaa `Card` (`as=",
+      "props": [
+        {
+          "name": "quote",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Verbatim testimonial text."
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Full name of the person quoted."
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Author's job title."
+        },
+        {
+          "name": "org",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Author's company or organisation."
+        },
+        {
+          "name": "date",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Date or year of the endorsement."
+        },
+        {
+          "name": "context",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Relationship or project context."
+        }
+      ],
+      "example": "import { TestimonialCard } from \"@kalaa/react\";\n\n<TestimonialCard />"
+    },
+    {
+      "name": "ContactCard",
+      "category": "Blocks/Profile & portfolio",
+      "purpose": "Direct contact card built on Kalaa `Card`, `KeyValue`, `Badge` and `ButtonLink` with email, location, response time and a primary `mailto:` action.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "default": "\"Get in touch\"",
+          "description": "Heading for the contact card."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Invitation copy below the heading."
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Contact email address."
+        },
+        {
+          "name": "phone",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional phone number."
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "City, country or timezone."
+        },
+        {
+          "name": "availability",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Current availability window."
+        },
+        {
+          "name": "responseTime",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Typical response time."
+        },
+        {
+          "name": "ctaLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Send email\"",
+          "description": "Primary email button label."
+        },
+        {
+          "name": "links",
+          "type": "ResumeContactLink[]",
+          "required": false,
+          "default": "[]",
+          "description": "Additional profile links."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3 | 4",
+          "required": false,
+          "default": "2",
+          "description": "Heading level for the card title (default 2)."
+        }
+      ],
+      "example": "import { ContactCard } from \"@kalaa/react\";\n\n<ContactCard />"
+    },
+    {
+      "name": "LinkList",
+      "category": "Blocks/Profile & portfolio",
+      "purpose": "Annotated link collection for writing, talks, repositories or profile hubs. Supports `",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional section heading."
+        },
+        {
+          "name": "items",
+          "type": "PortfolioLinkItem[]",
+          "required": true,
+          "default": null,
+          "description": "Annotated links to render."
+        },
+        {
+          "name": "variant",
+          "type": "\"stacked\" | \"inline\"",
+          "required": false,
+          "default": "\"stacked\"",
+          "description": "Visual variant: \"stacked\" (default, with descriptions) or \"inline\" (compact horizontal bar)."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2)."
+        }
+      ],
+      "example": "import { LinkList } from \"@kalaa/react\";\n\n<LinkList />"
+    },
+    {
+      "name": "Hero",
+      "category": "Blocks/Marketing",
+      "purpose": "Top marketing hero block with optional release `Badge`, IBM Plex Serif `h1` headline, value proposition, `ButtonLink` actions (one primary, one secondary) and factual highlights.",
+      "props": [
+        {
+          "name": "eyebrow",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional badge label above the title."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Primary headline."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Supporting value proposition paragraph."
+        },
+        {
+          "name": "primaryAction",
+          "type": "PortfolioAction",
+          "required": false,
+          "default": null,
+          "description": "Main call-to-action button."
+        },
+        {
+          "name": "secondaryAction",
+          "type": "PortfolioAction",
+          "required": false,
+          "default": null,
+          "description": "Secondary link button."
+        },
+        {
+          "name": "highlights",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "description": "Short factual highlights below the actions."
+        },
+        {
+          "name": "align",
+          "type": "\"start\" | \"center\"",
+          "required": false,
+          "default": "\"start\"",
+          "description": "Content alignment: \"start\" (default) or \"center\"."
+        },
+        {
+          "name": "headingLevel",
+          "type": "1 | 2",
+          "required": false,
+          "default": "1",
+          "description": "Heading level for the hero title (default 1)."
+        }
+      ],
+      "example": "import { Hero } from \"@kalaa/react\";\n\n<Hero />"
+    },
+    {
+      "name": "FeatureGrid",
+      "category": "Blocks/Marketing",
+      "purpose": "Responsive 2- or 3-column grid of product capabilities built from `SectionHeader`, Kalaa `Card` and `Badge`.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Section heading."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Supporting section description."
+        },
+        {
+          "name": "features",
+          "type": "LandingFeatureItem[]",
+          "required": true,
+          "default": null,
+          "description": "Feature items rendered as Kalaa `Card` blocks."
+        },
+        {
+          "name": "columns",
+          "type": "2 | 3",
+          "required": false,
+          "default": "3",
+          "description": "Number of columns on desktop (default 3)."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2; feature cards render one level deeper when heading is set)."
+        }
+      ],
+      "example": "import { FeatureGrid } from \"@kalaa/react\";\n\n<FeatureGrid />"
+    },
+    {
+      "name": "StatsBand",
+      "category": "Blocks/Marketing",
+      "purpose": "Horizontal benchmark and KPI band rendering figures with `font-variant-numeric: tabular-nums` inside a semantic `<dl>`.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional section heading."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional supporting description."
+        },
+        {
+          "name": "stats",
+          "type": "PortfolioStat[]",
+          "required": true,
+          "default": null,
+          "description": "Key metrics rendered with tabular numerals."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2)."
+        }
+      ],
+      "example": "import { StatsBand } from \"@kalaa/react\";\n\n<StatsBand />"
+    },
+    {
+      "name": "CTA",
+      "category": "Blocks/Marketing",
+      "purpose": "Call-to-action card with a 3px accent start border, serif heading, description, optional note and `ButtonLink` actions.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Action heading."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Supporting explanation."
+        },
+        {
+          "name": "primaryAction",
+          "type": "PortfolioAction",
+          "required": true,
+          "default": null,
+          "description": "Primary action link."
+        },
+        {
+          "name": "secondaryAction",
+          "type": "PortfolioAction",
+          "required": false,
+          "default": null,
+          "description": "Optional secondary action link."
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional note below the buttons."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Heading level (default 2)."
+        }
+      ],
+      "example": "import { CTA } from \"@kalaa/react\";\n\n<CTA />"
+    },
+    {
+      "name": "FAQ",
+      "category": "Blocks/Marketing",
+      "purpose": "Frequently asked questions block built on native HTML `<details>` and `<summary>` elements so disclosures work without client-side JavaScript.",
+      "props": [
+        {
+          "name": "heading",
+          "type": "string",
+          "required": false,
+          "default": "\"Frequently asked questions\"",
+          "description": "Section heading (default \"Frequently asked questions\")."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional supporting description."
+        },
+        {
+          "name": "items",
+          "type": "LandingFaqItem[]",
+          "required": true,
+          "default": null,
+          "description": "Question and answer pairs rendered as native `<details>` disclosures."
+        },
+        {
+          "name": "defaultOpenAll",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Opens all items by default (also ensures full answer visibility when printing)."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Section heading level (default 2)."
+        }
+      ],
+      "example": "import { FAQ } from \"@kalaa/react\";\n\n<FAQ />"
+    },
+    {
+      "name": "PageFooter",
+      "category": "Blocks/Marketing",
+      "purpose": "Semantic `<footer>` landmark with the Kalaa `LogoMark`, brand tagline, uniquely labelled `<nav>` link columns and utility links.",
+      "props": [
+        {
+          "name": "brandName",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Brand or owner name."
+        },
+        {
+          "name": "tagline",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Short tagline below the brand."
+        },
+        {
+          "name": "columns",
+          "type": "PortfolioFooterColumn[]",
+          "required": false,
+          "default": "[]",
+          "description": "Structured link columns."
+        },
+        {
+          "name": "links",
+          "type": "ResumeContactLink[]",
+          "required": false,
+          "default": "[]",
+          "description": "Flat utility links."
+        },
+        {
+          "name": "copyright",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Copyright or licence line."
+        },
+        {
+          "name": "showLogo",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to render the Kalaa mark next to the brand name."
+        }
+      ],
+      "example": "import { PageFooter } from \"@kalaa/react\";\n\n<PageFooter />"
+    },
+    {
+      "name": "SectionHeader",
+      "category": "Blocks/Marketing",
+      "purpose": "Consistent section heading (`h2` or `h3`) with an optional `Badge`, muted description and secondary `ButtonLink` action.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Section heading text."
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Supporting description below the heading."
+        },
+        {
+          "name": "badge",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional status or category badge text."
+        },
+        {
+          "name": "action",
+          "type": "PortfolioAction",
+          "required": false,
+          "default": null,
+          "description": "Optional secondary action link on the right."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Heading level (default 2)."
+        },
+        {
+          "name": "align",
+          "type": "\"between\" | \"start\"",
+          "required": false,
+          "default": "\"between\"",
+          "description": "Horizontal alignment: \"between\" (default) or \"start\"."
+        }
+      ],
+      "example": "import { SectionHeader } from \"@kalaa/react\";\n\n<SectionHeader />"
+    },
+    {
+      "name": "AppShell",
+      "category": "Components",
+      "purpose": "Page frame with a sticky 240px sidebar (full-page background) and a main area (max 1120px). Use it once per app, with `brand`, `AppShell.NavItem` children in `nav`, and `footer` for account or theme utilities. Pass `render={<NextLink href=",
+      "props": [
+        {
+          "name": "nav",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "Sidebar content, usually `AppShell.NavItem` links."
+        },
+        {
+          "name": "header",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Optional content above the main area (for example a page header)."
+        },
+        {
+          "name": "brand",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Brand slot at the top of the sidebar (logo, app name). Stays beside the Menu button on small screens."
+        },
+        {
+          "name": "footer",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Footer or utility slot at the bottom of the sidebar (theme toggle, account, sign out)."
+        }
+      ],
+      "example": "import { AppShell } from \"@kalaa/react\";\n\n<AppShell />"
+    },
+    {
+      "name": "PageHeader",
+      "category": "Components",
+      "purpose": "Title row for a page: optional back link, one `h1`, muted description and right-aligned actions. Pass `back={{ href, label, render: <NextLink href=",
+      "props": [
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "The page `h1`."
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Muted line under the title."
+        },
+        {
+          "name": "back",
+          "type": "{ href: string; label: string; /** Replaces the `<a>`, for client-side routing: `render: <NextLink href=\"/products\" />` with `next/link`. */ render?: useRender.RenderProp; }",
+          "required": false,
+          "default": null,
+          "description": "Link above the title to the parent page."
+        },
+        {
+          "name": "actions",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Buttons on the right of the title row; at most one primary."
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"brand\"",
+          "required": false,
+          "default": "\"default\"",
+          "description": "\"brand\" sets the title in serif for marketing pages."
+        }
+      ],
+      "example": "import { PageHeader } from \"@kalaa/react\";\n\n<PageHeader />"
+    },
+    {
+      "name": "Card",
+      "category": "Components",
+      "purpose": "Bordered surface that groups related content. A header row appears only when there is a title or actions.",
+      "props": [
+        {
+          "name": "as",
+          "type": "\"section\" | \"div\" | \"article\"",
+          "required": false,
+          "default": "\"section\"",
+          "description": "Root element (default section)."
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Card heading."
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Muted line under the title."
+        },
+        {
+          "name": "actions",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Content on the right of the header row."
+        },
+        {
+          "name": "titleLevel",
+          "type": "2 | 3 | 4",
+          "required": false,
+          "default": "2",
+          "description": "Heading level of the title (default 2). Use 3 or 4 when the card sits under a section heading."
+        }
+      ],
+      "example": "import { Card } from \"@kalaa/react\";\n\n<Card />"
+    },
+    {
+      "name": "KeyValue",
+      "category": "Components",
+      "purpose": "Definition list for facts about one thing. `rows` has a label column and dividers; `grid` fits summaries.",
+      "props": [
+        {
+          "name": "items",
+          "type": "Array<{ label: ReactNode; value: ReactNode }>",
+          "required": true,
+          "default": null,
+          "description": "Label and value pairs; an empty value shows an em dash."
+        },
+        {
+          "name": "layout",
+          "type": "\"rows\" | \"grid\"",
+          "required": false,
+          "default": "\"rows\"",
+          "description": "\"rows\" (label column with dividers, default) or \"grid\" (compact summary)."
+        }
+      ],
+      "example": "import { KeyValue } from \"@kalaa/react\";\n\n<KeyValue />"
+    },
+    {
+      "name": "ValueComparison",
+      "category": "Components",
+      "purpose": "Compare an original value with a proposed value. Panels stack when their container is narrow. Set a contextual accessible name when showing multiple comparisons and use a separate control for accepting a proposal.",
+      "props": [
+        {
+          "name": "original",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "proposed",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "originalLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Original\"",
+          "description": ""
+        },
+        {
+          "name": "proposedLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Proposed\"",
+          "description": ""
+        },
+        {
+          "name": "emptyLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"No value\"",
+          "description": ""
+        }
+      ],
+      "example": "import { ValueComparison } from \"@kalaa/react\";\n\n<ValueComparison />"
+    },
+    {
+      "name": "EmptyState",
+      "category": "Components",
+      "purpose": "Centred message for a list or area with nothing in it, with one optional next step.",
+      "props": [
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "What is missing, for example \"No products yet\"."
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "What to do about it."
+        },
+        {
+          "name": "action",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "One next step, usually a Button."
+        }
+      ],
+      "example": "import { EmptyState } from \"@kalaa/react\";\n\n<EmptyState />"
+    },
+    {
+      "name": "Button",
+      "category": "Components",
+      "purpose": "Action button. `primary` is the main next step, `secondary` the default, `ghost` low-emphasis inline actions, `danger` destructive ones.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "ButtonVariant",
+          "required": false,
+          "default": "\"secondary\"",
+          "description": "primary (main next step), secondary (default), ghost (low emphasis) or danger (destructive)."
+        },
+        {
+          "name": "size",
+          "type": "ButtonSize",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Height: sm 30px, md 36px (default)."
+        },
+        {
+          "name": "iconStart",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Decorative icon before the label."
+        },
+        {
+          "name": "iconEnd",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Decorative icon after the label."
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Shows a spinner, disables the button and sets `aria-busy`; keeps its width."
+        }
+      ],
+      "example": "import { Button } from \"@kalaa/react\";\n\n<Button />"
+    },
+    {
+      "name": "ButtonLink",
+      "category": "Components",
+      "purpose": "A link that looks like a Button, for navigation. Same variants and sizes; works with any router through `href` or the Base UI `render` prop (for example `next/link`).",
+      "props": [
+        {
+          "name": "variant",
+          "type": "ButtonVariant",
+          "required": false,
+          "default": "\"secondary\"",
+          "description": "primary (main next step), secondary (default), ghost (low emphasis) or danger (destructive)."
+        },
+        {
+          "name": "size",
+          "type": "ButtonSize",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Height: sm 30px, md 36px (default)."
+        },
+        {
+          "name": "iconStart",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Decorative icon before the label."
+        },
+        {
+          "name": "iconEnd",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Decorative icon after the label."
+        }
+      ],
+      "example": "import { ButtonLink } from \"@kalaa/react\";\n\n<ButtonLink />"
+    },
+    {
+      "name": "Field",
+      "category": "Components",
+      "purpose": "Wraps one control with a label, optional hint, error and required marker, and wires `aria-describedby` and `aria-invalid`.",
+      "props": [
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "Visible label above the control, in sentence case."
+        },
+        {
+          "name": "hint",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Help text below the control."
+        },
+        {
+          "name": "error",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Adds \"(required)\" to the label."
+        },
+        {
+          "name": "children",
+          "type": "ReactElement<ControlProps>",
+          "required": true,
+          "default": null,
+          "description": "Exactly one control (Input, Textarea, Select)."
+        }
+      ],
+      "example": "import { Field } from \"@kalaa/react\";\n\n<Field />"
+    },
+    {
+      "name": "Input",
+      "category": "Components",
+      "purpose": "Single-line text input (native props plus `size` and `invalid`). Put it in a `Field` to get a label and error text.",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\"",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Height: sm 30px, md 36px (default)."
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Shows the danger border and sets `aria-invalid`."
+        }
+      ],
+      "example": "import { Input } from \"@kalaa/react\";\n\n<Input />"
+    },
+    {
+      "name": "Textarea",
+      "category": "Components",
+      "purpose": "Multi-line text input with the same look as Input; `autoResize` grows it with its content.",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\"",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Text size and padding: sm or md (default)."
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Shows the danger border and sets `aria-invalid`."
+        },
+        {
+          "name": "autoResize",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Grows with its content instead of scrolling."
+        }
+      ],
+      "example": "import { Textarea } from \"@kalaa/react\";\n\n<Textarea />"
+    },
+    {
+      "name": "Select",
+      "category": "Components",
+      "purpose": "Dropdown built on Base UI Select, with keyboard support (arrows, type-ahead, Escape).",
+      "props": [
+        {
+          "name": "options",
+          "type": "SelectOption[]",
+          "required": true,
+          "default": null,
+          "description": "Choices as value and label pairs."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Controlled value."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Initial value when uncontrolled."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string | null) => void",
+          "required": false,
+          "default": null,
+          "description": "Called with the new value."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "default": "\"Select an option\"",
+          "description": "Text shown when nothing is selected."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\"",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Height: sm 30px, md 36px (default)."
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Shows the danger border and sets `aria-invalid`."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Form field name."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Marks the field required in forms."
+        }
+      ],
+      "example": "import { Select } from \"@kalaa/react\";\n\n<Select />"
+    },
+    {
+      "name": "Checkbox",
+      "category": "Components",
+      "purpose": "Checkbox with a label and optional description, built on Base UI. Supports `indeterminate` for select all.",
+      "props": [
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "Visible label, shown to the right of the box."
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Optional help text under the label, linked with `aria-describedby`."
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": ""
+        }
+      ],
+      "example": "import { Checkbox } from \"@kalaa/react\";\n\n<Checkbox />"
+    },
+    {
+      "name": "Switch",
+      "category": "Components",
+      "purpose": "On/off setting that applies immediately, with a label and optional description.",
+      "props": [
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "Visible label, shown to the right of the switch."
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Optional help text under the label, linked with `aria-describedby`."
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": ""
+        }
+      ],
+      "example": "import { Switch } from \"@kalaa/react\";\n\n<Switch />"
+    },
+    {
+      "name": "Tabs",
+      "category": "Components",
+      "purpose": "Switches between views of one subject. `segmented` for compact filters, `underline` for page sections.",
+      "props": [
+        {
+          "name": "items",
+          "type": "TabItem[]",
+          "required": true,
+          "default": null,
+          "description": "Tabs with their panel content."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Controlled selected tab."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Initially selected tab when uncontrolled (default: first enabled)."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "required": false,
+          "default": null,
+          "description": "Called with the selected tab value."
+        },
+        {
+          "name": "variant",
+          "type": "\"segmented\" | \"underline\"",
+          "required": false,
+          "default": "\"segmented\"",
+          "description": "\"segmented\" (default) or \"underline\"."
+        }
+      ],
+      "example": "import { Tabs } from \"@kalaa/react\";\n\n<Tabs />"
+    },
+    {
+      "name": "Banner",
+      "category": "Components",
+      "purpose": "Inline message in one of four tones; `warning` and `danger` are announced as alerts.",
+      "props": [
+        {
+          "name": "tone",
+          "type": "\"info\" | \"success\" | \"warning\" | \"danger\"",
+          "required": true,
+          "default": null,
+          "description": "Meaning and colour. Warning and danger use `role=\"alert\"`, the others `role=\"status\"`."
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Bold first line."
+        },
+        {
+          "name": "actions",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Buttons on the right."
+        }
+      ],
+      "example": "import { Banner } from \"@kalaa/react\";\n\n<Banner />"
+    },
+    {
+      "name": "Badge",
+      "category": "Components",
+      "purpose": "Small label with a tone (neutral, info, success, warning, danger). Status colours are for status only.",
+      "props": [
+        {
+          "name": "tone",
+          "type": "BadgeTone",
+          "required": false,
+          "default": "\"neutral\"",
+          "description": "Colour meaning: neutral (default), info, success, warning or danger."
+        }
+      ],
+      "example": "import { Badge } from \"@kalaa/react\";\n\n<Badge />"
+    },
+    {
+      "name": "StatusBadge",
+      "category": "Components",
+      "purpose": "A Badge whose tone comes from a status word, in one mapping table: approved is success, needs review is warning, rejected is danger.",
+      "props": [
+        {
+          "name": "status",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Status word such as \"approved\" or \"needs review\"; unknown words render neutral."
+        }
+      ],
+      "example": "import { StatusBadge } from \"@kalaa/react\";\n\n<StatusBadge />"
+    },
+    {
+      "name": "ProgressBar",
+      "category": "Components",
+      "purpose": "Progress of a task with a required label (visible or hidden) and a tone.",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "default": null,
+          "description": "Current value."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "default": "100",
+          "description": "Value that means complete (default 100)."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Accessible name; shown unless `hideLabel`."
+        },
+        {
+          "name": "hideLabel",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Hides the label visually but keeps it for screen readers."
+        },
+        {
+          "name": "tone",
+          "type": "\"accent\" | \"success\" | \"warning\" | \"danger\"",
+          "required": false,
+          "default": "\"accent\"",
+          "description": "Fill colour: accent (default), success, warning or danger."
+        }
+      ],
+      "example": "import { ProgressBar } from \"@kalaa/react\";\n\n<ProgressBar />"
+    },
+    {
+      "name": "Dialog",
+      "category": "Components",
+      "purpose": "Modal dialog on Base UI with focus trap, Escape to close and a labelled close button. Sizes sm, md and lg (400, 560, 720px).",
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Controlled open state."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Initial open state when uncontrolled."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when the dialog opens or closes."
+        },
+        {
+          "name": "trigger",
+          "type": "ReactElement",
+          "required": false,
+          "default": null,
+          "description": "Element that opens the dialog (usually a Button)."
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "Dialog heading; also its accessible name."
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Short explanation under the title."
+        },
+        {
+          "name": "footer",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Actions row, for example Cancel and Save."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\" | \"lg\"",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Width: sm 400px, md 560px (default), lg 720px."
+        }
+      ],
+      "example": "import { Dialog } from \"@kalaa/react\";\n\n<Dialog />"
+    },
+    {
+      "name": "Table",
+      "category": "Components",
+      "purpose": "Table component in @kalaa/react.",
+      "props": [
+        {
+          "name": "caption",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "hideCaption",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "scrollLabel",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": ""
+        }
+      ],
+      "example": "import { Table } from \"@kalaa/react\";\n\n<Table />"
+    },
+    {
+      "name": "DataTable",
+      "category": "Components",
+      "purpose": "A sortable table for small record sets. The caller owns the rows, editor fields, validation, and persistence. Supply stable row IDs and give each editor control an accessible label.",
+      "props": [
+        {
+          "name": "caption",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "rows",
+          "type": "readonly Row[]",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "columns",
+          "type": "readonly DataTableColumn<Row>[]",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "getRowId",
+          "type": "(row: Row) => string",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "getRowLabel",
+          "type": "(row: Row) => string",
+          "required": false,
+          "default": "getRowId",
+          "description": ""
+        },
+        {
+          "name": "newRow",
+          "type": "() => Row",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "onCreate",
+          "type": "(row: Row) => void | Promise<void>",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "onUpdate",
+          "type": "(id: string, row: Row) => void | Promise<void>",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "onDelete",
+          "type": "(id: string) => void | Promise<void>",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "emptyMessage",
+          "type": "string",
+          "required": false,
+          "default": "\"No records\"",
+          "description": ""
+        }
+      ],
+      "example": "import { DataTable } from \"@kalaa/react\";\n\n<DataTable />"
+    },
+    {
+      "name": "Pagination",
+      "category": "Components",
+      "purpose": "Pagination component in @kalaa/react.",
+      "props": [
+        {
+          "name": "page",
+          "type": "number",
+          "required": true,
+          "default": null,
+          "description": "Current page, starting at 1."
+        },
+        {
+          "name": "pageCount",
+          "type": "number",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "onPageChange",
+          "type": "(page: number) => void",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "previousLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Previous\"",
+          "description": ""
+        },
+        {
+          "name": "nextLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Next\"",
+          "description": ""
+        },
+        {
+          "name": "emptyLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"No pages\"",
+          "description": ""
+        },
+        {
+          "name": "formatPage",
+          "type": "(page: number, pageCount: number) => string",
+          "required": false,
+          "default": "defaultFormatPage",
+          "description": ""
+        }
+      ],
+      "example": "import { Pagination } from \"@kalaa/react\";\n\n<Pagination />"
+    },
+    {
+      "name": "Toolbar",
+      "category": "Components",
+      "purpose": "Groups filters and actions while preserving ordinary Tab navigation.",
+      "props": [
+        {
+          "name": "actions",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": ""
+        }
+      ],
+      "example": "import { Toolbar } from \"@kalaa/react\";\n\n<Toolbar />"
+    },
+    {
+      "name": "Meter",
+      "category": "Components",
+      "purpose": "Meter component in @kalaa/react.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "value",
+          "type": "number | null",
+          "required": false,
+          "default": null,
+          "description": "Score from 0 to 100. A missing or invalid score is shown as unavailable."
+        },
+        {
+          "name": "unavailableLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Unavailable\"",
+          "description": ""
+        }
+      ],
+      "example": "import { Meter } from \"@kalaa/react\";\n\n<Meter />"
+    },
+    {
+      "name": "SuggestionReview",
+      "category": "Components",
+      "purpose": "SuggestionReview component in @kalaa/react.",
+      "props": [
+        {
+          "name": "proposal",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "source",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "score",
+          "type": "{ label: string; value?: number | null }",
+          "required": false,
+          "default": null,
+          "description": ""
+        },
+        {
+          "name": "alternatives",
+          "type": "readonly { id: string; label: ReactNode }[]",
+          "required": false,
+          "default": "[]",
+          "description": ""
+        },
+        {
+          "name": "alternativesLabel",
+          "type": "string",
+          "required": false,
+          "default": "\"Ranked alternatives\"",
+          "description": ""
+        },
+        {
+          "name": "actions",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": ""
+        }
+      ],
+      "example": "import { SuggestionReview } from \"@kalaa/react\";\n\n<SuggestionReview />"
+    },
+    {
+      "name": "Logo",
+      "category": "Components",
+      "purpose": "The Kalaa square: a frame (the unlit moon) with a lit L-shaped crescent, plus an optional wordmark lockup. Colours follow `--kalaa-text` and `--kalaa-accent`, so it changes with theme and accent.",
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"mark\" | \"lockup\"",
+          "required": false,
+          "default": "\"mark\"",
+          "description": "\"mark\" is the square only; \"lockup\" adds the Kalaa wordmark."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "required": false,
+          "default": null,
+          "description": "Height of the mark in px (the wordmark scales with it). Minimum 16 for the mark, 96px wide for the lockup."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Accessible name of the mark. The lockup shows its own \"Kalaa\" text and ignores it."
+        },
+        {
+          "name": "mono",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Single-colour version: frame and corner both use currentColor."
+        }
+      ],
+      "example": "import { Logo } from \"@kalaa/react\";\n\n<Logo />"
+    },
+    {
+      "name": "CodeBlock",
+      "category": "Components",
+      "purpose": "Monospace code with a Copy button. If the clipboard is unavailable it says to select the text and copy it.",
+      "props": [
+        {
+          "name": "code",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "The code to show and copy."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "default": "\"Code\"",
+          "description": "Accessible name of the code region, for example \"Install command\"."
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Hint for readers and tools, for example \"bash\" or \"tsx\". Not highlighted."
+        }
+      ],
+      "example": "import { CodeBlock } from \"@kalaa/react\";\n\n<CodeBlock />"
+    },
+    {
+      "name": "Avatar",
+      "category": "Components",
+      "purpose": "Compact identity badge showing an image or initials derived from `name`. Uses `--kalaa-radius-full` for circular user badges and `--kalaa-radius-md` (`shape=",
+      "props": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Person or team name; used to derive up to two initials and as the accessible label."
+        },
+        {
+          "name": "initials",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Explicit initials override (for example \"SR\")."
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Optional image URL; falls back to initials if omitted or if loading fails."
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Accessible image description; defaults to `name`."
+        },
+        {
+          "name": "size",
+          "type": "AvatarSize",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Diameter: sm 24px, md 32px (default), lg 40px."
+        },
+        {
+          "name": "shape",
+          "type": "AvatarShape",
+          "required": false,
+          "default": "\"circle\"",
+          "description": "True circle (`--kalaa-radius-full`, default) or theme-shaped square (`--kalaa-radius-md`)."
+        }
+      ],
+      "example": "import { Avatar } from \"@kalaa/react\";\n\n<Avatar />"
+    },
+    {
+      "name": "Breadcrumbs",
+      "category": "Components",
+      "purpose": "Hierarchical trail inside a `<nav aria-label=",
+      "props": [
+        {
+          "name": "items",
+          "type": "BreadcrumbItem[]",
+          "required": true,
+          "default": null,
+          "description": "Trail from root to the current page."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "default": "\"Breadcrumb\"",
+          "description": "Accessible name for the `<nav>` landmark (default \"Breadcrumb\")."
+        }
+      ],
+      "example": "import { Breadcrumbs } from \"@kalaa/react\";\n\n<Breadcrumbs />"
+    },
+    {
+      "name": "Combobox",
+      "category": "Components",
+      "purpose": "Searchable single-value dropdown built on Base UI Combobox. Filters options as you type and supports full keyboard navigation (Arrow keys, Enter, Escape).",
+      "props": [
+        {
+          "name": "options",
+          "type": "ComboboxOption[]",
+          "required": true,
+          "default": null,
+          "description": "Choices as value and label pairs."
+        },
+        {
+          "name": "value",
+          "type": "string | null",
+          "required": false,
+          "default": null,
+          "description": "Controlled selected value."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | null",
+          "required": false,
+          "default": null,
+          "description": "Initial value when uncontrolled."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string | null) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when the selected value changes."
+        },
+        {
+          "name": "emptyMessage",
+          "type": "string",
+          "required": false,
+          "default": "\"No matching options\"",
+          "description": "Message shown when no option matches the search query."
+        },
+        {
+          "name": "size",
+          "type": "\"sm\" | \"md\"",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Height: sm 30px, md 36px (default)."
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Marks the control invalid."
+        }
+      ],
+      "example": "import { Combobox } from \"@kalaa/react\";\n\n<Combobox />"
+    },
+    {
+      "name": "Divider",
+      "category": "Components",
+      "purpose": "1px rule in `--kalaa-border` with `role=",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "DividerOrientation",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "Axis: horizontal (default) or vertical (for toolbar and inline groups)."
+        },
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Optional inline text centred on a horizontal divider."
+        },
+        {
+          "name": "decorative",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Hides the separator from the accessibility tree (`role=\"none\"`)."
+        }
+      ],
+      "example": "import { Divider } from \"@kalaa/react\";\n\n<Divider />"
+    },
+    {
+      "name": "DropZone",
+      "category": "Components",
+      "purpose": "Drag-and-drop and click-to-browse file target with `accept` filtering and a built-in `maxSizeBytes` size-limit notice and validation message.",
+      "props": [
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": false,
+          "default": "\"Drop a file here",
+          "description": "Primary prompt inside the drop target."
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Secondary instructions below the prompt."
+        },
+        {
+          "name": "accept",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Accepted MIME types or extensions (for example \".csv,text/csv\")."
+        },
+        {
+          "name": "maxSizeBytes",
+          "type": "number",
+          "required": false,
+          "default": null,
+          "description": "Maximum file size in bytes; displays a size-limit message and rejects larger files."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Allows selecting more than one file at once."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Disables clicking and dropping."
+        },
+        {
+          "name": "onFiles",
+          "type": "(files: File[]) => void",
+          "required": false,
+          "default": null,
+          "description": "Called with accepted files after a drop or file-picker selection."
+        },
+        {
+          "name": "onReject",
+          "type": "(reason: string, file: File) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when a file is rejected (size limit exceeded or type mismatch)."
+        }
+      ],
+      "example": "import { DropZone } from \"@kalaa/react\";\n\n<DropZone />"
+    },
+    {
+      "name": "Icon",
+      "category": "Components",
+      "purpose": "Curated 24-icon set for operational interfaces: inline 24×24 SVG strokes using `currentColor`. Decorative by default (`aria-hidden=",
+      "props": [
+        {
+          "name": "name",
+          "type": "IconName",
+          "required": true,
+          "default": null,
+          "description": "Which icon to draw."
+        },
+        {
+          "name": "size",
+          "type": "IconSize",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Size: sm 16px, md 20px (default), lg 24px."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Accessible name for an icon that stands alone. Omit it for decorative icons next to text (they are hidden from screen readers)."
+        }
+      ],
+      "example": "import { Icon } from \"@kalaa/react\";\n\n<Icon />"
+    },
+    {
+      "name": "Link",
+      "category": "Components",
+      "purpose": "Inline text link in the accent colour, always underlined so it does not rely on colour alone. Pass `render={<NextLink href=",
+      "props": [],
+      "example": "import { Link } from \"@kalaa/react\";\n\n<Link />"
+    },
+    {
+      "name": "Menu",
+      "category": "Components",
+      "purpose": "Action menu on Base UI Menu with full keyboard support (Arrow keys, Home/End, type-ahead, Enter/Space, Escape). Pass an `items` array or compose with `Menu.Item` and `Menu.Separator`.",
+      "props": [
+        {
+          "name": "trigger",
+          "type": "ReactElement",
+          "required": true,
+          "default": null,
+          "description": "Button or element that opens the menu."
+        },
+        {
+          "name": "items",
+          "type": "MenuEntry[]",
+          "required": false,
+          "default": null,
+          "description": "Declarative list of menu items and separators (alternatively pass `Menu.Item` children)."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Controlled open state."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Initial open state when uncontrolled."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when the menu opens or closes."
+        },
+        {
+          "name": "align",
+          "type": "\"start\" | \"center\" | \"end\"",
+          "required": false,
+          "default": "\"start\"",
+          "description": "Alignment along the trigger edge (default \"start\")."
+        }
+      ],
+      "example": "import { Menu } from \"@kalaa/react\";\n\n<Menu />"
+    },
+    {
+      "name": "MultiSelect",
+      "category": "Components",
+      "purpose": "Searchable multi-value picker on Base UI Combobox (`multiple`), rendering selected values as removable chips inside the control. Designed to replace 20-checkbox lists inside table and column-mapping rows.",
+      "props": [
+        {
+          "name": "options",
+          "type": "MultiSelectOption[]",
+          "required": true,
+          "default": null,
+          "description": "Choices as value and label pairs."
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "default": null,
+          "description": "Controlled array of selected option values."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "description": "Initial selected option values when uncontrolled."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string[]) => void",
+          "required": false,
+          "default": null,
+          "description": "Called whenever the selected values array changes."
+        },
+        {
+          "name": "emptyMessage",
+          "type": "string",
+          "required": false,
+          "default": "\"No matching options\"",
+          "description": "Message shown when no option matches the search query."
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Marks the control invalid."
+        }
+      ],
+      "example": "import { MultiSelect } from \"@kalaa/react\";\n\n<MultiSelect />"
+    },
+    {
+      "name": "Popover",
+      "category": "Components",
+      "purpose": "Anchored non-modal overlay built on Base UI Popover for filter controls, quick inspectors or rich explanations.",
+      "props": [
+        {
+          "name": "trigger",
+          "type": "ReactElement",
+          "required": false,
+          "default": null,
+          "description": "Element that opens the popover on click (usually a Button)."
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Optional heading inside the popover."
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Optional supporting copy under the heading."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Controlled open state."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Initial open state when uncontrolled."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when the popover opens or closes."
+        },
+        {
+          "name": "side",
+          "type": "PopoverSide",
+          "required": false,
+          "default": "\"bottom\"",
+          "description": "Preferred side relative to the trigger (default \"bottom\")."
+        },
+        {
+          "name": "align",
+          "type": "PopoverAlign",
+          "required": false,
+          "default": "\"start\"",
+          "description": "Alignment along the side (default \"start\")."
+        }
+      ],
+      "example": "import { Popover } from \"@kalaa/react\";\n\n<Popover />"
+    },
+    {
+      "name": "RadioGroup",
+      "category": "Components",
+      "purpose": "Mutually exclusive choice list built on Base UI RadioGroup, with arrow-key roving focus and optional per-option descriptions. Always uses `--kalaa-radius-full` so radio buttons remain circular in both square and soft shape themes.",
+      "props": [
+        {
+          "name": "options",
+          "type": "RadioOption[]",
+          "required": true,
+          "default": null,
+          "description": "Choices in the radio group."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Controlled selected value."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Initial selected value when uncontrolled."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: string) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when the selected radio changes."
+        },
+        {
+          "name": "orientation",
+          "type": "\"vertical\" | \"horizontal\"",
+          "required": false,
+          "default": "\"vertical\"",
+          "description": "Layout direction: vertical (default) or horizontal."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Disables every option in the group."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Form field name."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Marks a selection required in forms."
+        }
+      ],
+      "example": "import { RadioGroup } from \"@kalaa/react\";\n\n<RadioGroup />"
+    },
+    {
+      "name": "Skeleton",
+      "category": "Components",
+      "purpose": "Layout placeholder shown while records or cards load. Decorative (`aria-hidden=",
+      "props": [
+        {
+          "name": "variant",
+          "type": "SkeletonVariant",
+          "required": false,
+          "default": "\"text\"",
+          "description": "Shape preset: text line (default), rectangular block, or true circle (avatar placeholder)."
+        },
+        {
+          "name": "width",
+          "type": "number | string",
+          "required": false,
+          "default": null,
+          "description": "CSS width (number in px or string such as \"60%\")."
+        },
+        {
+          "name": "height",
+          "type": "number | string",
+          "required": false,
+          "default": null,
+          "description": "CSS height (number in px or string)."
+        }
+      ],
+      "example": "import { Skeleton } from \"@kalaa/react\";\n\n<Skeleton />"
+    },
+    {
+      "name": "Slider",
+      "category": "Components",
+      "purpose": "Single-thumb range control on Base UI Slider with tabular readout and keyboard support (Arrow keys, Home, End, Page Up/Down). Track uses `--kalaa-radius-pill` and the thumb uses `--kalaa-radius-full`.",
+      "props": [
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Visible label associated with the slider thumb."
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "default": null,
+          "description": "Controlled numeric value."
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "Initial value when uncontrolled (default 0)."
+        },
+        {
+          "name": "onValueChange",
+          "type": "(value: number) => void",
+          "required": false,
+          "default": null,
+          "description": "Called as the slider thumb moves."
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "Minimum value (default 0)."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "default": "100",
+          "description": "Maximum value (default 100)."
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "Step increment (default 1)."
+        },
+        {
+          "name": "showValue",
+          "type": "boolean",
+          "required": false,
+          "default": "Boolean(label)",
+          "description": "Shows the formatted numeric value opposite the label (default true when `label` is set)."
+        },
+        {
+          "name": "format",
+          "type": "Intl.NumberFormatOptions",
+          "required": false,
+          "default": null,
+          "description": "Number format options passed to `Intl.NumberFormat`."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Disables interaction."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Form field name."
+        }
+      ],
+      "example": "import { Slider } from \"@kalaa/react\";\n\n<Slider />"
+    },
+    {
+      "name": "Spinner",
+      "category": "Components",
+      "purpose": "Indeterminate activity ring using `currentColor` and `--kalaa-radius-full`. Announces `role=",
+      "props": [
+        {
+          "name": "size",
+          "type": "SpinnerSize",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Diameter: sm 12px, md 16px (default), lg 24px."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "default": "\"Loading\"",
+          "description": "Accessible text announced to screen readers (`role=\"status\"`). Ignored when `decorative`."
+        },
+        {
+          "name": "decorative",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Hides the spinner from assistive tech; use when the surrounding control already says it is busy."
+        }
+      ],
+      "example": "import { Spinner } from \"@kalaa/react\";\n\n<Spinner />"
+    },
+    {
+      "name": "Stat",
+      "category": "Components",
+      "purpose": "Single operational metric with a sentence-case label, tabular figure, optional status delta and comparison help line.",
+      "props": [
+        {
+          "name": "label",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "Metric name in sentence case (for example \"Products pending review\")."
+        },
+        {
+          "name": "value",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "Primary figure, rendered in tabular numerals."
+        },
+        {
+          "name": "delta",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Optional change indicator (for example \"+14%\" or \"-3 rows\")."
+        },
+        {
+          "name": "deltaTone",
+          "type": "StatDeltaTone",
+          "required": false,
+          "default": "\"neutral\"",
+          "description": "Meaning of the delta badge: neutral (default), success, warning or danger."
+        },
+        {
+          "name": "help",
+          "type": "ReactNode",
+          "required": false,
+          "default": null,
+          "description": "Secondary context or comparison period below the value."
+        }
+      ],
+      "example": "import { Stat } from \"@kalaa/react\";\n\n<Stat />"
+    },
+    {
+      "name": "Toast",
+      "category": "Components",
+      "purpose": "Transient status notification stack built on Base UI Toast (`ToastProvider` + `useToast()`). Mount `ToastProvider` once near the root of your app and trigger notifications with `const { toast } = useToast()`.",
+      "props": [],
+      "example": "import { Toast } from \"@kalaa/react\";\n\n<Toast />"
+    },
+    {
+      "name": "Tooltip",
+      "category": "Components",
+      "purpose": "Brief non-interactive hint on Base UI Tooltip that appears on hover or keyboard focus and dismisses with Escape.",
+      "props": [
+        {
+          "name": "content",
+          "type": "ReactNode",
+          "required": true,
+          "default": null,
+          "description": "Brief label or keyboard shortcut shown inside the tooltip."
+        },
+        {
+          "name": "children",
+          "type": "ReactElement",
+          "required": true,
+          "default": null,
+          "description": "Focusable trigger element (for example a Button)."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Controlled open state."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Initial open state when uncontrolled."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when the tooltip opens or closes."
+        },
+        {
+          "name": "side",
+          "type": "TooltipSide",
+          "required": false,
+          "default": "\"top\"",
+          "description": "Preferred side relative to the trigger (default \"top\")."
+        },
+        {
+          "name": "delay",
+          "type": "number",
+          "required": false,
+          "default": "250",
+          "description": "Hover delay in milliseconds before opening (default 250)."
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Additional class name on the popup element."
+        }
+      ],
+      "example": "import { Tooltip } from \"@kalaa/react\";\n\n<Tooltip />"
+    }
+  ]
+}

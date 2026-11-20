@@ -1,0 +1,1309 @@
+# Kalaa (@kalaa/react v0.1.0)
+
+> Calm, accessible React components, data-driven blocks and full-page templates styled with Kalaa design tokens (`--kalaa-*`). Square by default (`data-shape="soft"` for rounded corners), three Indian-pigment accents (`neel`, `geru`, `mayur`), light and dark themes (`data-theme="light|dark"`), and A4/Letter black-on-white print stylesheets.
+
+## Data-first AI workflow
+
+1. Validate or populate a single JSON object conforming to `ResumeData` (`@kalaa/react/resume.schema.json`) or `PortfolioData` (`@kalaa/react/portfolio.schema.json`).
+2. Pass the data object to `<ResumePage data={resumeData} layout="single-column" />`, `<PortfolioPage data={portfolioData} />`, or `<LandingPage data={landingPageData} />`.
+3. Compose custom views from individual blocks in `Blocks/Resume`, `Blocks/Profile & portfolio`, `Blocks/Marketing`, and primitives in `Components`.
+
+## Exported JSON Schemas and helpers
+
+- `ResumeData`, `resumeDataSchema`, `validateResumeData`, `sampleResumeData` (`@kalaa/react/resume.schema.json`)
+- `PortfolioData`, `portfolioDataSchema`, `validatePortfolioData`, `samplePortfolioData` (`@kalaa/react/portfolio.schema.json`)
+- `LandingPageData`, `sampleLandingPageData`
+
+## Templates
+
+### ResumePage
+
+Complete web and print resume template driven by a single `ResumeData` JSON object. Provides `
+
+Props:
+- `data` (`ResumeData`, required) — Complete JSON-serialisable resume data object conforming to `ResumeData`.
+- `layout` (`ResumePageLayout`, optional, default: "single-column") — Page layout: "single-column" (linear ATS flow, default) or "sidebar" (two-column print/web layout).
+- `paperSize` (`ResumePaperSize`, optional, default: "a4") — Target print paper geometry: "a4" (210mm, default) or "letter" (8.5in).
+- `forcePrintPreview` (`boolean`, optional, default: false) — Forces black-on-white print tokens on screen (useful for previewing print output in dark mode).
+
+Example:
+```tsx
+import { ResumePage } from "@kalaa/react";
+
+<ResumePage />
+```
+
+### PortfolioPage
+
+Complete personal portfolio page template driven by a single `PortfolioData` JSON object. Composes `ProfileCard`, `CaseStudyCard`, `ProjectList`, `Timeline`, `SkillGroups`, `TestimonialCard`, `LinkList`, `ContactCard` and `PageFooter` with semantic landmarks.
+
+Props:
+- `data` (`PortfolioData`, required) — Complete JSON-serialisable portfolio data object conforming to `PortfolioData`.
+
+Example:
+```tsx
+import { PortfolioPage } from "@kalaa/react";
+
+<PortfolioPage />
+```
+
+### LandingPage
+
+Complete product and marketing landing page template driven by a single `LandingPageData` JSON object. Composes `Hero`, `StatsBand`, `FeatureGrid`, `TestimonialCard`, `FAQ`, `CTA` and `PageFooter` with accessible landmarks.
+
+Props:
+- `data` (`LandingPageData`, required) — Complete JSON-serialisable marketing page data object conforming to `LandingPageData`.
+
+Example:
+```tsx
+import { LandingPage } from "@kalaa/react";
+
+<LandingPage />
+```
+
+## Blocks/Resume
+
+### ResumeHeader
+
+Top identity block for a web or print resume with candidate name (`h1`), professional title, location and contact links.
+
+Props:
+- `name` (`string`, required) — Candidate full name (rendered as `h1`).
+- `title` (`string`, required) — Primary professional title or headline.
+- `location` (`string`, optional) — City, region or timezone.
+- `email` (`string`, optional) — Contact email address.
+- `phone` (`string`, optional) — Contact phone number.
+- `website` (`string`, optional) — Personal website URL.
+- `links` (`ResumeContactLink[]`, optional, default: []) — Additional profile or portfolio links.
+- `badge` (`string`, optional) — Optional availability or status label shown in a badge.
+
+Example:
+```tsx
+import { ResumeHeader } from "@kalaa/react";
+
+<ResumeHeader />
+```
+
+### Summary
+
+Executive summary block with a section heading, concise narrative paragraph and optional bulleted highlights.
+
+Props:
+- `heading` (`string`, optional, default: "Summary") — Section heading text (default "Summary").
+- `text` (`string`, required) — Primary summary paragraph.
+- `highlights` (`string[]`, optional, default: []) — Optional factual highlights shown as a bulleted list.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Heading level (default 2).
+
+Example:
+```tsx
+import { Summary } from "@kalaa/react";
+
+<Summary />
+```
+
+### ExperienceList
+
+Chronological work history block composed of `ExperienceItem` entries with role, organisation, semantic `<time>` dates, outcome bullets and technology `Badge` tags.
+
+Props:
+- `heading` (`string`, optional, default: "Experience") — Section heading (default "Experience").
+- `items` (`ResumeExperienceItem[]`, required) — Chronological experience entries.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2; items render one level deeper).
+
+Example:
+```tsx
+import { ExperienceList } from "@kalaa/react";
+
+<ExperienceList />
+```
+
+### ExperienceItem
+
+Chronological work history block composed of `ExperienceItem` entries with role, organisation, semantic `<time>` dates, outcome bullets and technology `Badge` tags.
+
+Props:
+- `role` (`string`, required) — Job title or role name.
+- `org` (`string`, required) — Company or organisation name.
+- `location` (`string`, optional) — City, region or remote status.
+- `startDate` (`string`, required) — ISO or human-readable start date (rendered inside `<time>`).
+- `endDate` (`string`, optional, default: "Present") — ISO or human-readable end date, or "Present" if current.
+- `summary` (`string`, optional) — Optional one-line role overview.
+- `bullets` (`string[]`, required) — Impact bullets in sentence case.
+- `tags` (`string[]`, optional, default: []) — Technology or domain tags shown as badges.
+- `headingLevel` (`2 | 3 | 4`, optional, default: 2) — Heading level for the role title (default 2 when standalone, 3 inside ExperienceList).
+
+Example:
+```tsx
+import { ExperienceItem } from "@kalaa/react";
+
+<ExperienceItem />
+```
+
+### EducationList
+
+Academic qualifications block showing degrees, institutions, graduation `<time>` dates, thesis notes and honours badges.
+
+Props:
+- `heading` (`string`, optional, default: "Education") — Section heading (default "Education").
+- `items` (`ResumeEducationItem[]`, required) — Academic credentials list.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2; degree titles render one level deeper).
+
+Example:
+```tsx
+import { EducationList } from "@kalaa/react";
+
+<EducationList />
+```
+
+### SkillGroups
+
+Categorised skill groups rendered inside a semantic `<dl>` with Kalaa `Badge` items. Supports responsive `
+
+Props:
+- `heading` (`string`, optional, default: "Skills") — Section heading (default "Skills").
+- `groups` (`ResumeSkillGroup[]`, required) — Categorised skill groups.
+- `layout` (`"grid" | "stacked"`, optional, default: "grid") — Visual arrangement: "grid" (default) or "stacked" for narrow sidebars.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2).
+
+Example:
+```tsx
+import { SkillGroups } from "@kalaa/react";
+
+<SkillGroups />
+```
+
+### ProjectList
+
+Grid or stack of `ProjectCard` blocks built on Kalaa `Card`, `KeyValue` and `Badge` with impact numbers, technology tags and links.
+
+Props:
+- `heading` (`string`, optional, default: "Projects") — Section heading (default "Projects").
+- `items` (`ResumeProjectItem[]`, required) — Project entries to render.
+- `columns` (`1 | 2`, optional, default: 2) — Number of columns on wide screens (default 2).
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2; project titles render one level deeper).
+
+Example:
+```tsx
+import { ProjectList } from "@kalaa/react";
+
+<ProjectList />
+```
+
+### ProjectCard
+
+Grid or stack of `ProjectCard` blocks built on Kalaa `Card`, `KeyValue` and `Badge` with impact numbers, technology tags and links.
+
+Props:
+- `name` (`string`, required) — Project name.
+- `description` (`string`, required) — Concise explanation of what was built and why.
+- `role` (`string`, optional) — Optional role on the project.
+- `startDate` (`string`, optional) — Start date or year.
+- `endDate` (`string`, optional) — End date or year.
+- `impact` (`ResumeProjectImpact[]`, optional, default: []) — Quantified outcomes and impact metrics.
+- `tags` (`string[]`, optional, default: []) — Technology tags.
+- `links` (`ResumeContactLink[]`, optional, default: []) — External links (repository, live demo, paper).
+- `headingLevel` (`2 | 3 | 4`, optional, default: 2) — Heading level for the project title (default 2 when standalone, 3 inside ProjectList).
+
+Example:
+```tsx
+import { ProjectCard } from "@kalaa/react";
+
+<ProjectCard />
+```
+
+### Certifications
+
+Professional certifications block with issuer name, `<time>` dates, optional verification link and credential ID `Badge`.
+
+Props:
+- `heading` (`string`, optional, default: "Certifications") — Section heading (default "Certifications").
+- `items` (`ResumeCertificationItem[]`, required) — Certification entries.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2).
+
+Example:
+```tsx
+import { Certifications } from "@kalaa/react";
+
+<Certifications />
+```
+
+### Languages
+
+Spoken and written languages block pairing each language name with a proficiency `Badge`.
+
+Props:
+- `heading` (`string`, optional, default: "Languages") — Section heading (default "Languages").
+- `items` (`ResumeLanguageItem[]`, required) — Spoken or written languages with proficiency labels.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2).
+
+Example:
+```tsx
+import { Languages } from "@kalaa/react";
+
+<Languages />
+```
+
+### Awards
+
+Honours, awards and peer-reviewed publications list (`Awards` and `Publications`) with `<time>` dates, issuer details and category `Badge`.
+
+Props:
+- `heading` (`string`, optional, default: "Awards & publications") — Section heading (default "Awards & publications").
+- `items` (`ResumeAwardItem[]`, required) — Award and publication entries.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2; entry titles render one level deeper).
+
+Example:
+```tsx
+import { Awards } from "@kalaa/react";
+
+<Awards />
+```
+
+### Publications
+
+Honours, awards and peer-reviewed publications list (`Awards` and `Publications`) with `<time>` dates, issuer details and category `Badge`.
+
+Props:
+- `heading` (`string`, optional, default: "Publications") — Section heading (default "Awards & publications").
+- `items` (`ResumeAwardItem[]`, required) — Award and publication entries.
+- `headingLevel` (`2 | 3`, optional) — Section heading level (default 2; entry titles render one level deeper).
+
+Example:
+```tsx
+import { Publications } from "@kalaa/react";
+
+<Publications />
+```
+
+## Blocks/Profile & portfolio
+
+### ProfileCard
+
+Personal identity and bio card with monogram avatar, availability `Badge`, tabular-figure stats, skill tags and `ButtonLink` actions (at most one primary).
+
+Example:
+```tsx
+import { ProfileCard } from "@kalaa/react";
+
+<ProfileCard />
+```
+
+### CaseStudyCard
+
+Portfolio case study card built on Kalaa `Card`, `KeyValue`, `Badge` and `ButtonLink` with structured Challenge/Outcome rows and `<time>` year.
+
+Props:
+- `title` (`string`, required) — Case study title.
+- `client` (`string`, optional) — Client or organisation name.
+- `year` (`string`, required) — Year or date completed.
+- `summary` (`string`, required) — Overview of the engagement.
+- `challenge` (`string`, optional) — Key problem addressed.
+- `outcome` (`string`, optional) — Result delivered.
+- `metrics` (`ResumeProjectImpact[]`, optional, default: []) — Quantified impact metrics.
+- `tags` (`string[]`, optional, default: []) — Domain or technology tags.
+- `href` (`string`, optional) — Link to full write-up.
+- `ctaLabel` (`string`, optional, default: "Read case study") — Link button label.
+- `headingLevel` (`2 | 3 | 4`, optional, default: 2) — Heading level for the case study title (default 2 when standalone, 3 inside a section).
+
+Example:
+```tsx
+import { CaseStudyCard } from "@kalaa/react";
+
+<CaseStudyCard />
+```
+
+### Timeline
+
+Chronological milestone list rendered as a semantic `<ol>` with `<time>` dates, role/project titles, subtitles and `Badge` tags.
+
+Props:
+- `heading` (`string`, optional, default: "Timeline") — Optional section heading (default "Timeline").
+- `items` (`PortfolioTimelineItem[]`, required) — Chronological milestones.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2; milestone titles render one level deeper).
+
+Example:
+```tsx
+import { Timeline } from "@kalaa/react";
+
+<Timeline />
+```
+
+### TestimonialCard
+
+Endorsement card built on Kalaa `Card` (`as=
+
+Props:
+- `quote` (`string`, required) — Verbatim testimonial text.
+- `author` (`string`, required) — Full name of the person quoted.
+- `role` (`string`, required) — Author's job title.
+- `org` (`string`, optional) — Author's company or organisation.
+- `date` (`string`, optional) — Date or year of the endorsement.
+- `context` (`string`, optional) — Relationship or project context.
+
+Example:
+```tsx
+import { TestimonialCard } from "@kalaa/react";
+
+<TestimonialCard />
+```
+
+### ContactCard
+
+Direct contact card built on Kalaa `Card`, `KeyValue`, `Badge` and `ButtonLink` with email, location, response time and a primary `mailto:` action.
+
+Props:
+- `title` (`string`, optional, default: "Get in touch") — Heading for the contact card.
+- `description` (`string`, optional) — Invitation copy below the heading.
+- `email` (`string`, required) — Contact email address.
+- `phone` (`string`, optional) — Optional phone number.
+- `location` (`string`, optional) — City, country or timezone.
+- `availability` (`string`, optional) — Current availability window.
+- `responseTime` (`string`, optional) — Typical response time.
+- `ctaLabel` (`string`, optional, default: "Send email") — Primary email button label.
+- `links` (`ResumeContactLink[]`, optional, default: []) — Additional profile links.
+- `headingLevel` (`2 | 3 | 4`, optional, default: 2) — Heading level for the card title (default 2).
+
+Example:
+```tsx
+import { ContactCard } from "@kalaa/react";
+
+<ContactCard />
+```
+
+### LinkList
+
+Annotated link collection for writing, talks, repositories or profile hubs. Supports `
+
+Props:
+- `heading` (`string`, optional) — Optional section heading.
+- `items` (`PortfolioLinkItem[]`, required) — Annotated links to render.
+- `variant` (`"stacked" | "inline"`, optional, default: "stacked") — Visual variant: "stacked" (default, with descriptions) or "inline" (compact horizontal bar).
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2).
+
+Example:
+```tsx
+import { LinkList } from "@kalaa/react";
+
+<LinkList />
+```
+
+## Blocks/Marketing
+
+### Hero
+
+Top marketing hero block with optional release `Badge`, IBM Plex Serif `h1` headline, value proposition, `ButtonLink` actions (one primary, one secondary) and factual highlights.
+
+Props:
+- `eyebrow` (`string`, optional) — Optional badge label above the title.
+- `title` (`string`, required) — Primary headline.
+- `description` (`string`, required) — Supporting value proposition paragraph.
+- `primaryAction` (`PortfolioAction`, optional) — Main call-to-action button.
+- `secondaryAction` (`PortfolioAction`, optional) — Secondary link button.
+- `highlights` (`string[]`, optional, default: []) — Short factual highlights below the actions.
+- `align` (`"start" | "center"`, optional, default: "start") — Content alignment: "start" (default) or "center".
+- `headingLevel` (`1 | 2`, optional, default: 1) — Heading level for the hero title (default 1).
+
+Example:
+```tsx
+import { Hero } from "@kalaa/react";
+
+<Hero />
+```
+
+### FeatureGrid
+
+Responsive 2- or 3-column grid of product capabilities built from `SectionHeader`, Kalaa `Card` and `Badge`.
+
+Props:
+- `heading` (`string`, optional) — Section heading.
+- `description` (`string`, optional) — Supporting section description.
+- `features` (`LandingFeatureItem[]`, required) — Feature items rendered as Kalaa `Card` blocks.
+- `columns` (`2 | 3`, optional, default: 3) — Number of columns on desktop (default 3).
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2; feature cards render one level deeper when heading is set).
+
+Example:
+```tsx
+import { FeatureGrid } from "@kalaa/react";
+
+<FeatureGrid />
+```
+
+### StatsBand
+
+Horizontal benchmark and KPI band rendering figures with `font-variant-numeric: tabular-nums` inside a semantic `<dl>`.
+
+Props:
+- `heading` (`string`, optional) — Optional section heading.
+- `description` (`string`, optional) — Optional supporting description.
+- `stats` (`PortfolioStat[]`, required) — Key metrics rendered with tabular numerals.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2).
+
+Example:
+```tsx
+import { StatsBand } from "@kalaa/react";
+
+<StatsBand />
+```
+
+### CTA
+
+Call-to-action card with a 3px accent start border, serif heading, description, optional note and `ButtonLink` actions.
+
+Props:
+- `title` (`string`, required) — Action heading.
+- `description` (`string`, optional) — Supporting explanation.
+- `primaryAction` (`PortfolioAction`, required) — Primary action link.
+- `secondaryAction` (`PortfolioAction`, optional) — Optional secondary action link.
+- `note` (`string`, optional) — Optional note below the buttons.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Heading level (default 2).
+
+Example:
+```tsx
+import { CTA } from "@kalaa/react";
+
+<CTA />
+```
+
+### FAQ
+
+Frequently asked questions block built on native HTML `<details>` and `<summary>` elements so disclosures work without client-side JavaScript.
+
+Props:
+- `heading` (`string`, optional, default: "Frequently asked questions") — Section heading (default "Frequently asked questions").
+- `description` (`string`, optional) — Optional supporting description.
+- `items` (`LandingFaqItem[]`, required) — Question and answer pairs rendered as native `<details>` disclosures.
+- `defaultOpenAll` (`boolean`, optional, default: false) — Opens all items by default (also ensures full answer visibility when printing).
+- `headingLevel` (`2 | 3`, optional, default: 2) — Section heading level (default 2).
+
+Example:
+```tsx
+import { FAQ } from "@kalaa/react";
+
+<FAQ />
+```
+
+### PageFooter
+
+Semantic `<footer>` landmark with the Kalaa `LogoMark`, brand tagline, uniquely labelled `<nav>` link columns and utility links.
+
+Props:
+- `brandName` (`string`, required) — Brand or owner name.
+- `tagline` (`string`, optional) — Short tagline below the brand.
+- `columns` (`PortfolioFooterColumn[]`, optional, default: []) — Structured link columns.
+- `links` (`ResumeContactLink[]`, optional, default: []) — Flat utility links.
+- `copyright` (`string`, optional) — Copyright or licence line.
+- `showLogo` (`boolean`, optional, default: true) — Whether to render the Kalaa mark next to the brand name.
+
+Example:
+```tsx
+import { PageFooter } from "@kalaa/react";
+
+<PageFooter />
+```
+
+### SectionHeader
+
+Consistent section heading (`h2` or `h3`) with an optional `Badge`, muted description and secondary `ButtonLink` action.
+
+Props:
+- `title` (`string`, required) — Section heading text.
+- `description` (`string`, optional) — Supporting description below the heading.
+- `badge` (`string`, optional) — Optional status or category badge text.
+- `action` (`PortfolioAction`, optional) — Optional secondary action link on the right.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Heading level (default 2).
+- `align` (`"between" | "start"`, optional, default: "between") — Horizontal alignment: "between" (default) or "start".
+
+Example:
+```tsx
+import { SectionHeader } from "@kalaa/react";
+
+<SectionHeader />
+```
+
+## Components
+
+### AppShell
+
+Page frame with a sticky 240px sidebar (full-page background) and a main area (max 1120px). Use it once per app, with `brand`, `AppShell.NavItem` children in `nav`, and `footer` for account or theme utilities. Pass `render={<NextLink href=
+
+Props:
+- `nav` (`ReactNode`, required) — Sidebar content, usually `AppShell.NavItem` links.
+- `header` (`ReactNode`, optional) — Optional content above the main area (for example a page header).
+- `brand` (`ReactNode`, optional) — Brand slot at the top of the sidebar (logo, app name). Stays beside the Menu button on small screens.
+- `footer` (`ReactNode`, optional) — Footer or utility slot at the bottom of the sidebar (theme toggle, account, sign out).
+
+Example:
+```tsx
+import { AppShell } from "@kalaa/react";
+
+<AppShell />
+```
+
+### PageHeader
+
+Title row for a page: optional back link, one `h1`, muted description and right-aligned actions. Pass `back={{ href, label, render: <NextLink href=
+
+Props:
+- `title` (`ReactNode`, required) — The page `h1`.
+- `description` (`ReactNode`, optional) — Muted line under the title.
+- `back` (`{ href: string; label: string; /** Replaces the `<a>`, for client-side routing: `render: <NextLink href="/products" />` with `next/link`. */ render?: useRender.RenderProp; }`, optional) — Link above the title to the parent page.
+- `actions` (`ReactNode`, optional) — Buttons on the right of the title row; at most one primary.
+- `variant` (`"default" | "brand"`, optional, default: "default") — "brand" sets the title in serif for marketing pages.
+
+Example:
+```tsx
+import { PageHeader } from "@kalaa/react";
+
+<PageHeader />
+```
+
+### Card
+
+Bordered surface that groups related content. A header row appears only when there is a title or actions.
+
+Props:
+- `as` (`"section" | "div" | "article"`, optional, default: "section") — Root element (default section).
+- `title` (`ReactNode`, optional) — Card heading.
+- `description` (`ReactNode`, optional) — Muted line under the title.
+- `actions` (`ReactNode`, optional) — Content on the right of the header row.
+- `titleLevel` (`2 | 3 | 4`, optional, default: 2) — Heading level of the title (default 2). Use 3 or 4 when the card sits under a section heading.
+
+Example:
+```tsx
+import { Card } from "@kalaa/react";
+
+<Card />
+```
+
+### KeyValue
+
+Definition list for facts about one thing. `rows` has a label column and dividers; `grid` fits summaries.
+
+Props:
+- `items` (`Array<{ label: ReactNode; value: ReactNode }>`, required) — Label and value pairs; an empty value shows an em dash.
+- `layout` (`"rows" | "grid"`, optional, default: "rows") — "rows" (label column with dividers, default) or "grid" (compact summary).
+
+Example:
+```tsx
+import { KeyValue } from "@kalaa/react";
+
+<KeyValue />
+```
+
+### ValueComparison
+
+Compare an original value with a proposed value. Panels stack when their container is narrow. Set a contextual accessible name when showing multiple comparisons and use a separate control for accepting a proposal.
+
+Props:
+- `original` (`ReactNode`, required)
+- `proposed` (`ReactNode`, required)
+- `originalLabel` (`string`, optional, default: "Original")
+- `proposedLabel` (`string`, optional, default: "Proposed")
+- `emptyLabel` (`string`, optional, default: "No value")
+
+Example:
+```tsx
+import { ValueComparison } from "@kalaa/react";
+
+<ValueComparison />
+```
+
+### EmptyState
+
+Centred message for a list or area with nothing in it, with one optional next step.
+
+Props:
+- `title` (`ReactNode`, required) — What is missing, for example "No products yet".
+- `description` (`ReactNode`, optional) — What to do about it.
+- `action` (`ReactNode`, optional) — One next step, usually a Button.
+
+Example:
+```tsx
+import { EmptyState } from "@kalaa/react";
+
+<EmptyState />
+```
+
+### Button
+
+Action button. `primary` is the main next step, `secondary` the default, `ghost` low-emphasis inline actions, `danger` destructive ones.
+
+Props:
+- `variant` (`ButtonVariant`, optional, default: "secondary") — primary (main next step), secondary (default), ghost (low emphasis) or danger (destructive).
+- `size` (`ButtonSize`, optional, default: "md") — Height: sm 30px, md 36px (default).
+- `iconStart` (`ReactNode`, optional) — Decorative icon before the label.
+- `iconEnd` (`ReactNode`, optional) — Decorative icon after the label.
+- `loading` (`boolean`, optional, default: false) — Shows a spinner, disables the button and sets `aria-busy`; keeps its width.
+
+Example:
+```tsx
+import { Button } from "@kalaa/react";
+
+<Button />
+```
+
+### ButtonLink
+
+A link that looks like a Button, for navigation. Same variants and sizes; works with any router through `href` or the Base UI `render` prop (for example `next/link`).
+
+Props:
+- `variant` (`ButtonVariant`, optional, default: "secondary") — primary (main next step), secondary (default), ghost (low emphasis) or danger (destructive).
+- `size` (`ButtonSize`, optional, default: "md") — Height: sm 30px, md 36px (default).
+- `iconStart` (`ReactNode`, optional) — Decorative icon before the label.
+- `iconEnd` (`ReactNode`, optional) — Decorative icon after the label.
+
+Example:
+```tsx
+import { ButtonLink } from "@kalaa/react";
+
+<ButtonLink />
+```
+
+### Field
+
+Wraps one control with a label, optional hint, error and required marker, and wires `aria-describedby` and `aria-invalid`.
+
+Props:
+- `label` (`ReactNode`, required) — Visible label above the control, in sentence case.
+- `hint` (`ReactNode`, optional) — Help text below the control.
+- `error` (`ReactNode`, optional) — Error message; marks the control invalid.
+- `required` (`boolean`, optional) — Adds "(required)" to the label.
+- `children` (`ReactElement<ControlProps>`, required) — Exactly one control (Input, Textarea, Select).
+
+Example:
+```tsx
+import { Field } from "@kalaa/react";
+
+<Field />
+```
+
+### Input
+
+Single-line text input (native props plus `size` and `invalid`). Put it in a `Field` to get a label and error text.
+
+Props:
+- `size` (`"sm" | "md"`, optional, default: "md") — Height: sm 30px, md 36px (default).
+- `invalid` (`boolean`, optional) — Shows the danger border and sets `aria-invalid`.
+
+Example:
+```tsx
+import { Input } from "@kalaa/react";
+
+<Input />
+```
+
+### Textarea
+
+Multi-line text input with the same look as Input; `autoResize` grows it with its content.
+
+Props:
+- `size` (`"sm" | "md"`, optional, default: "md") — Text size and padding: sm or md (default).
+- `invalid` (`boolean`, optional) — Shows the danger border and sets `aria-invalid`.
+- `autoResize` (`boolean`, optional) — Grows with its content instead of scrolling.
+
+Example:
+```tsx
+import { Textarea } from "@kalaa/react";
+
+<Textarea />
+```
+
+### Select
+
+Dropdown built on Base UI Select, with keyboard support (arrows, type-ahead, Escape).
+
+Props:
+- `options` (`SelectOption[]`, required) — Choices as value and label pairs.
+- `value` (`string`, optional) — Controlled value.
+- `defaultValue` (`string`, optional) — Initial value when uncontrolled.
+- `onValueChange` (`(value: string | null) => void`, optional) — Called with the new value.
+- `placeholder` (`string`, optional, default: "Select an option") — Text shown when nothing is selected.
+- `size` (`"sm" | "md"`, optional, default: "md") — Height: sm 30px, md 36px (default).
+- `invalid` (`boolean`, optional) — Shows the danger border and sets `aria-invalid`.
+- `name` (`string`, optional) — Form field name.
+- `required` (`boolean`, optional) — Marks the field required in forms.
+
+Example:
+```tsx
+import { Select } from "@kalaa/react";
+
+<Select />
+```
+
+### Checkbox
+
+Checkbox with a label and optional description, built on Base UI. Supports `indeterminate` for select all.
+
+Props:
+- `label` (`ReactNode`, required) — Visible label, shown to the right of the box.
+- `description` (`ReactNode`, optional) — Optional help text under the label, linked with `aria-describedby`.
+- `className` (`string`, optional)
+
+Example:
+```tsx
+import { Checkbox } from "@kalaa/react";
+
+<Checkbox />
+```
+
+### Switch
+
+On/off setting that applies immediately, with a label and optional description.
+
+Props:
+- `label` (`ReactNode`, required) — Visible label, shown to the right of the switch.
+- `description` (`ReactNode`, optional) — Optional help text under the label, linked with `aria-describedby`.
+- `className` (`string`, optional)
+
+Example:
+```tsx
+import { Switch } from "@kalaa/react";
+
+<Switch />
+```
+
+### Tabs
+
+Switches between views of one subject. `segmented` for compact filters, `underline` for page sections.
+
+Props:
+- `items` (`TabItem[]`, required) — Tabs with their panel content.
+- `value` (`string`, optional) — Controlled selected tab.
+- `defaultValue` (`string`, optional) — Initially selected tab when uncontrolled (default: first enabled).
+- `onValueChange` (`(value: string) => void`, optional) — Called with the selected tab value.
+- `variant` (`"segmented" | "underline"`, optional, default: "segmented") — "segmented" (default) or "underline".
+
+Example:
+```tsx
+import { Tabs } from "@kalaa/react";
+
+<Tabs />
+```
+
+### Banner
+
+Inline message in one of four tones; `warning` and `danger` are announced as alerts.
+
+Props:
+- `tone` (`"info" | "success" | "warning" | "danger"`, required) — Meaning and colour. Warning and danger use `role="alert"`, the others `role="status"`.
+- `title` (`ReactNode`, optional) — Bold first line.
+- `actions` (`ReactNode`, optional) — Buttons on the right.
+
+Example:
+```tsx
+import { Banner } from "@kalaa/react";
+
+<Banner />
+```
+
+### Badge
+
+Small label with a tone (neutral, info, success, warning, danger). Status colours are for status only.
+
+Props:
+- `tone` (`BadgeTone`, optional, default: "neutral") — Colour meaning: neutral (default), info, success, warning or danger.
+
+Example:
+```tsx
+import { Badge } from "@kalaa/react";
+
+<Badge />
+```
+
+### StatusBadge
+
+A Badge whose tone comes from a status word, in one mapping table: approved is success, needs review is warning, rejected is danger.
+
+Props:
+- `status` (`string`, required) — Status word such as "approved" or "needs review"; unknown words render neutral.
+
+Example:
+```tsx
+import { StatusBadge } from "@kalaa/react";
+
+<StatusBadge />
+```
+
+### ProgressBar
+
+Progress of a task with a required label (visible or hidden) and a tone.
+
+Props:
+- `value` (`number`, required) — Current value.
+- `max` (`number`, optional, default: 100) — Value that means complete (default 100).
+- `label` (`string`, required) — Accessible name; shown unless `hideLabel`.
+- `hideLabel` (`boolean`, optional, default: false) — Hides the label visually but keeps it for screen readers.
+- `tone` (`"accent" | "success" | "warning" | "danger"`, optional, default: "accent") — Fill colour: accent (default), success, warning or danger.
+
+Example:
+```tsx
+import { ProgressBar } from "@kalaa/react";
+
+<ProgressBar />
+```
+
+### Dialog
+
+Modal dialog on Base UI with focus trap, Escape to close and a labelled close button. Sizes sm, md and lg (400, 560, 720px).
+
+Props:
+- `open` (`boolean`, optional) — Controlled open state.
+- `defaultOpen` (`boolean`, optional) — Initial open state when uncontrolled.
+- `onOpenChange` (`(open: boolean) => void`, optional) — Called when the dialog opens or closes.
+- `trigger` (`ReactElement`, optional) — Element that opens the dialog (usually a Button).
+- `title` (`ReactNode`, required) — Dialog heading; also its accessible name.
+- `description` (`ReactNode`, optional) — Short explanation under the title.
+- `footer` (`ReactNode`, optional) — Actions row, for example Cancel and Save.
+- `size` (`"sm" | "md" | "lg"`, optional, default: "md") — Width: sm 400px, md 560px (default), lg 720px.
+
+Example:
+```tsx
+import { Dialog } from "@kalaa/react";
+
+<Dialog />
+```
+
+### Table
+
+Table component in @kalaa/react.
+
+Props:
+- `caption` (`ReactNode`, required)
+- `hideCaption` (`boolean`, optional)
+- `scrollLabel` (`string`, optional)
+
+Example:
+```tsx
+import { Table } from "@kalaa/react";
+
+<Table />
+```
+
+### DataTable
+
+A sortable table for small record sets. The caller owns the rows, editor fields, validation, and persistence. Supply stable row IDs and give each editor control an accessible label.
+
+Props:
+- `caption` (`string`, required)
+- `rows` (`readonly Row[]`, required)
+- `columns` (`readonly DataTableColumn<Row>[]`, required)
+- `getRowId` (`(row: Row) => string`, required)
+- `getRowLabel` (`(row: Row) => string`, optional, default: getRowId)
+- `newRow` (`() => Row`, required)
+- `onCreate` (`(row: Row) => void | Promise<void>`, required)
+- `onUpdate` (`(id: string, row: Row) => void | Promise<void>`, required)
+- `onDelete` (`(id: string) => void | Promise<void>`, required)
+- `emptyMessage` (`string`, optional, default: "No records")
+
+Example:
+```tsx
+import { DataTable } from "@kalaa/react";
+
+<DataTable />
+```
+
+### Pagination
+
+Pagination component in @kalaa/react.
+
+Props:
+- `page` (`number`, required) — Current page, starting at 1.
+- `pageCount` (`number`, required)
+- `onPageChange` (`(page: number) => void`, required)
+- `previousLabel` (`string`, optional, default: "Previous")
+- `nextLabel` (`string`, optional, default: "Next")
+- `emptyLabel` (`string`, optional, default: "No pages")
+- `formatPage` (`(page: number, pageCount: number) => string`, optional, default: defaultFormatPage)
+
+Example:
+```tsx
+import { Pagination } from "@kalaa/react";
+
+<Pagination />
+```
+
+### Toolbar
+
+Groups filters and actions while preserving ordinary Tab navigation.
+
+Props:
+- `actions` (`ReactNode`, optional)
+
+Example:
+```tsx
+import { Toolbar } from "@kalaa/react";
+
+<Toolbar />
+```
+
+### Meter
+
+Meter component in @kalaa/react.
+
+Props:
+- `label` (`string`, required)
+- `value` (`number | null`, optional) — Score from 0 to 100. A missing or invalid score is shown as unavailable.
+- `unavailableLabel` (`string`, optional, default: "Unavailable")
+
+Example:
+```tsx
+import { Meter } from "@kalaa/react";
+
+<Meter />
+```
+
+### SuggestionReview
+
+SuggestionReview component in @kalaa/react.
+
+Props:
+- `proposal` (`ReactNode`, required)
+- `source` (`ReactNode`, optional)
+- `score` (`{ label: string; value?: number | null }`, optional)
+- `alternatives` (`readonly { id: string; label: ReactNode }[]`, optional, default: [])
+- `alternativesLabel` (`string`, optional, default: "Ranked alternatives")
+- `actions` (`ReactNode`, optional)
+
+Example:
+```tsx
+import { SuggestionReview } from "@kalaa/react";
+
+<SuggestionReview />
+```
+
+### Logo
+
+The Kalaa square: a frame (the unlit moon) with a lit L-shaped crescent, plus an optional wordmark lockup. Colours follow `--kalaa-text` and `--kalaa-accent`, so it changes with theme and accent.
+
+Props:
+- `variant` (`"mark" | "lockup"`, optional, default: "mark") — "mark" is the square only; "lockup" adds the Kalaa wordmark.
+- `size` (`number`, optional) — Height of the mark in px (the wordmark scales with it). Minimum 16 for the mark, 96px wide for the lockup.
+- `title` (`string`, optional) — Accessible name of the mark. The lockup shows its own "Kalaa" text and ignores it.
+- `mono` (`boolean`, optional) — Single-colour version: frame and corner both use currentColor.
+
+Example:
+```tsx
+import { Logo } from "@kalaa/react";
+
+<Logo />
+```
+
+### CodeBlock
+
+Monospace code with a Copy button. If the clipboard is unavailable it says to select the text and copy it.
+
+Props:
+- `code` (`string`, required) — The code to show and copy.
+- `label` (`string`, optional, default: "Code") — Accessible name of the code region, for example "Install command".
+- `language` (`string`, optional) — Hint for readers and tools, for example "bash" or "tsx". Not highlighted.
+
+Example:
+```tsx
+import { CodeBlock } from "@kalaa/react";
+
+<CodeBlock />
+```
+
+### Avatar
+
+Compact identity badge showing an image or initials derived from `name`. Uses `--kalaa-radius-full` for circular user badges and `--kalaa-radius-md` (`shape=
+
+Props:
+- `name` (`string`, optional) — Person or team name; used to derive up to two initials and as the accessible label.
+- `initials` (`string`, optional) — Explicit initials override (for example "SR").
+- `src` (`string`, optional) — Optional image URL; falls back to initials if omitted or if loading fails.
+- `alt` (`string`, optional) — Accessible image description; defaults to `name`.
+- `size` (`AvatarSize`, optional, default: "md") — Diameter: sm 24px, md 32px (default), lg 40px.
+- `shape` (`AvatarShape`, optional, default: "circle") — True circle (`--kalaa-radius-full`, default) or theme-shaped square (`--kalaa-radius-md`).
+
+Example:
+```tsx
+import { Avatar } from "@kalaa/react";
+
+<Avatar />
+```
+
+### Breadcrumbs
+
+Hierarchical trail inside a `<nav aria-label=
+
+Props:
+- `items` (`BreadcrumbItem[]`, required) — Trail from root to the current page.
+- `label` (`string`, optional, default: "Breadcrumb") — Accessible name for the `<nav>` landmark (default "Breadcrumb").
+
+Example:
+```tsx
+import { Breadcrumbs } from "@kalaa/react";
+
+<Breadcrumbs />
+```
+
+### Combobox
+
+Searchable single-value dropdown built on Base UI Combobox. Filters options as you type and supports full keyboard navigation (Arrow keys, Enter, Escape).
+
+Props:
+- `options` (`ComboboxOption[]`, required) — Choices as value and label pairs.
+- `value` (`string | null`, optional) — Controlled selected value.
+- `defaultValue` (`string | null`, optional) — Initial value when uncontrolled.
+- `onValueChange` (`(value: string | null) => void`, optional) — Called when the selected value changes.
+- `emptyMessage` (`string`, optional, default: "No matching options") — Message shown when no option matches the search query.
+- `size` (`"sm" | "md"`, optional, default: "md") — Height: sm 30px, md 36px (default).
+- `invalid` (`boolean`, optional) — Marks the control invalid.
+
+Example:
+```tsx
+import { Combobox } from "@kalaa/react";
+
+<Combobox />
+```
+
+### Divider
+
+1px rule in `--kalaa-border` with `role=
+
+Props:
+- `orientation` (`DividerOrientation`, optional, default: "horizontal") — Axis: horizontal (default) or vertical (for toolbar and inline groups).
+- `label` (`ReactNode`, optional) — Optional inline text centred on a horizontal divider.
+- `decorative` (`boolean`, optional, default: false) — Hides the separator from the accessibility tree (`role="none"`).
+
+Example:
+```tsx
+import { Divider } from "@kalaa/react";
+
+<Divider />
+```
+
+### DropZone
+
+Drag-and-drop and click-to-browse file target with `accept` filtering and a built-in `maxSizeBytes` size-limit notice and validation message.
+
+Props:
+- `label` (`ReactNode`, optional, default: "Drop a file here) — Primary prompt inside the drop target.
+- `description` (`ReactNode`, optional) — Secondary instructions below the prompt.
+- `accept` (`string`, optional) — Accepted MIME types or extensions (for example ".csv,text/csv").
+- `maxSizeBytes` (`number`, optional) — Maximum file size in bytes; displays a size-limit message and rejects larger files.
+- `multiple` (`boolean`, optional, default: false) — Allows selecting more than one file at once.
+- `disabled` (`boolean`, optional, default: false) — Disables clicking and dropping.
+- `onFiles` (`(files: File[]) => void`, optional) — Called with accepted files after a drop or file-picker selection.
+- `onReject` (`(reason: string, file: File) => void`, optional) — Called when a file is rejected (size limit exceeded or type mismatch).
+
+Example:
+```tsx
+import { DropZone } from "@kalaa/react";
+
+<DropZone />
+```
+
+### Icon
+
+Curated 24-icon set for operational interfaces: inline 24×24 SVG strokes using `currentColor`. Decorative by default (`aria-hidden=
+
+Props:
+- `name` (`IconName`, required) — Which icon to draw.
+- `size` (`IconSize`, optional, default: "md") — Size: sm 16px, md 20px (default), lg 24px.
+- `label` (`string`, optional) — Accessible name for an icon that stands alone. Omit it for decorative icons next to text (they are hidden from screen readers).
+
+Example:
+```tsx
+import { Icon } from "@kalaa/react";
+
+<Icon />
+```
+
+### Link
+
+Inline text link in the accent colour, always underlined so it does not rely on colour alone. Pass `render={<NextLink href=
+
+Example:
+```tsx
+import { Link } from "@kalaa/react";
+
+<Link />
+```
+
+### Menu
+
+Action menu on Base UI Menu with full keyboard support (Arrow keys, Home/End, type-ahead, Enter/Space, Escape). Pass an `items` array or compose with `Menu.Item` and `Menu.Separator`.
+
+Props:
+- `trigger` (`ReactElement`, required) — Button or element that opens the menu.
+- `items` (`MenuEntry[]`, optional) — Declarative list of menu items and separators (alternatively pass `Menu.Item` children).
+- `open` (`boolean`, optional) — Controlled open state.
+- `defaultOpen` (`boolean`, optional) — Initial open state when uncontrolled.
+- `onOpenChange` (`(open: boolean) => void`, optional) — Called when the menu opens or closes.
+- `align` (`"start" | "center" | "end"`, optional, default: "start") — Alignment along the trigger edge (default "start").
+
+Example:
+```tsx
+import { Menu } from "@kalaa/react";
+
+<Menu />
+```
+
+### MultiSelect
+
+Searchable multi-value picker on Base UI Combobox (`multiple`), rendering selected values as removable chips inside the control. Designed to replace 20-checkbox lists inside table and column-mapping rows.
+
+Props:
+- `options` (`MultiSelectOption[]`, required) — Choices as value and label pairs.
+- `value` (`string[]`, optional) — Controlled array of selected option values.
+- `defaultValue` (`string[]`, optional, default: []) — Initial selected option values when uncontrolled.
+- `onValueChange` (`(value: string[]) => void`, optional) — Called whenever the selected values array changes.
+- `emptyMessage` (`string`, optional, default: "No matching options") — Message shown when no option matches the search query.
+- `invalid` (`boolean`, optional) — Marks the control invalid.
+
+Example:
+```tsx
+import { MultiSelect } from "@kalaa/react";
+
+<MultiSelect />
+```
+
+### Popover
+
+Anchored non-modal overlay built on Base UI Popover for filter controls, quick inspectors or rich explanations.
+
+Props:
+- `trigger` (`ReactElement`, optional) — Element that opens the popover on click (usually a Button).
+- `title` (`ReactNode`, optional) — Optional heading inside the popover.
+- `description` (`ReactNode`, optional) — Optional supporting copy under the heading.
+- `open` (`boolean`, optional) — Controlled open state.
+- `defaultOpen` (`boolean`, optional) — Initial open state when uncontrolled.
+- `onOpenChange` (`(open: boolean) => void`, optional) — Called when the popover opens or closes.
+- `side` (`PopoverSide`, optional, default: "bottom") — Preferred side relative to the trigger (default "bottom").
+- `align` (`PopoverAlign`, optional, default: "start") — Alignment along the side (default "start").
+
+Example:
+```tsx
+import { Popover } from "@kalaa/react";
+
+<Popover />
+```
+
+### RadioGroup
+
+Mutually exclusive choice list built on Base UI RadioGroup, with arrow-key roving focus and optional per-option descriptions. Always uses `--kalaa-radius-full` so radio buttons remain circular in both square and soft shape themes.
+
+Props:
+- `options` (`RadioOption[]`, required) — Choices in the radio group.
+- `value` (`string`, optional) — Controlled selected value.
+- `defaultValue` (`string`, optional) — Initial selected value when uncontrolled.
+- `onValueChange` (`(value: string) => void`, optional) — Called when the selected radio changes.
+- `orientation` (`"vertical" | "horizontal"`, optional, default: "vertical") — Layout direction: vertical (default) or horizontal.
+- `disabled` (`boolean`, optional) — Disables every option in the group.
+- `name` (`string`, optional) — Form field name.
+- `required` (`boolean`, optional) — Marks a selection required in forms.
+
+Example:
+```tsx
+import { RadioGroup } from "@kalaa/react";
+
+<RadioGroup />
+```
+
+### Skeleton
+
+Layout placeholder shown while records or cards load. Decorative (`aria-hidden=
+
+Props:
+- `variant` (`SkeletonVariant`, optional, default: "text") — Shape preset: text line (default), rectangular block, or true circle (avatar placeholder).
+- `width` (`number | string`, optional) — CSS width (number in px or string such as "60%").
+- `height` (`number | string`, optional) — CSS height (number in px or string).
+
+Example:
+```tsx
+import { Skeleton } from "@kalaa/react";
+
+<Skeleton />
+```
+
+### Slider
+
+Single-thumb range control on Base UI Slider with tabular readout and keyboard support (Arrow keys, Home, End, Page Up/Down). Track uses `--kalaa-radius-pill` and the thumb uses `--kalaa-radius-full`.
+
+Props:
+- `label` (`ReactNode`, optional) — Visible label associated with the slider thumb.
+- `value` (`number`, optional) — Controlled numeric value.
+- `defaultValue` (`number`, optional, default: 0) — Initial value when uncontrolled (default 0).
+- `onValueChange` (`(value: number) => void`, optional) — Called as the slider thumb moves.
+- `min` (`number`, optional, default: 0) — Minimum value (default 0).
+- `max` (`number`, optional, default: 100) — Maximum value (default 100).
+- `step` (`number`, optional, default: 1) — Step increment (default 1).
+- `showValue` (`boolean`, optional, default: Boolean(label)) — Shows the formatted numeric value opposite the label (default true when `label` is set).
+- `format` (`Intl.NumberFormatOptions`, optional) — Number format options passed to `Intl.NumberFormat`.
+- `disabled` (`boolean`, optional) — Disables interaction.
+- `name` (`string`, optional) — Form field name.
+
+Example:
+```tsx
+import { Slider } from "@kalaa/react";
+
+<Slider />
+```
+
+### Spinner
+
+Indeterminate activity ring using `currentColor` and `--kalaa-radius-full`. Announces `role=
+
+Props:
+- `size` (`SpinnerSize`, optional, default: "md") — Diameter: sm 12px, md 16px (default), lg 24px.
+- `label` (`string`, optional, default: "Loading") — Accessible text announced to screen readers (`role="status"`). Ignored when `decorative`.
+- `decorative` (`boolean`, optional, default: false) — Hides the spinner from assistive tech; use when the surrounding control already says it is busy.
+
+Example:
+```tsx
+import { Spinner } from "@kalaa/react";
+
+<Spinner />
+```
+
+### Stat
+
+Single operational metric with a sentence-case label, tabular figure, optional status delta and comparison help line.
+
+Props:
+- `label` (`ReactNode`, required) — Metric name in sentence case (for example "Products pending review").
+- `value` (`ReactNode`, required) — Primary figure, rendered in tabular numerals.
+- `delta` (`ReactNode`, optional) — Optional change indicator (for example "+14%" or "-3 rows").
+- `deltaTone` (`StatDeltaTone`, optional, default: "neutral") — Meaning of the delta badge: neutral (default), success, warning or danger.
+- `help` (`ReactNode`, optional) — Secondary context or comparison period below the value.
+
+Example:
+```tsx
+import { Stat } from "@kalaa/react";
+
+<Stat />
+```
+
+### Toast
+
+Transient status notification stack built on Base UI Toast (`ToastProvider` + `useToast()`). Mount `ToastProvider` once near the root of your app and trigger notifications with `const { toast } = useToast()`.
+
+Example:
+```tsx
+import { Toast } from "@kalaa/react";
+
+<Toast />
+```
+
+### Tooltip
+
+Brief non-interactive hint on Base UI Tooltip that appears on hover or keyboard focus and dismisses with Escape.
+
+Props:
+- `content` (`ReactNode`, required) — Brief label or keyboard shortcut shown inside the tooltip.
+- `children` (`ReactElement`, required) — Focusable trigger element (for example a Button).
+- `open` (`boolean`, optional) — Controlled open state.
+- `defaultOpen` (`boolean`, optional) — Initial open state when uncontrolled.
+- `onOpenChange` (`(open: boolean) => void`, optional) — Called when the tooltip opens or closes.
+- `side` (`TooltipSide`, optional, default: "top") — Preferred side relative to the trigger (default "top").
+- `delay` (`number`, optional, default: 250) — Hover delay in milliseconds before opening (default 250).
+- `className` (`string`, optional) — Additional class name on the popup element.
+
+Example:
+```tsx
+import { Tooltip } from "@kalaa/react";
+
+<Tooltip />
+```

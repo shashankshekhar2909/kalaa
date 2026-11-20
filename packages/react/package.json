@@ -21,7 +21,10 @@
     "vitest": "5.1.1"
   },
   "files": [
-    "dist"
+    "dist",
+    "schemas",
+    "components.json",
+    "llms.txt"
   ],
   "peerDependencies": {
     "react": "^19.0.0",
@@ -32,11 +35,18 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./resume.schema.json": "./schemas/resume.schema.json",
+    "./portfolio.schema.json": "./schemas/portfolio.schema.json",
+    "./schemas/resume.schema.json": "./schemas/resume.schema.json",
+    "./schemas/portfolio.schema.json": "./schemas/portfolio.schema.json",
+    "./sample-resume.json": "./schemas/sample-resume.json",
+    "./components.json": "./components.json",
+    "./llms.txt": "./llms.txt"
   },
   "scripts": {
-    "build": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly && node scripts/css.mjs",
-    "check": "tsc --noEmit && node scripts/css.mjs --check",
+    "build": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly && node scripts/css.mjs && node scripts/ai-manifest.mjs",
+    "check": "tsc --noEmit && node scripts/css.mjs --check && node scripts/ai-manifest.mjs --check",
     "test": "vitest run"
   }
 }

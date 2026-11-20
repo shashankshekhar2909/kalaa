@@ -1,0 +1,62 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Introduction/For AI" />
+
+# For AI: data-first blocks and templates
+
+Kalaa is structured so AI coding assistants and automated pipelines can generate complete, accessible views—resumes, engineering portfolios, case studies and product landing pages—by **filling a JSON Schema and rendering a template**, with zero custom CSS.
+
+## 1. Fill the schema, render the template
+
+Every template in `@kalaa/react` accepts a single JSON-serialisable `data` prop backed by an exported TypeScript interface and a Draft 2020-12 JSON Schema:
+
+| Template            | TypeScript type   | JSON Schema export                                           | Validator & sample                                   |
+| ------------------- | ----------------- | ------------------------------------------------------------ | ---------------------------------------------------- |
+| `<ResumePage />`    | `ResumeData`      | `@kalaa/react/resume.schema.json` (`resumeDataSchema`)       | `validateResumeData(data)`, `sampleResumeData`       |
+| `<PortfolioPage />` | `PortfolioData`   | `@kalaa/react/portfolio.schema.json` (`portfolioDataSchema`) | `validatePortfolioData(data)`, `samplePortfolioData` |
+| `<LandingPage />`   | `LandingPageData` | Exported TS type in `@kalaa/react`                           | `sampleLandingPageData`                              |
+
+### Minimal resume example
+
+```tsx
+import "@kalaa/tokens/fonts.css";
+import "@kalaa/tokens/tokens.css";
+import "@kalaa/react/styles.css";
+import { ResumePage, sampleResumeData, validateResumeData } from "@kalaa/react";
+
+const result = validateResumeData(sampleResumeData);
+if (!result.valid) {
+  throw new Error(result.errors.join("\n"));
+}
+
+export function WebResume() {
+  // layout: "single-column" (default, linear ATS flow) | "sidebar"
+  // paperSize: "a4" (default, 210mm) | "letter" (8.5in)
+  return <ResumePage data={sampleResumeData} layout="sidebar" paperSize="a4" />;
+}
+```
+
+## 2. Machine-readable context (`llms.txt` and `components.json`)
+
+Rather than scraping source files, AI agents can read the generated manifest files directly from `@kalaa/react`:
+
+- **`@kalaa/react/llms.txt`** (`packages/react/llms.txt`): concise Markdown index of all templates, blocks and primitives with their purpose, props, defaults and minimal JSX usage.
+- **`@kalaa/react/components.json`** (`packages/react/components.json`): structured JSON array containing `name`, `category`, `purpose`, `props` (`name`, `type`, `required`, `default`, `description`) and `example` for every component.
+- **`@kalaa/react/resume.schema.json`** & **`@kalaa/react/portfolio.schema.json`**: strict JSON Schemas (`additionalProperties: false`) for structured LLM output / tool-calling.
+
+Both `llms.txt` and `components.json` are generated from component TypeScript source and JSDoc by `node packages/react/scripts/ai-manifest.mjs` and verified in CI by Vitest so they never drift.
+
+## 3. Composing custom pages from Blocks
+
+When a page needs a custom arrangement instead of a full template, compose from the three block categories—all exported from the main `@kalaa/react` entry:
+
+- **`Blocks/Resume`**: `ResumeHeader`, `Summary`, `ExperienceList`, `ExperienceItem`, `EducationList`, `SkillGroups`, `ProjectList`, `ProjectCard`, `Certifications`, `Languages`, `Awards`, `Publications`.
+- **`Blocks/Profile & portfolio`**: `ProfileCard`, `CaseStudyCard`, `Timeline`, `TestimonialCard`, `ContactCard`, `LinkList`.
+- **`Blocks/Marketing`**: `Hero`, `FeatureGrid`, `StatsBand`, `CTA`, `FAQ`, `PageFooter`, `SectionHeader`.
+
+## 4. Built-in accessibility and print rules
+
+1. **Heading hierarchy**: Templates render `<h1>` once at the top, `<h2>` for each section, and `<h3>` for items inside sections (`headingLevel` prop on every block).
+2. **Landmarks**: Templates emit `<header>`, uniquely labelled `<nav>`, `<main>`, `<aside>` and `<footer>` landmarks.
+3. **Dates & zero-JS**: All dates render inside `<time dateTime="...">`, and disclosures (`FAQ`) use native `<details>`/`<summary>` so pages work without client JavaScript.
+4. **Black-on-white print**: `ResumePage` forces high-contrast black-on-white tokens under `@media print` (and via `forcePrintPreview`) even when the browser or page is in dark mode.
