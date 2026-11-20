@@ -1,0 +1,29 @@
+.kl-languages {
+  display: grid;
+  gap: var(--kalaa-space-3);
+  font-family: var(--kalaa-font-sans);
+  color: var(--kalaa-text);
+}
+.kl-languages__heading {
+  margin: 0;
+  font-size: var(--kalaa-font-size-md);
+  font-weight: var(--kalaa-font-weight-semibold);
+  line-height: var(--kalaa-line-height-heading);
+}
+.kl-languages__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--kalaa-space-2);
+}
+.kl-languages__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--kalaa-space-3);
+  font-size: var(--kalaa-font-size-sm);
+}
+.kl-languages__name {
+  font-weight: var(--kalaa-font-weight-medium);
+}

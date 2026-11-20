@@ -1,0 +1,60 @@
+.kl-resume-header {
+  display: grid;
+  gap: var(--kalaa-space-3);
+  padding-bottom: var(--kalaa-space-4);
+  border-bottom: 1px solid var(--kalaa-border);
+  font-family: var(--kalaa-font-sans);
+  color: var(--kalaa-text);
+}
+.kl-resume-header__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  gap: var(--kalaa-space-3);
+}
+.kl-resume-header__identity {
+  display: grid;
+  gap: var(--kalaa-space-1);
+}
+.kl-resume-header__name {
+  margin: 0;
+  font-family: var(--kalaa-font-serif);
+  font-size: var(--kalaa-font-size-xl);
+  font-weight: var(--kalaa-font-weight-semibold);
+  line-height: var(--kalaa-line-height-heading);
+  color: var(--kalaa-text);
+}
+.kl-resume-header__title {
+  margin: 0;
+  font-size: var(--kalaa-font-size-md);
+  font-weight: var(--kalaa-font-weight-medium);
+  color: var(--kalaa-text-muted);
+}
+.kl-resume-header__contacts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-2) var(--kalaa-space-4);
+  font-size: var(--kalaa-font-size-sm);
+  color: var(--kalaa-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.kl-resume-header__contact-item {
+  display: inline-flex;
+  align-items: center;
+}
+.kl-resume-header__link {
+  color: var(--kalaa-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.kl-resume-header__link:hover {
+  color: var(--kalaa-accent-hover);
+}
+.kl-resume-header__link:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}

@@ -1,0 +1,88 @@
+.kl-profile-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  gap: var(--kalaa-space-3);
+}
+.kl-profile-card__identity {
+  display: flex;
+  align-items: center;
+  gap: var(--kalaa-space-3);
+}
+.kl-profile-card__avatar {
+  inline-size: var(--kalaa-control-height-lg);
+  block-size: var(--kalaa-control-height-lg);
+  border-radius: var(--kalaa-radius-full);
+  background: var(--kalaa-accent-soft);
+  color: var(--kalaa-accent);
+  border: 1px solid var(--kalaa-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--kalaa-font-size-base);
+  font-weight: var(--kalaa-font-weight-semibold);
+  flex-shrink: 0;
+}
+.kl-profile-card__name {
+  margin: 0;
+  font-family: var(--kalaa-font-serif);
+  font-size: var(--kalaa-font-size-lg);
+  font-weight: var(--kalaa-font-weight-semibold);
+  line-height: var(--kalaa-line-height-heading);
+  color: var(--kalaa-text);
+}
+.kl-profile-card__role {
+  margin: var(--kalaa-space-1) 0 0;
+  font-size: var(--kalaa-font-size-sm);
+  color: var(--kalaa-text-muted);
+}
+.kl-profile-card__bio {
+  margin: 0;
+  font-size: var(--kalaa-font-size-base);
+  line-height: var(--kalaa-line-height-body);
+  color: var(--kalaa-text);
+  max-width: 68ch;
+}
+.kl-profile-card__stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--kalaa-space-3);
+  padding: var(--kalaa-space-3) 0;
+  border-top: 1px solid var(--kalaa-border);
+  border-bottom: 1px solid var(--kalaa-border);
+}
+.kl-profile-card__stat {
+  display: grid;
+  gap: var(--kalaa-space-1);
+}
+.kl-profile-card__stat-label {
+  font-size: var(--kalaa-font-size-xs);
+  color: var(--kalaa-text-muted);
+}
+.kl-profile-card__stat-value {
+  margin: 0;
+  font-size: var(--kalaa-font-size-lg);
+  font-weight: var(--kalaa-font-weight-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--kalaa-text);
+}
+.kl-profile-card__stat-detail {
+  margin: 0;
+  font-size: var(--kalaa-font-size-xs);
+  color: var(--kalaa-text-subtle);
+}
+.kl-profile-card__skills {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-2);
+}
+.kl-profile-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-3);
+}

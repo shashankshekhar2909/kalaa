@@ -1,0 +1,28 @@
+.kl-contact-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--kalaa-space-3);
+}
+.kl-contact-card__links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-3);
+}
+.kl-contact-card__link {
+  color: var(--kalaa-accent);
+  font-size: var(--kalaa-font-size-sm);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.kl-contact-card__link:hover {
+  color: var(--kalaa-accent-hover);
+}
+.kl-contact-card__link:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}

@@ -1,0 +1,61 @@
+.kl-education-list {
+  display: grid;
+  gap: var(--kalaa-space-4);
+  font-family: var(--kalaa-font-sans);
+  color: var(--kalaa-text);
+}
+.kl-education-list__heading {
+  margin: 0;
+  font-size: var(--kalaa-font-size-md);
+  font-weight: var(--kalaa-font-weight-semibold);
+  line-height: var(--kalaa-line-height-heading);
+}
+.kl-education-list__items {
+  display: grid;
+  gap: var(--kalaa-space-4);
+}
+.kl-education-list__item {
+  display: grid;
+  gap: var(--kalaa-space-1);
+  break-inside: avoid;
+}
+.kl-education-list__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--kalaa-space-2);
+}
+.kl-education-list__degree {
+  margin: 0;
+  font-size: var(--kalaa-font-size-base);
+  font-weight: var(--kalaa-font-weight-semibold);
+  line-height: var(--kalaa-line-height-heading);
+}
+.kl-education-list__institution {
+  margin: var(--kalaa-space-1) 0 0;
+  font-size: var(--kalaa-font-size-sm);
+  color: var(--kalaa-text-muted);
+}
+.kl-education-list__dates {
+  font-size: var(--kalaa-font-size-xs);
+  color: var(--kalaa-text-subtle);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.kl-education-list__details {
+  margin: 0;
+  font-size: var(--kalaa-font-size-sm);
+  color: var(--kalaa-text-muted);
+}
+.kl-education-list__honors {
+  margin: var(--kalaa-space-1) 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-2);
+}
+.kl-education-list__honor {
+  display: inline-flex;
+}

@@ -1,0 +1,96 @@
+.kl-page-footer {
+  display: grid;
+  gap: var(--kalaa-space-5);
+  padding-top: var(--kalaa-space-6);
+  border-top: 1px solid var(--kalaa-border);
+  font-family: var(--kalaa-font-sans);
+  color: var(--kalaa-text);
+}
+.kl-page-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: start;
+  gap: var(--kalaa-space-6);
+}
+.kl-page-footer__brand {
+  display: grid;
+  gap: var(--kalaa-space-2);
+  max-width: 36ch;
+}
+.kl-page-footer__lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--kalaa-space-2);
+}
+.kl-page-footer__logo {
+  inline-size: var(--kalaa-space-6);
+  block-size: var(--kalaa-space-6);
+  display: inline-flex;
+}
+.kl-page-footer__name {
+  font-family: var(--kalaa-font-serif);
+  font-size: var(--kalaa-font-size-md);
+  font-weight: var(--kalaa-font-weight-semibold);
+  color: var(--kalaa-text);
+}
+.kl-page-footer__tagline {
+  margin: 0;
+  font-size: var(--kalaa-font-size-xs);
+  color: var(--kalaa-text-muted);
+}
+.kl-page-footer__columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-8);
+}
+.kl-page-footer__column {
+  display: grid;
+  gap: var(--kalaa-space-2);
+  align-content: start;
+}
+.kl-page-footer__column-heading {
+  font-size: var(--kalaa-font-size-xs);
+  font-weight: var(--kalaa-font-weight-semibold);
+  color: var(--kalaa-text);
+}
+.kl-page-footer__list,
+.kl-page-footer__utility {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--kalaa-space-1);
+}
+.kl-page-footer__utility {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-4);
+}
+.kl-page-footer__link {
+  font-size: var(--kalaa-font-size-xs);
+  color: var(--kalaa-text-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.kl-page-footer__link:hover {
+  color: var(--kalaa-accent);
+}
+.kl-page-footer__link:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}
+.kl-page-footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--kalaa-space-3);
+  padding-top: var(--kalaa-space-4);
+  border-top: 1px solid var(--kalaa-border);
+}
+.kl-page-footer__copyright {
+  margin: 0;
+  font-size: var(--kalaa-font-size-xs);
+  color: var(--kalaa-text-subtle);
+}

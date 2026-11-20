@@ -1,0 +1,106 @@
+.kl-resume-page {
+  display: grid;
+  gap: var(--kalaa-space-6);
+  margin: 0 auto;
+  padding: var(--kalaa-space-8);
+  background: var(--kalaa-surface);
+  color: var(--kalaa-text);
+  border: 1px solid var(--kalaa-border);
+  border-radius: var(--kalaa-radius-lg);
+  box-shadow: var(--kalaa-shadow-1);
+  font-family: var(--kalaa-font-sans);
+  box-sizing: border-box;
+}
+.kl-resume-page--a4 {
+  max-inline-size: 210mm;
+}
+.kl-resume-page--letter {
+  max-inline-size: 8.5in;
+}
+.kl-resume-page__body {
+  display: grid;
+  gap: var(--kalaa-space-6);
+  align-items: start;
+}
+.kl-resume-page--sidebar .kl-resume-page__body {
+  grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+}
+.kl-resume-page__main,
+.kl-resume-page__sidebar {
+  display: grid;
+  gap: var(--kalaa-space-6);
+  align-content: start;
+}
+.kl-resume-page--sidebar .kl-resume-page__sidebar {
+  padding-inline-start: var(--kalaa-space-5);
+  border-inline-start: 1px solid var(--kalaa-border);
+}
+@media (max-width: 720px) {
+  .kl-resume-page {
+    padding: var(--kalaa-space-4);
+  }
+  .kl-resume-page--sidebar .kl-resume-page__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .kl-resume-page--sidebar .kl-resume-page__sidebar {
+    padding-inline-start: 0;
+    border-inline-start: none;
+    padding-top: var(--kalaa-space-5);
+    border-top: 1px solid var(--kalaa-border);
+  }
+}
+.kl-resume-page--print {
+  --kalaa-bg: var(--kalaa-palette-neel-neutral-0);
+  --kalaa-surface: var(--kalaa-palette-neel-neutral-0);
+  --kalaa-surface-alt: var(--kalaa-palette-neel-neutral-50);
+  --kalaa-text: var(--kalaa-palette-neel-neutral-950);
+  --kalaa-text-muted: var(--kalaa-palette-neel-neutral-700);
+  --kalaa-text-subtle: var(--kalaa-palette-neel-neutral-600);
+  --kalaa-border: var(--kalaa-palette-neel-neutral-200);
+  --kalaa-border-strong: var(--kalaa-palette-neel-neutral-500);
+  --kalaa-accent: var(--kalaa-palette-neel-800);
+  --kalaa-accent-hover: var(--kalaa-palette-neel-900);
+  --kalaa-accent-soft: var(--kalaa-palette-neel-50);
+  --kalaa-on-accent: var(--kalaa-palette-neel-neutral-0);
+  --kalaa-success: var(--kalaa-palette-green-800);
+  --kalaa-success-soft: var(--kalaa-palette-green-50);
+  --kalaa-warning: var(--kalaa-palette-amber-800);
+  --kalaa-warning-soft: var(--kalaa-palette-amber-50);
+  --kalaa-danger: var(--kalaa-palette-red-800);
+  --kalaa-danger-soft: var(--kalaa-palette-red-50);
+  --kalaa-shadow-1: none;
+  --kalaa-shadow-2: none;
+  color-scheme: light;
+}
+@media print {
+  @page {
+    margin: 12mm;
+  }
+  .kl-resume-page {
+    --kalaa-bg: var(--kalaa-palette-neel-neutral-0);
+    --kalaa-surface: var(--kalaa-palette-neel-neutral-0);
+    --kalaa-surface-alt: var(--kalaa-palette-neel-neutral-50);
+    --kalaa-text: var(--kalaa-palette-neel-neutral-950);
+    --kalaa-text-muted: var(--kalaa-palette-neel-neutral-700);
+    --kalaa-text-subtle: var(--kalaa-palette-neel-neutral-600);
+    --kalaa-border: var(--kalaa-palette-neel-neutral-200);
+    --kalaa-border-strong: var(--kalaa-palette-neel-neutral-500);
+    --kalaa-accent: var(--kalaa-palette-neel-800);
+    --kalaa-accent-hover: var(--kalaa-palette-neel-900);
+    --kalaa-accent-soft: var(--kalaa-palette-neel-50);
+    --kalaa-on-accent: var(--kalaa-palette-neel-neutral-0);
+    --kalaa-success: var(--kalaa-palette-green-800);
+    --kalaa-success-soft: var(--kalaa-palette-green-50);
+    --kalaa-warning: var(--kalaa-palette-amber-800);
+    --kalaa-warning-soft: var(--kalaa-palette-amber-50);
+    --kalaa-danger: var(--kalaa-palette-red-800);
+    --kalaa-danger-soft: var(--kalaa-palette-red-50);
+    --kalaa-shadow-1: none;
+    --kalaa-shadow-2: none;
+    color-scheme: light;
+    max-inline-size: none;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+}

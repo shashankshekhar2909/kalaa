@@ -1,0 +1,31 @@
+.kl-summary {
+  display: grid;
+  gap: var(--kalaa-space-2);
+  font-family: var(--kalaa-font-sans);
+  color: var(--kalaa-text);
+}
+.kl-summary__heading {
+  margin: 0;
+  font-size: var(--kalaa-font-size-md);
+  font-weight: var(--kalaa-font-weight-semibold);
+  line-height: var(--kalaa-line-height-heading);
+  color: var(--kalaa-text);
+}
+.kl-summary__text {
+  margin: 0;
+  font-size: var(--kalaa-font-size-base);
+  line-height: var(--kalaa-line-height-body);
+  color: var(--kalaa-text);
+  max-width: 72ch;
+}
+.kl-summary__highlights {
+  margin: var(--kalaa-space-1) 0 0;
+  padding-left: var(--kalaa-space-5);
+  display: grid;
+  gap: var(--kalaa-space-1);
+  font-size: var(--kalaa-font-size-sm);
+  color: var(--kalaa-text-muted);
+}
+.kl-summary__highlight {
+  line-height: var(--kalaa-line-height-body);
+}

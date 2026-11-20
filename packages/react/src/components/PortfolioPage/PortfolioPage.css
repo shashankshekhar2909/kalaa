@@ -1,0 +1,83 @@
+.kl-portfolio-page {
+  display: grid;
+  gap: var(--kalaa-space-8);
+  max-inline-size: 1120px;
+  margin: 0 auto;
+  padding: var(--kalaa-space-8);
+  background: var(--kalaa-bg);
+  color: var(--kalaa-text);
+  font-family: var(--kalaa-font-sans);
+  box-sizing: border-box;
+}
+.kl-portfolio-page__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--kalaa-space-4);
+  padding-bottom: var(--kalaa-space-4);
+  border-bottom: 1px solid var(--kalaa-border);
+}
+.kl-portfolio-page__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--kalaa-space-3);
+}
+.kl-portfolio-page__logo {
+  inline-size: var(--kalaa-space-7);
+  block-size: var(--kalaa-space-7);
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.kl-portfolio-page__title {
+  margin: 0;
+  font-family: var(--kalaa-font-serif);
+  font-size: var(--kalaa-font-size-lg);
+  font-weight: var(--kalaa-font-weight-semibold);
+  line-height: var(--kalaa-line-height-heading);
+}
+.kl-portfolio-page__subtitle {
+  margin: 0;
+  font-size: var(--kalaa-font-size-xs);
+  color: var(--kalaa-text-muted);
+}
+.kl-portfolio-page__nav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-4);
+}
+.kl-portfolio-page__nav-link {
+  font-size: var(--kalaa-font-size-sm);
+  font-weight: var(--kalaa-font-weight-medium);
+  color: var(--kalaa-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.kl-portfolio-page__nav-link:hover {
+  color: var(--kalaa-accent);
+}
+.kl-portfolio-page__nav-link:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}
+.kl-portfolio-page__main {
+  display: grid;
+  gap: var(--kalaa-space-8);
+}
+.kl-portfolio-page__section {
+  display: grid;
+  gap: var(--kalaa-space-4);
+}
+.kl-portfolio-page__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--kalaa-space-4);
+}
+@media (max-width: 720px) {
+  .kl-portfolio-page {
+    padding: var(--kalaa-space-4);
+  }
+}

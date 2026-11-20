@@ -1,0 +1,53 @@
+.kl-case-study-card {
+  break-inside: avoid;
+}
+.kl-case-study-card__meta {
+  font-size: var(--kalaa-font-size-xs);
+  color: var(--kalaa-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.kl-case-study-card__summary {
+  margin: 0;
+  font-size: var(--kalaa-font-size-base);
+  line-height: var(--kalaa-line-height-body);
+  color: var(--kalaa-text);
+}
+.kl-case-study-card__narrative {
+  margin: 0;
+  display: grid;
+  gap: var(--kalaa-space-2);
+  padding: var(--kalaa-space-3);
+  background: var(--kalaa-bg);
+  border: 1px solid var(--kalaa-border);
+  border-radius: var(--kalaa-radius-md);
+}
+.kl-case-study-card__point {
+  display: grid;
+  gap: var(--kalaa-space-1);
+}
+.kl-case-study-card__label {
+  font-size: var(--kalaa-font-size-xs);
+  font-weight: var(--kalaa-font-weight-semibold);
+  color: var(--kalaa-text-muted);
+}
+.kl-case-study-card__text {
+  margin: 0;
+  font-size: var(--kalaa-font-size-sm);
+  line-height: var(--kalaa-line-height-body);
+  color: var(--kalaa-text);
+}
+.kl-case-study-card__footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--kalaa-space-3);
+}
+.kl-case-study-card__tags {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--kalaa-space-2);
+}
