@@ -1,4 +1,4 @@
-# Kalaa site (/) + Storybook (/storybook/) on deploy-server port 8100; public via kalaa.buildwithshashank.com (Cloudflare tunnel).
+# Kalaa site (/) + Storybook (/storybook/) on port 8100; public via reverse proxy / tunnel.
 # Static files only; updated by scripts/deploy-storybook.sh.
 name: kalaa-storybook
 services:
@@ -10,7 +10,7 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ./site:/srv:ro
-    network_mode: bridge # deploy-server has no free address pools for new compose networks
+    network_mode: bridge # Host bridge networking mode
     mem_limit: 64m
     read_only: true
     tmpfs:

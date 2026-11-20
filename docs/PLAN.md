@@ -100,7 +100,7 @@ ODbL 1.0), no personal data.
 Recommended start: release tarballs (`pnpm pack`) attached to git tags and vendored into each app
 (`vendor/kalaa-react-x.y.z.tgz`). Works inside Docker builds with no tokens or registry, and consumers pin exact
 versions. Move to the public npm `@kalaa` scope at P5. Alternatives: GitHub Packages (free private quota, but every
-consumer and Docker build needs a token) or self-hosted Verdaccio on deploy-server (a new service to run; needs approval).
+consumer and Docker build needs a token) or self-hosted Verdaccio on private registry host (a new service to run; needs approval).
 
 ## Quality bar
 
