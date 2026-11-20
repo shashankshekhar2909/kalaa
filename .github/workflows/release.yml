@@ -1,0 +1,62 @@
+name: Release
+
+# One-time npmjs.com setup for npm trusted publishing:
+# 1. Log into npmjs.com and create or navigate to the "kalaa" organization.
+# 2. Go to Organization/Package Settings -> Publishing Access -> Provenance / Trusted Publishers.
+# 3. Add a Trusted Publisher for GitHub Actions:
+#    - Repository owner / name: shashankshekhar2909/kalaa
+#    - Workflow filename: release.yml
+#    - Environment: (leave blank or configure matching environment)
+# 4. Permissions below provide OIDC token minting (id-token: write) and PR/commit capabilities
+#    (contents: write, pull-requests: write). No NPM_TOKEN secret is required.
+# 5. Requires Node 22+ and npm >= 11.5 for trusted publishing support.
+
+on:
+  push:
+    branches:
+      - master
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.21.0
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Ensure npm >= 11.5 for trusted publishing
+        run: npm install -g npm@^11.5.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm changeset publish
+          version: pnpm changeset version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
