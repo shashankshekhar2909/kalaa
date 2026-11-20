@@ -65,8 +65,8 @@ export function ToastProvider({ children, timeout = 5000, limit = 3 }: ToastProv
     </BaseToast.Provider>
   );
 }
-export function useToast() {
-  const manager = BaseToast.useToastManager();
+export function useToast<Data extends object = Record<string, unknown>>() {
+  const manager = BaseToast.useToastManager<Data>();
   function toast({ tone = "info", ...options }: ToastOptions): string {
     return manager.add({
       ...options,

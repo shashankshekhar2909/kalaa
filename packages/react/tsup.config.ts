@@ -9,4 +9,7 @@ export default defineConfig({
   banner: { js: '"use client";' },
   sourcemap: true,
   clean: true,
+  esbuildOptions(options) {
+    options.sourcesContent = false;
+  },
 });

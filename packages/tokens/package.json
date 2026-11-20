@@ -1,8 +1,38 @@
 {
   "name": "@kalaa/tokens",
   "version": "0.2.1",
-  "private": true,
+  "description": "Design tokens, color roles, themes, and self-hosted IBM Plex typography for the Kalaa design system.",
+  "license": "Apache-2.0",
   "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "homepage": "https://kalaa.buildwithshashank.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shashankshekhar2909/kalaa.git",
+    "directory": "packages/tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/shashankshekhar2909/kalaa/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "keywords": [
+    "design-tokens",
+    "design-system",
+    "css-variables",
+    "dtcg",
+    "style-dictionary",
+    "ibm-plex",
+    "wcag",
+    "kalaa"
+  ],
   "devDependencies": {
     "@fontsource/ibm-plex-mono": "5.3.0",
     "@fontsource/ibm-plex-sans": "5.3.0",

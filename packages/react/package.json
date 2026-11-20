@@ -1,8 +1,37 @@
 {
   "name": "@kalaa/react",
   "version": "0.2.1",
-  "private": true,
+  "description": "Accessible React component library, design blocks and page templates styled with Kalaa tokens.",
+  "license": "Apache-2.0",
   "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "homepage": "https://kalaa.buildwithshashank.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shashankshekhar2909/kalaa.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/shashankshekhar2909/kalaa/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "keywords": [
+    "react",
+    "design-system",
+    "components",
+    "accessible",
+    "wcag",
+    "base-ui",
+    "kalaa"
+  ],
   "dependencies": {
     "@base-ui/react": "1.9.0"
   },
