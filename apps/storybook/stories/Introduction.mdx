@@ -11,14 +11,13 @@ import { Logo } from "@kalaa/react";
 
 Kalaa is a design system for operational software: accessible React components and design tokens with sharp
 corners, three Indian-pigment accents and IBM Plex type (including Devanagari). This is the component reference.
-It is a private preview (v0.1): packages are vendored as tarballs and are not on npm.
 
 ## What is here
 
 - **Foundations**: the Logo, Colour roles with live contrast ratios, Typography, Shape, Space and the raw Palette.
-- **Components**: 19 UI components in v0.1, plus the Logo and CodeBlock. Every component page has a live demo, props,
+- **Components**: UI components, plus the Logo, CodeBlock, and templates. Every component page has a live demo, props,
   usage notes and do/don't guidance.
-- **Examples**: a whole screen (the product editor) built only from Kalaa components.
+- **Examples**: complete screens and workflows built only from Kalaa components.
 
 ## Try the switches
 
@@ -33,38 +32,54 @@ so one page can show two shapes or three accents side by side.
 
 ## Installation
 
-<span className="sb-unstyled" style={{ fontSize: 12 }}>
-  v0.1 preview. Kalaa is private and not on npm yet.
-</span>
-
-Packages are vendored as release tarballs into each app (the tarball flow is a decision, not a script yet, so the file
-names below are the intended ones).
+### Method A: npm install (post-publish)
 
 ```bash
-# 1. Put the tarballs in vendor/ and install them
-pnpm add ./vendor/kalaa-tokens-0.1.0.tgz ./vendor/kalaa-react-0.1.0.tgz
+npm install @kalaa/react @kalaa/tokens
+# or
+pnpm add @kalaa/react @kalaa/tokens
 ```
 
-```tsx
-// 2. Load tokens, fonts and component styles once, at your app root
-import "@kalaa/tokens/fonts.css"; // self-hosted IBM Plex, no network
-import "@kalaa/tokens/tokens.css"; // colour, type, space, shape and motion tokens
-import "@kalaa/react/styles.css";
+### Method B: Vendored release tarballs (current / pre-publish)
 
-// 3. Use components
+Packages are built with `scripts/release-pack.sh` and vendored into each application:
+
+```bash
+# Put the tarballs in vendor/ and install them
+pnpm add ./vendor/kalaa-tokens-0.2.1.tgz ./vendor/kalaa-react-0.2.1.tgz
+```
+
+## CSS Order
+
+Load tokens, fonts and component styles in this exact order once at your app root:
+
+```tsx
+import "@kalaa/tokens/tokens.css"; // 1. colour, type, space, shape and motion tokens
+import "@kalaa/tokens/fonts.css"; // 2. self-hosted IBM Plex, no network
+import "@kalaa/react/styles.css"; // 3. component styles
+```
+
+## Using components
+
+```tsx
 import { Button } from "@kalaa/react";
 
 export const Save = () => <Button variant="primary">Save changes</Button>;
 ```
 
+## SSR & First-Paint Theme Guidance
+
+Pick accent, theme and shape with plain HTML attributes (omit them for Neel, system theme, square):
+
 ```html
-<!-- 4. Optional: pick accent, theme and shape with plain attributes (omit them for Neel, system theme, square) -->
 <html data-accent="geru" data-theme="dark" data-shape="soft">
   <!-- data-accent: neel (default) | geru | mayur
        data-theme:  light | dark   (omit to follow the system)
        data-shape:  soft           (omit for square) -->
 </html>
 ```
+
+To eliminate first-paint flicker in SSR applications, render these attributes on `<html>` directly from server templates or execute an inline script in `<head>` before body hydration.
 
 The same attributes work on any wrapper element, for example `<div data-shape="soft">`. A wrapper that sets
 `data-theme` should also set `data-accent` unless it is Neel.
