@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
+import { readComponentCss } from "../../../scripts/ai-manifest.mjs";
 import { ResumePage } from "./ResumePage";
 import { sampleResumeData } from "../../schemas/sampleData";
 
@@ -32,5 +33,12 @@ describe("ResumePage", () => {
       "kl-resume-page--letter",
       "kl-resume-page--print",
     );
+  });
+
+  it("scopes @page print rules to named pages instead of a global @page rule", () => {
+    const css = readComponentCss("ResumePage");
+    expect(css).not.toMatch(/@page\s*\{/);
+    expect(css).toMatch(/@page\s+kl-resume-page\s*\{/);
+    expect(css).toMatch(/page:\s*kl-resume-page/);
   });
 });

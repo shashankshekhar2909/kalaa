@@ -67,10 +67,17 @@ export function DropZone({
   const metaText = metaParts.join(" · ");
   function handleFileList(list: FileList | null) {
     if (!list || list.length === 0 || disabled) return;
-    const incoming = multiple ? Array.from(list) : [list[0]];
+    const allFiles = Array.from(list);
     const valid: File[] = [];
     let firstError: string | null = null;
-    for (const file of incoming) {
+    for (let i = 0; i < allFiles.length; i++) {
+      const file = allFiles[i];
+      if (!multiple && i > 0) {
+        const msg = `Only a single file can be selected; ${file.name} was rejected.`;
+        firstError ??= msg;
+        onReject?.(msg, file);
+        continue;
+      }
       if (!matchesAccept(file, accept)) {
         const msg = `${file.name} does not match accepted formats (${accept}).`;
         firstError ??= msg;
@@ -86,8 +93,8 @@ export function DropZone({
       valid.push(file);
     }
     setError(firstError);
+    setSelectedNames(valid.map((f) => f.name));
     if (valid.length > 0) {
-      setSelectedNames(valid.map((f) => f.name));
       onFiles?.(valid);
     }
   }

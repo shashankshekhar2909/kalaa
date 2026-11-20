@@ -73,10 +73,19 @@
   color-scheme: light;
 }
 @media print {
-  @page {
+  @page kl-resume-page {
+    margin: 12mm;
+  }
+  @page kl-resume-page-a4 {
+    size: A4;
+    margin: 12mm;
+  }
+  @page kl-resume-page-letter {
+    size: letter;
     margin: 12mm;
   }
   .kl-resume-page {
+    page: kl-resume-page;
     --kalaa-bg: var(--kalaa-palette-neel-neutral-0);
     --kalaa-surface: var(--kalaa-palette-neel-neutral-0);
     --kalaa-surface-alt: var(--kalaa-palette-neel-neutral-50);
@@ -102,5 +111,11 @@
     padding: 0;
     border: none;
     box-shadow: none;
+  }
+  .kl-resume-page--a4 {
+    page: kl-resume-page-a4;
+  }
+  .kl-resume-page--letter {
+    page: kl-resume-page-letter;
   }
 }
