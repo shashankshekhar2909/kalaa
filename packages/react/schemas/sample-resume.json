@@ -1,0 +1,186 @@
+{
+  "basics": {
+    "name": "Aarav Deshmukh",
+    "title": "Principal Systems Architect",
+    "location": "Pune, India",
+    "email": "aarav.deshmukh@example.invalid",
+    "phone": "+91 20 5550 0194",
+    "website": "https://aarav-systems.example.invalid",
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.example.invalid/aarav-deshmukh"
+      },
+      {
+        "label": "Publications",
+        "href": "https://papers.example.invalid/aarav-deshmukh"
+      }
+    ]
+  },
+  "summary": {
+    "heading": "Summary",
+    "text": "Systems architect with 11 years designing deterministic telemetry pipelines, multi-region storage engines and accessible operator consoles for energy and logistics platforms.",
+    "highlights": [
+      "Cut regional failover recovery from 14 minutes to 22 seconds across 180 substations",
+      "Led migration of 42 internal operator consoles onto a single accessible token and component platform",
+      "Authored open specifications for low-overhead time-series compaction used by 14 engineering teams"
+    ]
+  },
+  "experience": [
+    {
+      "role": "Principal Systems Architect",
+      "org": "Vayu Grid Systems",
+      "location": "Pune, India",
+      "startDate": "2023-04",
+      "endDate": "Present",
+      "summary": "Technical lead for grid telemetry ingestion and operator workflow consoles.",
+      "bullets": [
+        "Re-architected the substation event ingestion pipeline in Rust and Go, sustaining 1.4M events/s at p99 latency under 18 ms.",
+        "Standardised 19 operator dashboard surfaces on an accessible design system with zero WCAG 2.2 AA contrast or keyboard defects.",
+        "Mentored 12 staff and senior engineers across storage, observability and frontend architecture guilds."
+      ],
+      "tags": ["Rust", "Go", "TypeScript", "React", "Time-series storage"]
+    },
+    {
+      "role": "Staff Platform Engineer",
+      "org": "Narmada Cloud Labs",
+      "location": "Bengaluru, India",
+      "startDate": "2019-07",
+      "endDate": "2023-03",
+      "summary": "Owned control-plane reliability, schema registries and release automation.",
+      "bullets": [
+        "Designed a deterministic schema-validation gateway that blocked 100% of breaking API deployments across 64 microservices.",
+        "Reduced control-plane memory footprint by 41% through zero-copy batch serialisation and compact ring buffers.",
+        "Built self-service fleet diagnostics tools that lowered mean time to resolution from 47 minutes to 9 minutes."
+      ],
+      "tags": ["Go", "PostgreSQL", "JSON Schema", "Kubernetes", "OpenTelemetry"]
+    },
+    {
+      "role": "Senior Software Engineer",
+      "org": "Deccan Telemetry",
+      "location": "Hyderabad, India",
+      "startDate": "2016-06",
+      "endDate": "2019-06",
+      "bullets": [
+        "Implemented offline-resilient edge collectors for rail freight sensors operating over intermittent cellular links.",
+        "Built automated replay and audit tables for compliance reporting across 9,000 active sensor nodes."
+      ],
+      "tags": ["C++", "Python", "SQLite", "Linux"]
+    }
+  ],
+  "education": [
+    {
+      "degree": "M.Tech in Computer Science and Engineering",
+      "institution": "Visvesvaraya Institute of Technology",
+      "location": "Pune, India",
+      "startDate": "2014",
+      "endDate": "2016",
+      "details": "Thesis on bounded-memory stream compaction for industrial sensor networks.",
+      "honors": ["Institute Gold Medal", "GATE Fellowship"]
+    },
+    {
+      "degree": "B.E. in Information Technology",
+      "institution": "Sahyadri College of Engineering",
+      "location": "Nashik, India",
+      "startDate": "2010",
+      "endDate": "2014",
+      "details": "First class with distinction; systems programming lab coordinator."
+    }
+  ],
+  "skills": [
+    {
+      "category": "Systems & backend",
+      "skills": ["Rust", "Go", "TypeScript", "C++", "PostgreSQL", "SQLite"]
+    },
+    {
+      "category": "Frontend & design systems",
+      "skills": ["React 19", "Accessible primitives", "Design tokens (DTCG)", "Playwright", "WCAG 2.2 AA"]
+    },
+    {
+      "category": "Infrastructure & observability",
+      "skills": ["OpenTelemetry", "Prometheus", "Linux perf", "Container builds", "Deterministic CI"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Pravah Stream Compactor",
+      "role": "Creator & maintainer",
+      "startDate": "2024",
+      "endDate": "Present",
+      "description": "Open-source time-series segment compactor for edge gateways with deterministic memory bounds and crash-safe manifest checkpoints.",
+      "impact": [
+        { "label": "Write amplification", "value": "1.18x (-54%)" },
+        { "label": "Recovery time", "value": "310 ms" }
+      ],
+      "tags": ["Rust", "Storage", "Embedded Linux"],
+      "links": [
+        { "label": "Source", "href": "https://github.example.invalid/vayu-grid/pravah" },
+        { "label": "Design note", "href": "https://papers.example.invalid/pravah-compaction" }
+      ]
+    },
+    {
+      "name": "Drishti Operator Workbench",
+      "role": "Lead architect",
+      "startDate": "2025",
+      "endDate": "2026",
+      "description": "Keyboard-first incident triage console and schema-driven runbook renderer built for regional power dispatch teams.",
+      "impact": [
+        { "label": "Triage speed", "value": "2.4x faster" },
+        { "label": "Axe violations", "value": "0 across 140 views" }
+      ],
+      "tags": ["React", "TypeScript", "Design Tokens"],
+      "links": [
+        { "label": "Case study", "href": "https://aarav-systems.example.invalid/case-studies/drishti" }
+      ]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Certified Kubernetes Security Specialist (CKS)",
+      "issuer": "Cloud Native Computing Foundation",
+      "date": "2024-02",
+      "expiryDate": "2027-02",
+      "credentialId": "CNCF-CKS-884120"
+    },
+    {
+      "name": "IAAP Certified Professional in Web Accessibility (CPWA)",
+      "issuer": "International Association of Accessibility Professionals",
+      "date": "2023-09",
+      "credentialId": "IAAP-CPWA-30941"
+    }
+  ],
+  "languages": [
+    {
+      "language": "Marathi",
+      "proficiency": "Native or bilingual",
+      "level": "native"
+    },
+    {
+      "language": "English",
+      "proficiency": "Full professional proficiency",
+      "level": "fluent"
+    },
+    {
+      "language": "Hindi",
+      "proficiency": "Full professional proficiency",
+      "level": "fluent"
+    }
+  ],
+  "awards": [
+    {
+      "title": "Deterministic Rollup Compaction for Sub-Second Substation Telemetry",
+      "issuer": "Symposium on Industrial Telemetry Systems",
+      "date": "2025-10",
+      "kind": "publication",
+      "summary": "Peer-reviewed paper detailing bounded-memory WAL compaction under bursty grid faults.",
+      "href": "https://papers.example.invalid/sits-2025-rollup"
+    },
+    {
+      "title": "National Grid Resilience Engineering Award",
+      "issuer": "Indian Power Systems Forum",
+      "date": "2024-11",
+      "kind": "award",
+      "summary": "Recognised for zero-data-loss regional failover architecture during monsoon peak loads."
+    }
+  ]
+}
