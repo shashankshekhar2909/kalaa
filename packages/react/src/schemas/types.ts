@@ -446,18 +446,25 @@ export interface JsonSchemaNode {
   items?: JsonSchemaNode;
   minItems?: number;
   minLength?: number;
+  pattern?: string;
   enum?: readonly string[];
   $defs?: Record<string, JsonSchemaNode>;
   $ref?: string;
 }
+
+const nonEmptyStringSchema: JsonSchemaNode = {
+  type: "string",
+  minLength: 1,
+  pattern: "\\S",
+};
 
 const linkSchema: JsonSchemaNode = {
   type: "object",
   required: ["label", "href"],
   additionalProperties: false,
   properties: {
-    label: { type: "string", minLength: 1 },
-    href: { type: "string", minLength: 1 },
+    label: nonEmptyStringSchema,
+    href: nonEmptyStringSchema,
   },
 };
 
@@ -466,8 +473,8 @@ const impactSchema: JsonSchemaNode = {
   required: ["label", "value"],
   additionalProperties: false,
   properties: {
-    label: { type: "string", minLength: 1 },
-    value: { type: "string", minLength: 1 },
+    label: nonEmptyStringSchema,
+    value: nonEmptyStringSchema,
   },
 };
 
@@ -476,13 +483,13 @@ const projectSchema: JsonSchemaNode = {
   required: ["name", "description"],
   additionalProperties: false,
   properties: {
-    name: { type: "string", minLength: 1 },
-    description: { type: "string", minLength: 1 },
+    name: nonEmptyStringSchema,
+    description: nonEmptyStringSchema,
     role: { type: "string" },
     startDate: { type: "string" },
     endDate: { type: "string" },
     impact: { type: "array", items: impactSchema },
-    tags: { type: "array", items: { type: "string", minLength: 1 } },
+    tags: { type: "array", items: nonEmptyStringSchema },
     links: { type: "array", items: linkSchema },
   },
 };
@@ -492,8 +499,8 @@ const skillGroupSchema: JsonSchemaNode = {
   required: ["category", "skills"],
   additionalProperties: false,
   properties: {
-    category: { type: "string", minLength: 1 },
-    skills: { type: "array", minItems: 1, items: { type: "string", minLength: 1 } },
+    category: nonEmptyStringSchema,
+    skills: { type: "array", minItems: 1, items: nonEmptyStringSchema },
   },
 };
 
@@ -512,8 +519,8 @@ export const resumeDataSchema: JsonSchemaNode = {
       required: ["name", "title"],
       additionalProperties: false,
       properties: {
-        name: { type: "string", minLength: 1 },
-        title: { type: "string", minLength: 1 },
+        name: nonEmptyStringSchema,
+        title: nonEmptyStringSchema,
         location: { type: "string" },
         email: { type: "string" },
         phone: { type: "string" },
@@ -527,8 +534,8 @@ export const resumeDataSchema: JsonSchemaNode = {
       additionalProperties: false,
       properties: {
         heading: { type: "string" },
-        text: { type: "string", minLength: 1 },
-        highlights: { type: "array", items: { type: "string", minLength: 1 } },
+        text: nonEmptyStringSchema,
+        highlights: { type: "array", items: nonEmptyStringSchema },
       },
     },
     experience: {
@@ -539,14 +546,14 @@ export const resumeDataSchema: JsonSchemaNode = {
         required: ["role", "org", "startDate", "bullets"],
         additionalProperties: false,
         properties: {
-          role: { type: "string", minLength: 1 },
-          org: { type: "string", minLength: 1 },
+          role: nonEmptyStringSchema,
+          org: nonEmptyStringSchema,
           location: { type: "string" },
-          startDate: { type: "string", minLength: 1 },
+          startDate: nonEmptyStringSchema,
           endDate: { type: "string" },
           summary: { type: "string" },
-          bullets: { type: "array", minItems: 1, items: { type: "string", minLength: 1 } },
-          tags: { type: "array", items: { type: "string", minLength: 1 } },
+          bullets: { type: "array", minItems: 1, items: nonEmptyStringSchema },
+          tags: { type: "array", items: nonEmptyStringSchema },
         },
       },
     },
@@ -558,13 +565,13 @@ export const resumeDataSchema: JsonSchemaNode = {
         required: ["degree", "institution", "endDate"],
         additionalProperties: false,
         properties: {
-          degree: { type: "string", minLength: 1 },
-          institution: { type: "string", minLength: 1 },
+          degree: nonEmptyStringSchema,
+          institution: nonEmptyStringSchema,
           location: { type: "string" },
           startDate: { type: "string" },
-          endDate: { type: "string", minLength: 1 },
+          endDate: nonEmptyStringSchema,
           details: { type: "string" },
-          honors: { type: "array", items: { type: "string", minLength: 1 } },
+          honors: { type: "array", items: nonEmptyStringSchema },
         },
       },
     },
@@ -584,9 +591,9 @@ export const resumeDataSchema: JsonSchemaNode = {
         required: ["name", "issuer", "date"],
         additionalProperties: false,
         properties: {
-          name: { type: "string", minLength: 1 },
-          issuer: { type: "string", minLength: 1 },
-          date: { type: "string", minLength: 1 },
+          name: nonEmptyStringSchema,
+          issuer: nonEmptyStringSchema,
+          date: nonEmptyStringSchema,
           expiryDate: { type: "string" },
           credentialId: { type: "string" },
           href: { type: "string" },
@@ -600,8 +607,8 @@ export const resumeDataSchema: JsonSchemaNode = {
         required: ["language", "proficiency"],
         additionalProperties: false,
         properties: {
-          language: { type: "string", minLength: 1 },
-          proficiency: { type: "string", minLength: 1 },
+          language: nonEmptyStringSchema,
+          proficiency: nonEmptyStringSchema,
           level: {
             type: "string",
             enum: ["native", "fluent", "professional", "elementary"],
@@ -616,9 +623,9 @@ export const resumeDataSchema: JsonSchemaNode = {
         required: ["title", "issuer", "date"],
         additionalProperties: false,
         properties: {
-          title: { type: "string", minLength: 1 },
-          issuer: { type: "string", minLength: 1 },
-          date: { type: "string", minLength: 1 },
+          title: nonEmptyStringSchema,
+          issuer: nonEmptyStringSchema,
+          date: nonEmptyStringSchema,
           kind: { type: "string", enum: ["award", "publication"] },
           summary: { type: "string" },
           href: { type: "string" },
@@ -647,13 +654,13 @@ export const portfolioDataSchema: JsonSchemaNode = {
       required: ["name", "role", "bio"],
       additionalProperties: false,
       properties: {
-        name: { type: "string", minLength: 1 },
-        role: { type: "string", minLength: 1 },
+        name: nonEmptyStringSchema,
+        role: nonEmptyStringSchema,
         location: { type: "string" },
-        bio: { type: "string", minLength: 1 },
+        bio: nonEmptyStringSchema,
         availability: { type: "string" },
         initials: { type: "string" },
-        skills: { type: "array", items: { type: "string", minLength: 1 } },
+        skills: { type: "array", items: nonEmptyStringSchema },
         stats: {
           type: "array",
           items: {
@@ -661,8 +668,8 @@ export const portfolioDataSchema: JsonSchemaNode = {
             required: ["label", "value"],
             additionalProperties: false,
             properties: {
-              label: { type: "string", minLength: 1 },
-              value: { type: "string", minLength: 1 },
+              label: nonEmptyStringSchema,
+              value: nonEmptyStringSchema,
               detail: { type: "string" },
             },
           },
@@ -679,14 +686,14 @@ export const portfolioDataSchema: JsonSchemaNode = {
         required: ["title", "year", "summary"],
         additionalProperties: false,
         properties: {
-          title: { type: "string", minLength: 1 },
+          title: nonEmptyStringSchema,
           client: { type: "string" },
-          year: { type: "string", minLength: 1 },
-          summary: { type: "string", minLength: 1 },
+          year: nonEmptyStringSchema,
+          summary: nonEmptyStringSchema,
           challenge: { type: "string" },
           outcome: { type: "string" },
           metrics: { type: "array", items: impactSchema },
-          tags: { type: "array", items: { type: "string", minLength: 1 } },
+          tags: { type: "array", items: nonEmptyStringSchema },
           href: { type: "string" },
           ctaLabel: { type: "string" },
         },
@@ -704,9 +711,9 @@ export const portfolioDataSchema: JsonSchemaNode = {
         additionalProperties: false,
         properties: {
           id: { type: "string" },
-          date: { type: "string", minLength: 1 },
+          date: nonEmptyStringSchema,
           endDate: { type: "string" },
-          title: { type: "string", minLength: 1 },
+          title: nonEmptyStringSchema,
           subtitle: { type: "string" },
           description: { type: "string" },
           badge: { type: "string" },
@@ -724,9 +731,9 @@ export const portfolioDataSchema: JsonSchemaNode = {
         required: ["quote", "author", "role"],
         additionalProperties: false,
         properties: {
-          quote: { type: "string", minLength: 1 },
-          author: { type: "string", minLength: 1 },
-          role: { type: "string", minLength: 1 },
+          quote: nonEmptyStringSchema,
+          author: nonEmptyStringSchema,
+          role: nonEmptyStringSchema,
           org: { type: "string" },
           date: { type: "string" },
           context: { type: "string" },
@@ -740,8 +747,8 @@ export const portfolioDataSchema: JsonSchemaNode = {
         required: ["label", "href"],
         additionalProperties: false,
         properties: {
-          label: { type: "string", minLength: 1 },
-          href: { type: "string", minLength: 1 },
+          label: nonEmptyStringSchema,
+          href: nonEmptyStringSchema,
           description: { type: "string" },
           meta: { type: "string" },
         },
@@ -754,7 +761,7 @@ export const portfolioDataSchema: JsonSchemaNode = {
       properties: {
         title: { type: "string" },
         description: { type: "string" },
-        email: { type: "string", minLength: 1 },
+        email: nonEmptyStringSchema,
         phone: { type: "string" },
         location: { type: "string" },
         availability: { type: "string" },
@@ -768,7 +775,7 @@ export const portfolioDataSchema: JsonSchemaNode = {
       required: ["brandName"],
       additionalProperties: false,
       properties: {
-        brandName: { type: "string", minLength: 1 },
+        brandName: nonEmptyStringSchema,
         tagline: { type: "string" },
         columns: {
           type: "array",
@@ -777,7 +784,7 @@ export const portfolioDataSchema: JsonSchemaNode = {
             required: ["heading", "links"],
             additionalProperties: false,
             properties: {
-              heading: { type: "string", minLength: 1 },
+              heading: nonEmptyStringSchema,
               links: { type: "array", items: linkSchema },
             },
           },
@@ -853,8 +860,11 @@ export function validateJsonSchema(
         errors.push(`${currentPath}: expected string`);
         return;
       }
-      if (typeof rule.minLength === "number" && node.trim().length < rule.minLength) {
+      if (typeof rule.minLength === "number" && node.length < rule.minLength) {
         errors.push(`${currentPath}: expected non-empty string (minLength ${rule.minLength})`);
+      }
+      if (typeof rule.pattern === "string" && !new RegExp(rule.pattern).test(node)) {
+        errors.push(`${currentPath}: expected non-whitespace string matching pattern ${rule.pattern}`);
       }
       if (rule.enum && !rule.enum.includes(node)) {
         errors.push(`${currentPath}: value "${node}" is not in [${rule.enum.join(", ")}]`);

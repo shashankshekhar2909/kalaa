@@ -18,7 +18,7 @@
 
 ### ResumePage
 
-Complete web and print resume template driven by a single `ResumeData` JSON object. Provides `
+Complete web and print resume template driven by a single `ResumeData` JSON object. Provides `"single-column"` and `"sidebar"` layouts, A4 and US Letter sizing, ATS-linear DOM order and automatic black-on-white print output even in dark mode.
 
 Props:
 - `data` (`ResumeData`, required) — Complete JSON-serialisable resume data object conforming to `ResumeData`.
@@ -28,9 +28,9 @@ Props:
 
 Example:
 ```tsx
-import { ResumePage } from "@kalaa/react";
+import { ResumePage, sampleResumeData } from "@kalaa/react";
 
-<ResumePage />
+<ResumePage data={sampleResumeData} layout="single-column" paperSize="a4" />
 ```
 
 ### PortfolioPage
@@ -42,9 +42,9 @@ Props:
 
 Example:
 ```tsx
-import { PortfolioPage } from "@kalaa/react";
+import { PortfolioPage, samplePortfolioData } from "@kalaa/react";
 
-<PortfolioPage />
+<PortfolioPage data={samplePortfolioData} />
 ```
 
 ### LandingPage
@@ -56,9 +56,9 @@ Props:
 
 Example:
 ```tsx
-import { LandingPage } from "@kalaa/react";
+import { LandingPage, sampleLandingPageData } from "@kalaa/react";
 
-<LandingPage />
+<LandingPage data={sampleLandingPageData} />
 ```
 
 ## Blocks/Resume
@@ -81,7 +81,12 @@ Example:
 ```tsx
 import { ResumeHeader } from "@kalaa/react";
 
-<ResumeHeader />
+<ResumeHeader
+  name="Aarav Deshmukh"
+  title="Principal Systems Architect"
+  location="Pune, India"
+  email="aarav.deshmukh@example.invalid"
+/>
 ```
 
 ### Summary
@@ -98,7 +103,10 @@ Example:
 ```tsx
 import { Summary } from "@kalaa/react";
 
-<Summary />
+<Summary
+  text="Systems architect with 11 years designing deterministic telemetry pipelines."
+  highlights={["Cut regional failover recovery from 14 minutes to 22 seconds"]}
+/>
 ```
 
 ### ExperienceList
@@ -114,7 +122,18 @@ Example:
 ```tsx
 import { ExperienceList } from "@kalaa/react";
 
-<ExperienceList />
+<ExperienceList
+  items={[
+    {
+      role: "Principal Systems Architect",
+      org: "Vayu Grid Systems",
+      startDate: "2023-04",
+      endDate: "Present",
+      bullets: ["Sustained 1.4M events/s at p99 latency under 18 ms."],
+      tags: ["Rust", "Go", "TypeScript"],
+    },
+  ]}
+/>
 ```
 
 ### ExperienceItem
@@ -134,9 +153,20 @@ Props:
 
 Example:
 ```tsx
-import { ExperienceItem } from "@kalaa/react";
+import { ExperienceList } from "@kalaa/react";
 
-<ExperienceItem />
+<ExperienceList
+  items={[
+    {
+      role: "Principal Systems Architect",
+      org: "Vayu Grid Systems",
+      startDate: "2023-04",
+      endDate: "Present",
+      bullets: ["Sustained 1.4M events/s at p99 latency under 18 ms."],
+      tags: ["Rust", "Go", "TypeScript"],
+    },
+  ]}
+/>
 ```
 
 ### EducationList
@@ -152,12 +182,22 @@ Example:
 ```tsx
 import { EducationList } from "@kalaa/react";
 
-<EducationList />
+<EducationList
+  items={[
+    {
+      degree: "M.Tech in Computer Science and Engineering",
+      institution: "Visvesvaraya Institute of Technology",
+      startDate: "2014",
+      endDate: "2016",
+      honors: ["Institute Gold Medal"],
+    },
+  ]}
+/>
 ```
 
 ### SkillGroups
 
-Categorised skill groups rendered inside a semantic `<dl>` with Kalaa `Badge` items. Supports responsive `
+Categorised skill groups rendered inside a semantic `<dl>` with Kalaa `Badge` items. Supports responsive `"grid"` or narrow `"stacked"` sidebar layouts.
 
 Props:
 - `heading` (`string`, optional, default: "Skills") — Section heading (default "Skills").
@@ -169,7 +209,11 @@ Example:
 ```tsx
 import { SkillGroups } from "@kalaa/react";
 
-<SkillGroups />
+<SkillGroups
+  groups={[
+    { category: "Systems & backend", skills: ["Rust", "Go", "TypeScript", "PostgreSQL"] },
+  ]}
+/>
 ```
 
 ### ProjectList
@@ -186,7 +230,17 @@ Example:
 ```tsx
 import { ProjectList } from "@kalaa/react";
 
-<ProjectList />
+<ProjectList
+  items={[
+    {
+      name: "Pravah Stream Compactor",
+      description: "Time-series segment compactor for edge gateways.",
+      impact: [{ label: "Write amplification", value: "1.18x (-54%)" }],
+      tags: ["Rust", "Storage"],
+      links: [{ label: "Source", href: "https://github.example.invalid/vayu-grid/pravah" }],
+    },
+  ]}
+/>
 ```
 
 ### ProjectCard
@@ -206,9 +260,19 @@ Props:
 
 Example:
 ```tsx
-import { ProjectCard } from "@kalaa/react";
+import { ProjectList } from "@kalaa/react";
 
-<ProjectCard />
+<ProjectList
+  items={[
+    {
+      name: "Pravah Stream Compactor",
+      description: "Time-series segment compactor for edge gateways.",
+      impact: [{ label: "Write amplification", value: "1.18x (-54%)" }],
+      tags: ["Rust", "Storage"],
+      links: [{ label: "Source", href: "https://github.example.invalid/vayu-grid/pravah" }],
+    },
+  ]}
+/>
 ```
 
 ### Certifications
@@ -224,7 +288,16 @@ Example:
 ```tsx
 import { Certifications } from "@kalaa/react";
 
-<Certifications />
+<Certifications
+  items={[
+    {
+      name: "Certified Kubernetes Security Specialist (CKS)",
+      issuer: "Cloud Native Computing Foundation",
+      date: "2024-02",
+      credentialId: "CNCF-CKS-884120",
+    },
+  ]}
+/>
 ```
 
 ### Languages
@@ -240,7 +313,12 @@ Example:
 ```tsx
 import { Languages } from "@kalaa/react";
 
-<Languages />
+<Languages
+  items={[
+    { language: "Marathi", proficiency: "Native or bilingual", level: "native" },
+    { language: "English", proficiency: "Full professional proficiency", level: "fluent" },
+  ]}
+/>
 ```
 
 ### Awards
@@ -256,7 +334,16 @@ Example:
 ```tsx
 import { Awards } from "@kalaa/react";
 
-<Awards />
+<Awards
+  items={[
+    {
+      title: "National Grid Resilience Engineering Award",
+      issuer: "Indian Power Systems Forum",
+      date: "2024-11",
+      kind: "award",
+    },
+  ]}
+/>
 ```
 
 ### Publications
@@ -270,9 +357,18 @@ Props:
 
 Example:
 ```tsx
-import { Publications } from "@kalaa/react";
+import { Awards } from "@kalaa/react";
 
-<Publications />
+<Awards
+  items={[
+    {
+      title: "National Grid Resilience Engineering Award",
+      issuer: "Indian Power Systems Forum",
+      date: "2024-11",
+      kind: "award",
+    },
+  ]}
+/>
 ```
 
 ## Blocks/Profile & portfolio
@@ -281,11 +377,29 @@ import { Publications } from "@kalaa/react";
 
 Personal identity and bio card with monogram avatar, availability `Badge`, tabular-figure stats, skill tags and `ButtonLink` actions (at most one primary).
 
+Props:
+- `name` (`string`, required) — Person's full name.
+- `role` (`string`, required) — Primary role or headline.
+- `location` (`string`, optional) — Location or timezone.
+- `bio` (`string`, required) — Short biography paragraph.
+- `availability` (`string`, optional) — Availability status (for example "Available for architecture reviews").
+- `initials` (`string`, optional) — Avatar monogram initials (for example "AD").
+- `skills` (`string[]`, optional, default: []) — Top skill tags.
+- `stats` (`PortfolioStat[]`, optional, default: []) — Career highlight numbers.
+- `primaryAction` (`PortfolioAction`, optional) — Primary action link.
+- `secondaryAction` (`PortfolioAction`, optional) — Secondary action link.
+- `headingLevel` (`2 | 3`, optional, default: 2) — Heading level for the person's name (default 2).
+
 Example:
 ```tsx
 import { ProfileCard } from "@kalaa/react";
 
-<ProfileCard />
+<ProfileCard
+  name="Aarav Deshmukh"
+  role="Principal Systems Architect"
+  bio="I design high-throughput telemetry engines and calm operator consoles."
+  availability="Available for Q1 reviews"
+/>
 ```
 
 ### CaseStudyCard
@@ -309,7 +423,13 @@ Example:
 ```tsx
 import { CaseStudyCard } from "@kalaa/react";
 
-<CaseStudyCard />
+<CaseStudyCard
+  title="Substation telemetry pipeline overhaul"
+  client="Vayu Grid Systems"
+  year="2025"
+  summary="Replaced a polling collector with a bounded-memory Rust stream compactor."
+  metrics={[{ label: "Recovery time", value: "22 s" }]}
+/>
 ```
 
 ### Timeline
@@ -325,12 +445,22 @@ Example:
 ```tsx
 import { Timeline } from "@kalaa/react";
 
-<Timeline />
+<Timeline
+  items={[
+    {
+      date: "2023-04",
+      endDate: "Present",
+      title: "Principal Systems Architect",
+      subtitle: "Vayu Grid Systems",
+      badge: "Current",
+    },
+  ]}
+/>
 ```
 
 ### TestimonialCard
 
-Endorsement card built on Kalaa `Card` (`as=
+Endorsement card built on Kalaa `Card` (`as="article"`) with a semantic `<blockquote>`, `<cite>` author attribution, role, organisation and `<time>` date.
 
 Props:
 - `quote` (`string`, required) — Verbatim testimonial text.
@@ -344,7 +474,12 @@ Example:
 ```tsx
 import { TestimonialCard } from "@kalaa/react";
 
-<TestimonialCard />
+<TestimonialCard
+  quote="Aarav turned our most fragile telemetry service into the calmest part of our stack."
+  author="Meera Kulkarni"
+  role="VP of Engineering"
+  org="Vayu Grid Systems"
+/>
 ```
 
 ### ContactCard
@@ -367,12 +502,17 @@ Example:
 ```tsx
 import { ContactCard } from "@kalaa/react";
 
-<ContactCard />
+<ContactCard
+  title="Start a technical conversation"
+  email="aarav.deshmukh@example.invalid"
+  location="Pune, India"
+  responseTime="Within 1 business day"
+/>
 ```
 
 ### LinkList
 
-Annotated link collection for writing, talks, repositories or profile hubs. Supports `
+Annotated link collection for writing, talks, repositories or profile hubs. Supports `"stacked"` rows with descriptions or compact `"inline"` rows.
 
 Props:
 - `heading` (`string`, optional) — Optional section heading.
@@ -384,7 +524,17 @@ Example:
 ```tsx
 import { LinkList } from "@kalaa/react";
 
-<LinkList />
+<LinkList
+  heading="Selected writing"
+  items={[
+    {
+      label: "Deterministic rollup compaction paper",
+      href: "https://papers.example.invalid/sits-2025-rollup",
+      description: "Symposium on Industrial Telemetry Systems (2025)",
+      meta: "Paper",
+    },
+  ]}
+/>
 ```
 
 ## Blocks/Marketing
@@ -407,7 +557,12 @@ Example:
 ```tsx
 import { Hero } from "@kalaa/react";
 
-<Hero />
+<Hero
+  eyebrow="Release 2.4"
+  title="Calm telemetry for high-voltage operations"
+  description="Ingest, compact and inspect millions of sensor events per second."
+  primaryAction={{ label: "Deploy sample cluster", href: "#cta" }}
+/>
 ```
 
 ### FeatureGrid
@@ -425,7 +580,16 @@ Example:
 ```tsx
 import { FeatureGrid } from "@kalaa/react";
 
-<FeatureGrid />
+<FeatureGrid
+  heading="Engineered for predictable operations"
+  features={[
+    {
+      title: "Bounded-memory stream compactor",
+      description: "Fixed ring buffers guarantee zero out-of-memory restarts.",
+      badge: "Storage",
+    },
+  ]}
+/>
 ```
 
 ### StatsBand
@@ -442,7 +606,13 @@ Example:
 ```tsx
 import { StatsBand } from "@kalaa/react";
 
-<StatsBand />
+<StatsBand
+  heading="Measured under real substation fault bursts"
+  stats={[
+    { label: "Ingest throughput", value: "1.4M/s", detail: "Per 4-core regional node" },
+    { label: "Failover recovery", value: "22 s", detail: "Zero dropped frames" },
+  ]}
+/>
 ```
 
 ### CTA
@@ -461,7 +631,11 @@ Example:
 ```tsx
 import { CTA } from "@kalaa/react";
 
-<CTA />
+<CTA
+  title="Ready to calm your telemetry stack?"
+  description="Run the self-contained simulator locally."
+  primaryAction={{ label: "Download evaluation tarball", href: "#download" }}
+/>
 ```
 
 ### FAQ
@@ -479,7 +653,14 @@ Example:
 ```tsx
 import { FAQ } from "@kalaa/react";
 
-<FAQ />
+<FAQ
+  items={[
+    {
+      question: "Does the operator console work without client-side JavaScript?",
+      answer: "Yes. Every report and disclosure renders valid semantic HTML on the server.",
+    },
+  ]}
+/>
 ```
 
 ### PageFooter
@@ -498,7 +679,11 @@ Example:
 ```tsx
 import { PageFooter } from "@kalaa/react";
 
-<PageFooter />
+<PageFooter
+  brandName="Pravah Telemetry"
+  tagline="Built with Kalaa design tokens and components."
+  copyright="© 2026 Pravah Telemetry Systems."
+/>
 ```
 
 ### SectionHeader
@@ -517,14 +702,17 @@ Example:
 ```tsx
 import { SectionHeader } from "@kalaa/react";
 
-<SectionHeader />
+<SectionHeader
+  title="Engineered for predictable operations"
+  description="Every layer is inspectable, schema-validated and operable from the keyboard."
+/>
 ```
 
 ## Components
 
 ### AppShell
 
-Page frame with a sticky 240px sidebar (full-page background) and a main area (max 1120px). Use it once per app, with `brand`, `AppShell.NavItem` children in `nav`, and `footer` for account or theme utilities. Pass `render={<NextLink href=
+Page frame with a sticky 240px sidebar (full-page background) and a main area (max 1120px). Use it once per app, with `brand`, `AppShell.NavItem` children in `nav`, and `footer` for account or theme utilities. Pass `render={<NextLink href="..." />}` on `NavItem` for client-side routing.
 
 Props:
 - `nav` (`ReactNode`, required) — Sidebar content, usually `AppShell.NavItem` links.
@@ -534,27 +722,40 @@ Props:
 
 Example:
 ```tsx
+import NextLink from "next/link";
 import { AppShell } from "@kalaa/react";
 
-<AppShell />
+<AppShell
+  brand="Catalog Admin"
+  nav={<AppShell.NavItem render={<NextLink href="/products" />} active>Products</AppShell.NavItem>}
+  footer={<button type="button">Sign out</button>}
+>
+  <PageHeader title="Products" />
+</AppShell>
 ```
 
 ### PageHeader
 
-Title row for a page: optional back link, one `h1`, muted description and right-aligned actions. Pass `back={{ href, label, render: <NextLink href=
+Title row for a page: optional back link, one `h1`, muted description and right-aligned actions. Pass `back={{ href, label, render: <NextLink href="..." /> }}` for client-side routing in Next.js.
 
 Props:
 - `title` (`ReactNode`, required) — The page `h1`.
 - `description` (`ReactNode`, optional) — Muted line under the title.
-- `back` (`{ href: string; label: string; /** Replaces the `<a>`, for client-side routing: `render: <NextLink href="/products" />` with `next/link`. */ render?: useRender.RenderProp; }`, optional) — Link above the title to the parent page.
+- `back` (`{ href: string; label: string; render?: useRender.RenderProp; }`, optional) — Link above the title to the parent page.
 - `actions` (`ReactNode`, optional) — Buttons on the right of the title row; at most one primary.
 - `variant` (`"default" | "brand"`, optional, default: "default") — "brand" sets the title in serif for marketing pages.
 
 Example:
 ```tsx
-import { PageHeader } from "@kalaa/react";
+import NextLink from "next/link";
+import { PageHeader, Button } from "@kalaa/react";
 
-<PageHeader />
+<PageHeader
+  title="Products"
+  description="Manage your catalog."
+  back={{ href: "/catalog", label: "Back to catalog", render: <NextLink href="/catalog" /> }}
+  actions={<Button variant="primary">Add product</Button>}
+/>
 ```
 
 ### Card
@@ -572,7 +773,7 @@ Example:
 ```tsx
 import { Card } from "@kalaa/react";
 
-<Card />
+<Card title="Products" description="Manage your catalog.">24 products</Card>
 ```
 
 ### KeyValue
@@ -587,7 +788,7 @@ Example:
 ```tsx
 import { KeyValue } from "@kalaa/react";
 
-<KeyValue />
+<KeyValue items={[{ label: "Status", value: "Draft" }, { label: "Stock", value: "88 units" }]} />
 ```
 
 ### ValueComparison
@@ -621,7 +822,7 @@ Example:
 ```tsx
 import { EmptyState } from "@kalaa/react";
 
-<EmptyState />
+<EmptyState title="No products yet" description="Add a product to start your catalog." />
 ```
 
 ### Button
@@ -639,7 +840,7 @@ Example:
 ```tsx
 import { Button } from "@kalaa/react";
 
-<Button />
+<Button variant="primary">Save changes</Button>
 ```
 
 ### ButtonLink
@@ -651,12 +852,16 @@ Props:
 - `size` (`ButtonSize`, optional, default: "md") — Height: sm 30px, md 36px (default).
 - `iconStart` (`ReactNode`, optional) — Decorative icon before the label.
 - `iconEnd` (`ReactNode`, optional) — Decorative icon after the label.
+- `render` (`useRender.RenderProp`, optional) — Replaces the `<a>` element, for client-side routing. Pass your router's link, for example `render={<NextLink href="/products" />}` with `next/link`. Kalaa props and classes are merged onto it.
 
 Example:
 ```tsx
+import NextLink from "next/link";
 import { ButtonLink } from "@kalaa/react";
 
-<ButtonLink />
+<ButtonLink variant="primary" render={<NextLink href="/products" />}>
+  View products
+</ButtonLink>
 ```
 
 ### Field
@@ -672,9 +877,11 @@ Props:
 
 Example:
 ```tsx
-import { Field } from "@kalaa/react";
+import { Field, Input } from "@kalaa/react";
 
-<Field />
+<Field label="Product title" hint="Shown on the storefront.">
+  <Input defaultValue="Cold-pressed mustard oil 1 L" />
+</Field>
 ```
 
 ### Input
@@ -689,7 +896,7 @@ Example:
 ```tsx
 import { Input } from "@kalaa/react";
 
-<Input />
+<Input aria-label="Product name" placeholder="Enter product name" />
 ```
 
 ### Textarea
@@ -705,7 +912,7 @@ Example:
 ```tsx
 import { Textarea } from "@kalaa/react";
 
-<Textarea />
+<Textarea aria-label="Product description" autoResize />
 ```
 
 ### Select
@@ -727,7 +934,11 @@ Example:
 ```tsx
 import { Select } from "@kalaa/react";
 
-<Select />
+<Select
+  aria-label="Review status"
+  options={[{ value: "draft", label: "Draft" }, { value: "review", label: "Needs review" }]}
+  defaultValue="draft"
+/>
 ```
 
 ### Checkbox
@@ -743,7 +954,7 @@ Example:
 ```tsx
 import { Checkbox } from "@kalaa/react";
 
-<Checkbox />
+<Checkbox label="Show on storefront" defaultChecked />
 ```
 
 ### Switch
@@ -759,7 +970,7 @@ Example:
 ```tsx
 import { Switch } from "@kalaa/react";
 
-<Switch />
+<Switch label="Track stock" description="Warn when fewer than 20 units are left." />
 ```
 
 ### Tabs
@@ -777,7 +988,13 @@ Example:
 ```tsx
 import { Tabs } from "@kalaa/react";
 
-<Tabs />
+<Tabs
+  variant="underline"
+  items={[
+    { value: "details", label: "Details", content: "Product details." },
+    { value: "history", label: "History", content: "3 earlier versions." },
+  ]}
+/>
 ```
 
 ### Banner
@@ -793,7 +1010,7 @@ Example:
 ```tsx
 import { Banner } from "@kalaa/react";
 
-<Banner />
+<Banner tone="warning" title="1 field needs attention">Fix the price before approving.</Banner>
 ```
 
 ### Badge
@@ -807,7 +1024,7 @@ Example:
 ```tsx
 import { Badge } from "@kalaa/react";
 
-<Badge />
+<Badge tone="success">Approved</Badge>
 ```
 
 ### StatusBadge
@@ -821,7 +1038,7 @@ Example:
 ```tsx
 import { StatusBadge } from "@kalaa/react";
 
-<StatusBadge />
+<StatusBadge status="needs review" />
 ```
 
 ### ProgressBar
@@ -839,7 +1056,7 @@ Example:
 ```tsx
 import { ProgressBar } from "@kalaa/react";
 
-<ProgressBar />
+<ProgressBar label="Import progress" value={45} />
 ```
 
 ### Dialog
@@ -858,9 +1075,15 @@ Props:
 
 Example:
 ```tsx
-import { Dialog } from "@kalaa/react";
+import { Dialog, Button } from "@kalaa/react";
 
-<Dialog />
+<Dialog
+  trigger={<Button>Review import</Button>}
+  title="Review import"
+  footer={<Button variant="primary">Confirm</Button>}
+>
+  Twelve products are ready to import.
+</Dialog>
 ```
 
 ### Table
@@ -985,7 +1208,7 @@ Example:
 ```tsx
 import { Logo } from "@kalaa/react";
 
-<Logo />
+<Logo variant="lockup" size={28} />
 ```
 
 ### CodeBlock
@@ -1001,12 +1224,12 @@ Example:
 ```tsx
 import { CodeBlock } from "@kalaa/react";
 
-<CodeBlock />
+<CodeBlock label="Install command" code="pnpm add ./vendor/kalaa-react-0.1.0.tgz" />
 ```
 
 ### Avatar
 
-Compact identity badge showing an image or initials derived from `name`. Uses `--kalaa-radius-full` for circular user badges and `--kalaa-radius-md` (`shape=
+Compact identity badge showing an image or initials derived from `name`. Uses `--kalaa-radius-full` for circular user badges and `--kalaa-radius-md` (`shape="square"`) for workspaces or teams.
 
 Props:
 - `name` (`string`, optional) — Person or team name; used to derive up to two initials and as the accessible label.
@@ -1020,12 +1243,12 @@ Example:
 ```tsx
 import { Avatar } from "@kalaa/react";
 
-<Avatar />
+<Avatar name="Asha Rao" />
 ```
 
 ### Breadcrumbs
 
-Hierarchical trail inside a `<nav aria-label=
+Hierarchical trail inside a `<nav aria-label="Breadcrumb">` landmark, marking the final item with `aria-current="page"`. Supports client-side routing via `render` on each item.
 
 Props:
 - `items` (`BreadcrumbItem[]`, required) — Trail from root to the current page.
@@ -1033,9 +1256,16 @@ Props:
 
 Example:
 ```tsx
+import NextLink from "next/link";
 import { Breadcrumbs } from "@kalaa/react";
 
-<Breadcrumbs />
+<Breadcrumbs
+  items={[
+    { label: "Catalog", href: "/catalog", render: <NextLink href="/catalog" /> },
+    { label: "Imports", href: "/catalog/imports", render: <NextLink href="/catalog/imports" /> },
+    { label: "Batch #1042" },
+  ]}
+/>
 ```
 
 ### Combobox
@@ -1055,12 +1285,19 @@ Example:
 ```tsx
 import { Combobox } from "@kalaa/react";
 
-<Combobox />
+<Combobox
+  aria-label="Catalog category"
+  options={[
+    { value: "beverages", label: "Beverages & Roasters" },
+    { value: "spices", label: "Whole & Ground Spices" },
+  ]}
+  defaultValue="beverages"
+/>
 ```
 
 ### Divider
 
-1px rule in `--kalaa-border` with `role=
+1px rule in `--kalaa-border` with `role="separator"`. Supports horizontal rules (with an optional centred label) and vertical rules for toolbars.
 
 Props:
 - `orientation` (`DividerOrientation`, optional, default: "horizontal") — Axis: horizontal (default) or vertical (for toolbar and inline groups).
@@ -1071,7 +1308,7 @@ Example:
 ```tsx
 import { Divider } from "@kalaa/react";
 
-<Divider />
+<Divider label="Import options" />
 ```
 
 ### DropZone
@@ -1079,7 +1316,7 @@ import { Divider } from "@kalaa/react";
 Drag-and-drop and click-to-browse file target with `accept` filtering and a built-in `maxSizeBytes` size-limit notice and validation message.
 
 Props:
-- `label` (`ReactNode`, optional, default: "Drop a file here) — Primary prompt inside the drop target.
+- `label` (`ReactNode`, optional, default: "Drop a file here, or click to browse") — Primary prompt inside the drop target.
 - `description` (`ReactNode`, optional) — Secondary instructions below the prompt.
 - `accept` (`string`, optional) — Accepted MIME types or extensions (for example ".csv,text/csv").
 - `maxSizeBytes` (`number`, optional) — Maximum file size in bytes; displays a size-limit message and rejects larger files.
@@ -1092,12 +1329,18 @@ Example:
 ```tsx
 import { DropZone } from "@kalaa/react";
 
-<DropZone />
+<DropZone
+  label="Drop a product CSV here, or click to browse"
+  description="UTF-8 comma-separated values with a header row."
+  accept=".csv,text/csv"
+  maxSizeBytes={5 * 1024 * 1024}
+  onFiles={(files) => console.log(files)}
+/>
 ```
 
 ### Icon
 
-Curated 24-icon set for operational interfaces: inline 24×24 SVG strokes using `currentColor`. Decorative by default (`aria-hidden=
+Curated 24-icon set for operational interfaces: inline 24×24 SVG strokes using `currentColor`. Decorative by default (`aria-hidden="true"`); pass `label` when the icon stands alone without text.
 
 Props:
 - `name` (`IconName`, required) — Which icon to draw.
@@ -1106,20 +1349,26 @@ Props:
 
 Example:
 ```tsx
-import { Icon } from "@kalaa/react";
+import { Icon, Button } from "@kalaa/react";
 
-<Icon />
+<Button iconStart={<Icon name="upload" size="sm" />}>Import CSV</Button>
 ```
 
 ### Link
 
-Inline text link in the accent colour, always underlined so it does not rely on colour alone. Pass `render={<NextLink href=
+Inline text link in the accent colour, always underlined so it does not rely on colour alone. Pass `render={<NextLink href="..." />}` for client-side routing in Next.js.
+
+Props:
+- `render` (`useRender.RenderProp`, optional) — Replaces the `<a>` element, for client-side routing. Pass your router's link, for example `render={<NextLink href="/products" />}` with `next/link`. Kalaa props and classes are merged onto it.
 
 Example:
 ```tsx
+import NextLink from "next/link";
 import { Link } from "@kalaa/react";
 
-<Link />
+<p>
+  See the <Link render={<NextLink href="/imports" />}>import history</Link> for row-level errors.
+</p>
 ```
 
 ### Menu
@@ -1136,9 +1385,16 @@ Props:
 
 Example:
 ```tsx
-import { Menu } from "@kalaa/react";
+import { Menu, Button } from "@kalaa/react";
 
-<Menu />
+<Menu
+  trigger={<Button>Row actions</Button>}
+  items={[
+    { label: "Duplicate record", onSelect: () => {} },
+    { type: "separator" },
+    { label: "Delete record", tone: "danger", onSelect: () => {} },
+  ]}
+/>
 ```
 
 ### MultiSelect
@@ -1157,7 +1413,15 @@ Example:
 ```tsx
 import { MultiSelect } from "@kalaa/react";
 
-<MultiSelect />
+<MultiSelect
+  aria-label="Mapped source columns"
+  options={[
+    { value: "sku", label: "SKU code" },
+    { value: "ean", label: "EAN-13 barcode" },
+    { value: "title", label: "Product title" },
+  ]}
+  defaultValue={["sku", "title"]}
+/>
 ```
 
 ### Popover
@@ -1176,9 +1440,15 @@ Props:
 
 Example:
 ```tsx
-import { Popover } from "@kalaa/react";
+import { Popover, Button } from "@kalaa/react";
 
-<Popover />
+<Popover
+  trigger={<Button>Filter columns</Button>}
+  title="Column visibility"
+  description="Choose which fields appear in the table."
+>
+  <div>SKU, Title, Status</div>
+</Popover>
 ```
 
 ### RadioGroup
@@ -1199,12 +1469,19 @@ Example:
 ```tsx
 import { RadioGroup } from "@kalaa/react";
 
-<RadioGroup />
+<RadioGroup
+  aria-label="Import mode"
+  defaultValue="merge"
+  options={[
+    { value: "merge", label: "Merge with existing products" },
+    { value: "append", label: "Insert new products only" },
+  ]}
+/>
 ```
 
 ### Skeleton
 
-Layout placeholder shown while records or cards load. Decorative (`aria-hidden=
+Layout placeholder shown while records or cards load. Decorative (`aria-hidden="true"`); pulses gently and stops under `prefers-reduced-motion`.
 
 Props:
 - `variant` (`SkeletonVariant`, optional, default: "text") — Shape preset: text line (default), rectangular block, or true circle (avatar placeholder).
@@ -1215,7 +1492,10 @@ Example:
 ```tsx
 import { Skeleton } from "@kalaa/react";
 
-<Skeleton />
+<div aria-busy="true" aria-label="Loading product">
+  <Skeleton variant="text" width="40%" />
+  <Skeleton variant="block" />
+</div>
 ```
 
 ### Slider
@@ -1239,12 +1519,12 @@ Example:
 ```tsx
 import { Slider } from "@kalaa/react";
 
-<Slider />
+<Slider label="Minimum match confidence" defaultValue={80} min={0} max={100} step={5} />
 ```
 
 ### Spinner
 
-Indeterminate activity ring using `currentColor` and `--kalaa-radius-full`. Announces `role=
+Indeterminate activity ring using `currentColor` and `--kalaa-radius-full`. Announces `role="status"` with a visually hidden label unless marked `decorative` (as inside `Button loading`).
 
 Props:
 - `size` (`SpinnerSize`, optional, default: "md") — Diameter: sm 12px, md 16px (default), lg 24px.
@@ -1255,7 +1535,7 @@ Example:
 ```tsx
 import { Spinner } from "@kalaa/react";
 
-<Spinner />
+<Spinner label="Validating import rows" />
 ```
 
 ### Stat
@@ -1273,7 +1553,13 @@ Example:
 ```tsx
 import { Stat } from "@kalaa/react";
 
-<Stat />
+<Stat
+  label="Products approved"
+  value="1,284"
+  delta="+6.4%"
+  deltaTone="success"
+  help="Compared with the previous 7 days"
+/>
 ```
 
 ### Toast
@@ -1282,9 +1568,20 @@ Transient status notification stack built on Base UI Toast (`ToastProvider` + `u
 
 Example:
 ```tsx
-import { Toast } from "@kalaa/react";
+import { ToastProvider, useToast, Button } from "@kalaa/react";
 
-<Toast />
+function SaveButton() {
+  const { toast } = useToast();
+  return (
+    <Button onClick={() => toast({ title: "Catalog saved", tone: "success" })}>
+      Save
+    </Button>
+  );
+}
+
+<ToastProvider>
+  <SaveButton />
+</ToastProvider>
 ```
 
 ### Tooltip
@@ -1303,7 +1600,9 @@ Props:
 
 Example:
 ```tsx
-import { Tooltip } from "@kalaa/react";
+import { Tooltip, Button } from "@kalaa/react";
 
-<Tooltip />
+<Tooltip content="Export filtered rows as UTF-8 CSV">
+  <Button>Export CSV</Button>
+</Tooltip>
 ```

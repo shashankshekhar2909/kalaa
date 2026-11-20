@@ -33,3 +33,4 @@ export function parseComponentSource(input: {
   storiesSource?: string;
   sharedRegistry?: Map<string, unknown>;
 }): ComponentEntryManifest;
+export function readComponentCss(dirName: string, fileName?: string): string;

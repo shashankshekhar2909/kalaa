@@ -33,9 +33,9 @@ describe("AI schemas and sample data", () => {
     }
   });
 
-  it("rejects invalid resume payloads with descriptive error paths", () => {
+  it("rejects invalid resume payloads with descriptive error paths and enforces non-whitespace pattern in schema and validator", () => {
     const invalid = {
-      basics: { name: "", title: "Architect", unexpectedField: true },
+      basics: { name: "", title: "   ", unexpectedField: true },
       summary: { text: "Short bio" },
       experience: [],
       education: [],
@@ -44,8 +44,11 @@ describe("AI schemas and sample data", () => {
     const result = validateResumeData(invalid);
     expect(result.valid).toBe(false);
     expect(result.errors).toContain("$.basics.name: expected non-empty string (minLength 1)");
+    expect(result.errors).toContain("$.basics.title: expected non-whitespace string matching pattern \\S");
     expect(result.errors).toContain("$.basics.unexpectedField: unexpected additional property");
     expect(result.errors).toContain("$.experience: expected at least 1 item(s)");
+    expect(resumeSchemaFile.properties.basics.properties.name.pattern).toBe("\\S");
+    expect(portfolioSchemaFile.properties.profile.properties.name.pattern).toBe("\\S");
   });
 
   it("validates samplePortfolioData against portfolio.schema.json", () => {

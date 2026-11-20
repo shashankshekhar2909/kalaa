@@ -9,7 +9,7 @@
     {
       "name": "ResumePage",
       "category": "Templates",
-      "purpose": "Complete web and print resume template driven by a single `ResumeData` JSON object. Provides `",
+      "purpose": "Complete web and print resume template driven by a single `ResumeData` JSON object. Provides `\"single-column\"` and `\"sidebar\"` layouts, A4 and US Letter sizing, ATS-linear DOM order and automatic black-on-white print output even in dark mode.",
       "props": [
         {
           "name": "data",
@@ -40,7 +40,7 @@
           "description": "Forces black-on-white print tokens on screen (useful for previewing print output in dark mode)."
         }
       ],
-      "example": "import { ResumePage } from \"@kalaa/react\";\n\n<ResumePage />"
+      "example": "import { ResumePage, sampleResumeData } from \"@kalaa/react\";\n\n<ResumePage data={sampleResumeData} layout=\"single-column\" paperSize=\"a4\" />"
     },
     {
       "name": "PortfolioPage",
@@ -55,7 +55,7 @@
           "description": "Complete JSON-serialisable portfolio data object conforming to `PortfolioData`."
         }
       ],
-      "example": "import { PortfolioPage } from \"@kalaa/react\";\n\n<PortfolioPage />"
+      "example": "import { PortfolioPage, samplePortfolioData } from \"@kalaa/react\";\n\n<PortfolioPage data={samplePortfolioData} />"
     },
     {
       "name": "LandingPage",
@@ -70,7 +70,7 @@
           "description": "Complete JSON-serialisable marketing page data object conforming to `LandingPageData`."
         }
       ],
-      "example": "import { LandingPage } from \"@kalaa/react\";\n\n<LandingPage />"
+      "example": "import { LandingPage, sampleLandingPageData } from \"@kalaa/react\";\n\n<LandingPage data={sampleLandingPageData} />"
     },
     {
       "name": "ResumeHeader",
@@ -134,7 +134,7 @@
           "description": "Optional availability or status label shown in a badge."
         }
       ],
-      "example": "import { ResumeHeader } from \"@kalaa/react\";\n\n<ResumeHeader />"
+      "example": "import { ResumeHeader } from \"@kalaa/react\";\n\n<ResumeHeader\n  name=\"Aarav Deshmukh\"\n  title=\"Principal Systems Architect\"\n  location=\"Pune, India\"\n  email=\"aarav.deshmukh@example.invalid\"\n/>"
     },
     {
       "name": "Summary",
@@ -170,7 +170,7 @@
           "description": "Heading level (default 2)."
         }
       ],
-      "example": "import { Summary } from \"@kalaa/react\";\n\n<Summary />"
+      "example": "import { Summary } from \"@kalaa/react\";\n\n<Summary\n  text=\"Systems architect with 11 years designing deterministic telemetry pipelines.\"\n  highlights={[\"Cut regional failover recovery from 14 minutes to 22 seconds\"]}\n/>"
     },
     {
       "name": "ExperienceList",
@@ -199,7 +199,7 @@
           "description": "Section heading level (default 2; items render one level deeper)."
         }
       ],
-      "example": "import { ExperienceList } from \"@kalaa/react\";\n\n<ExperienceList />"
+      "example": "import { ExperienceList } from \"@kalaa/react\";\n\n<ExperienceList\n  items={[\n    {\n      role: \"Principal Systems Architect\",\n      org: \"Vayu Grid Systems\",\n      startDate: \"2023-04\",\n      endDate: \"Present\",\n      bullets: [\"Sustained 1.4M events/s at p99 latency under 18 ms.\"],\n      tags: [\"Rust\", \"Go\", \"TypeScript\"],\n    },\n  ]}\n/>"
     },
     {
       "name": "ExperienceItem",
@@ -270,7 +270,7 @@
           "description": "Heading level for the role title (default 2 when standalone, 3 inside ExperienceList)."
         }
       ],
-      "example": "import { ExperienceItem } from \"@kalaa/react\";\n\n<ExperienceItem />"
+      "example": "import { ExperienceList } from \"@kalaa/react\";\n\n<ExperienceList\n  items={[\n    {\n      role: \"Principal Systems Architect\",\n      org: \"Vayu Grid Systems\",\n      startDate: \"2023-04\",\n      endDate: \"Present\",\n      bullets: [\"Sustained 1.4M events/s at p99 latency under 18 ms.\"],\n      tags: [\"Rust\", \"Go\", \"TypeScript\"],\n    },\n  ]}\n/>"
     },
     {
       "name": "EducationList",
@@ -299,12 +299,12 @@
           "description": "Section heading level (default 2; degree titles render one level deeper)."
         }
       ],
-      "example": "import { EducationList } from \"@kalaa/react\";\n\n<EducationList />"
+      "example": "import { EducationList } from \"@kalaa/react\";\n\n<EducationList\n  items={[\n    {\n      degree: \"M.Tech in Computer Science and Engineering\",\n      institution: \"Visvesvaraya Institute of Technology\",\n      startDate: \"2014\",\n      endDate: \"2016\",\n      honors: [\"Institute Gold Medal\"],\n    },\n  ]}\n/>"
     },
     {
       "name": "SkillGroups",
       "category": "Blocks/Resume",
-      "purpose": "Categorised skill groups rendered inside a semantic `<dl>` with Kalaa `Badge` items. Supports responsive `",
+      "purpose": "Categorised skill groups rendered inside a semantic `<dl>` with Kalaa `Badge` items. Supports responsive `\"grid\"` or narrow `\"stacked\"` sidebar layouts.",
       "props": [
         {
           "name": "heading",
@@ -335,7 +335,7 @@
           "description": "Section heading level (default 2)."
         }
       ],
-      "example": "import { SkillGroups } from \"@kalaa/react\";\n\n<SkillGroups />"
+      "example": "import { SkillGroups } from \"@kalaa/react\";\n\n<SkillGroups\n  groups={[\n    { category: \"Systems & backend\", skills: [\"Rust\", \"Go\", \"TypeScript\", \"PostgreSQL\"] },\n  ]}\n/>"
     },
     {
       "name": "ProjectList",
@@ -371,7 +371,7 @@
           "description": "Section heading level (default 2; project titles render one level deeper)."
         }
       ],
-      "example": "import { ProjectList } from \"@kalaa/react\";\n\n<ProjectList />"
+      "example": "import { ProjectList } from \"@kalaa/react\";\n\n<ProjectList\n  items={[\n    {\n      name: \"Pravah Stream Compactor\",\n      description: \"Time-series segment compactor for edge gateways.\",\n      impact: [{ label: \"Write amplification\", value: \"1.18x (-54%)\" }],\n      tags: [\"Rust\", \"Storage\"],\n      links: [{ label: \"Source\", href: \"https://github.example.invalid/vayu-grid/pravah\" }],\n    },\n  ]}\n/>"
     },
     {
       "name": "ProjectCard",
@@ -442,7 +442,7 @@
           "description": "Heading level for the project title (default 2 when standalone, 3 inside ProjectList)."
         }
       ],
-      "example": "import { ProjectCard } from \"@kalaa/react\";\n\n<ProjectCard />"
+      "example": "import { ProjectList } from \"@kalaa/react\";\n\n<ProjectList\n  items={[\n    {\n      name: \"Pravah Stream Compactor\",\n      description: \"Time-series segment compactor for edge gateways.\",\n      impact: [{ label: \"Write amplification\", value: \"1.18x (-54%)\" }],\n      tags: [\"Rust\", \"Storage\"],\n      links: [{ label: \"Source\", href: \"https://github.example.invalid/vayu-grid/pravah\" }],\n    },\n  ]}\n/>"
     },
     {
       "name": "Certifications",
@@ -471,7 +471,7 @@
           "description": "Section heading level (default 2)."
         }
       ],
-      "example": "import { Certifications } from \"@kalaa/react\";\n\n<Certifications />"
+      "example": "import { Certifications } from \"@kalaa/react\";\n\n<Certifications\n  items={[\n    {\n      name: \"Certified Kubernetes Security Specialist (CKS)\",\n      issuer: \"Cloud Native Computing Foundation\",\n      date: \"2024-02\",\n      credentialId: \"CNCF-CKS-884120\",\n    },\n  ]}\n/>"
     },
     {
       "name": "Languages",
@@ -500,7 +500,7 @@
           "description": "Section heading level (default 2)."
         }
       ],
-      "example": "import { Languages } from \"@kalaa/react\";\n\n<Languages />"
+      "example": "import { Languages } from \"@kalaa/react\";\n\n<Languages\n  items={[\n    { language: \"Marathi\", proficiency: \"Native or bilingual\", level: \"native\" },\n    { language: \"English\", proficiency: \"Full professional proficiency\", level: \"fluent\" },\n  ]}\n/>"
     },
     {
       "name": "Awards",
@@ -529,7 +529,7 @@
           "description": "Section heading level (default 2; entry titles render one level deeper)."
         }
       ],
-      "example": "import { Awards } from \"@kalaa/react\";\n\n<Awards />"
+      "example": "import { Awards } from \"@kalaa/react\";\n\n<Awards\n  items={[\n    {\n      title: \"National Grid Resilience Engineering Award\",\n      issuer: \"Indian Power Systems Forum\",\n      date: \"2024-11\",\n      kind: \"award\",\n    },\n  ]}\n/>"
     },
     {
       "name": "Publications",
@@ -558,14 +558,92 @@
           "description": "Section heading level (default 2; entry titles render one level deeper)."
         }
       ],
-      "example": "import { Publications } from \"@kalaa/react\";\n\n<Publications />"
+      "example": "import { Awards } from \"@kalaa/react\";\n\n<Awards\n  items={[\n    {\n      title: \"National Grid Resilience Engineering Award\",\n      issuer: \"Indian Power Systems Forum\",\n      date: \"2024-11\",\n      kind: \"award\",\n    },\n  ]}\n/>"
     },
     {
       "name": "ProfileCard",
       "category": "Blocks/Profile & portfolio",
       "purpose": "Personal identity and bio card with monogram avatar, availability `Badge`, tabular-figure stats, skill tags and `ButtonLink` actions (at most one primary).",
-      "props": [],
-      "example": "import { ProfileCard } from \"@kalaa/react\";\n\n<ProfileCard />"
+      "props": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Person's full name."
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Primary role or headline."
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Location or timezone."
+        },
+        {
+          "name": "bio",
+          "type": "string",
+          "required": true,
+          "default": null,
+          "description": "Short biography paragraph."
+        },
+        {
+          "name": "availability",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Availability status (for example \"Available for architecture reviews\")."
+        },
+        {
+          "name": "initials",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Avatar monogram initials (for example \"AD\")."
+        },
+        {
+          "name": "skills",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "description": "Top skill tags."
+        },
+        {
+          "name": "stats",
+          "type": "PortfolioStat[]",
+          "required": false,
+          "default": "[]",
+          "description": "Career highlight numbers."
+        },
+        {
+          "name": "primaryAction",
+          "type": "PortfolioAction",
+          "required": false,
+          "default": null,
+          "description": "Primary action link."
+        },
+        {
+          "name": "secondaryAction",
+          "type": "PortfolioAction",
+          "required": false,
+          "default": null,
+          "description": "Secondary action link."
+        },
+        {
+          "name": "headingLevel",
+          "type": "2 | 3",
+          "required": false,
+          "default": "2",
+          "description": "Heading level for the person's name (default 2)."
+        }
+      ],
+      "example": "import { ProfileCard } from \"@kalaa/react\";\n\n<ProfileCard\n  name=\"Aarav Deshmukh\"\n  role=\"Principal Systems Architect\"\n  bio=\"I design high-throughput telemetry engines and calm operator consoles.\"\n  availability=\"Available for Q1 reviews\"\n/>"
     },
     {
       "name": "CaseStudyCard",
@@ -650,7 +728,7 @@
           "description": "Heading level for the case study title (default 2 when standalone, 3 inside a section)."
         }
       ],
-      "example": "import { CaseStudyCard } from \"@kalaa/react\";\n\n<CaseStudyCard />"
+      "example": "import { CaseStudyCard } from \"@kalaa/react\";\n\n<CaseStudyCard\n  title=\"Substation telemetry pipeline overhaul\"\n  client=\"Vayu Grid Systems\"\n  year=\"2025\"\n  summary=\"Replaced a polling collector with a bounded-memory Rust stream compactor.\"\n  metrics={[{ label: \"Recovery time\", value: \"22 s\" }]}\n/>"
     },
     {
       "name": "Timeline",
@@ -679,12 +757,12 @@
           "description": "Section heading level (default 2; milestone titles render one level deeper)."
         }
       ],
-      "example": "import { Timeline } from \"@kalaa/react\";\n\n<Timeline />"
+      "example": "import { Timeline } from \"@kalaa/react\";\n\n<Timeline\n  items={[\n    {\n      date: \"2023-04\",\n      endDate: \"Present\",\n      title: \"Principal Systems Architect\",\n      subtitle: \"Vayu Grid Systems\",\n      badge: \"Current\",\n    },\n  ]}\n/>"
     },
     {
       "name": "TestimonialCard",
       "category": "Blocks/Profile & portfolio",
-      "purpose": "Endorsement card built on Kalaa `Card` (`as=",
+      "purpose": "Endorsement card built on Kalaa `Card` (`as=\"article\"`) with a semantic `<blockquote>`, `<cite>` author attribution, role, organisation and `<time>` date.",
       "props": [
         {
           "name": "quote",
@@ -729,7 +807,7 @@
           "description": "Relationship or project context."
         }
       ],
-      "example": "import { TestimonialCard } from \"@kalaa/react\";\n\n<TestimonialCard />"
+      "example": "import { TestimonialCard } from \"@kalaa/react\";\n\n<TestimonialCard\n  quote=\"Aarav turned our most fragile telemetry service into the calmest part of our stack.\"\n  author=\"Meera Kulkarni\"\n  role=\"VP of Engineering\"\n  org=\"Vayu Grid Systems\"\n/>"
     },
     {
       "name": "ContactCard",
@@ -807,12 +885,12 @@
           "description": "Heading level for the card title (default 2)."
         }
       ],
-      "example": "import { ContactCard } from \"@kalaa/react\";\n\n<ContactCard />"
+      "example": "import { ContactCard } from \"@kalaa/react\";\n\n<ContactCard\n  title=\"Start a technical conversation\"\n  email=\"aarav.deshmukh@example.invalid\"\n  location=\"Pune, India\"\n  responseTime=\"Within 1 business day\"\n/>"
     },
     {
       "name": "LinkList",
       "category": "Blocks/Profile & portfolio",
-      "purpose": "Annotated link collection for writing, talks, repositories or profile hubs. Supports `",
+      "purpose": "Annotated link collection for writing, talks, repositories or profile hubs. Supports `\"stacked\"` rows with descriptions or compact `\"inline\"` rows.",
       "props": [
         {
           "name": "heading",
@@ -843,7 +921,7 @@
           "description": "Section heading level (default 2)."
         }
       ],
-      "example": "import { LinkList } from \"@kalaa/react\";\n\n<LinkList />"
+      "example": "import { LinkList } from \"@kalaa/react\";\n\n<LinkList\n  heading=\"Selected writing\"\n  items={[\n    {\n      label: \"Deterministic rollup compaction paper\",\n      href: \"https://papers.example.invalid/sits-2025-rollup\",\n      description: \"Symposium on Industrial Telemetry Systems (2025)\",\n      meta: \"Paper\",\n    },\n  ]}\n/>"
     },
     {
       "name": "Hero",
@@ -907,7 +985,7 @@
           "description": "Heading level for the hero title (default 1)."
         }
       ],
-      "example": "import { Hero } from \"@kalaa/react\";\n\n<Hero />"
+      "example": "import { Hero } from \"@kalaa/react\";\n\n<Hero\n  eyebrow=\"Release 2.4\"\n  title=\"Calm telemetry for high-voltage operations\"\n  description=\"Ingest, compact and inspect millions of sensor events per second.\"\n  primaryAction={{ label: \"Deploy sample cluster\", href: \"#cta\" }}\n/>"
     },
     {
       "name": "FeatureGrid",
@@ -950,7 +1028,7 @@
           "description": "Section heading level (default 2; feature cards render one level deeper when heading is set)."
         }
       ],
-      "example": "import { FeatureGrid } from \"@kalaa/react\";\n\n<FeatureGrid />"
+      "example": "import { FeatureGrid } from \"@kalaa/react\";\n\n<FeatureGrid\n  heading=\"Engineered for predictable operations\"\n  features={[\n    {\n      title: \"Bounded-memory stream compactor\",\n      description: \"Fixed ring buffers guarantee zero out-of-memory restarts.\",\n      badge: \"Storage\",\n    },\n  ]}\n/>"
     },
     {
       "name": "StatsBand",
@@ -986,7 +1064,7 @@
           "description": "Section heading level (default 2)."
         }
       ],
-      "example": "import { StatsBand } from \"@kalaa/react\";\n\n<StatsBand />"
+      "example": "import { StatsBand } from \"@kalaa/react\";\n\n<StatsBand\n  heading=\"Measured under real substation fault bursts\"\n  stats={[\n    { label: \"Ingest throughput\", value: \"1.4M/s\", detail: \"Per 4-core regional node\" },\n    { label: \"Failover recovery\", value: \"22 s\", detail: \"Zero dropped frames\" },\n  ]}\n/>"
     },
     {
       "name": "CTA",
@@ -1036,7 +1114,7 @@
           "description": "Heading level (default 2)."
         }
       ],
-      "example": "import { CTA } from \"@kalaa/react\";\n\n<CTA />"
+      "example": "import { CTA } from \"@kalaa/react\";\n\n<CTA\n  title=\"Ready to calm your telemetry stack?\"\n  description=\"Run the self-contained simulator locally.\"\n  primaryAction={{ label: \"Download evaluation tarball\", href: \"#download\" }}\n/>"
     },
     {
       "name": "FAQ",
@@ -1079,7 +1157,7 @@
           "description": "Section heading level (default 2)."
         }
       ],
-      "example": "import { FAQ } from \"@kalaa/react\";\n\n<FAQ />"
+      "example": "import { FAQ } from \"@kalaa/react\";\n\n<FAQ\n  items={[\n    {\n      question: \"Does the operator console work without client-side JavaScript?\",\n      answer: \"Yes. Every report and disclosure renders valid semantic HTML on the server.\",\n    },\n  ]}\n/>"
     },
     {
       "name": "PageFooter",
@@ -1129,7 +1207,7 @@
           "description": "Whether to render the Kalaa mark next to the brand name."
         }
       ],
-      "example": "import { PageFooter } from \"@kalaa/react\";\n\n<PageFooter />"
+      "example": "import { PageFooter } from \"@kalaa/react\";\n\n<PageFooter\n  brandName=\"Pravah Telemetry\"\n  tagline=\"Built with Kalaa design tokens and components.\"\n  copyright=\"© 2026 Pravah Telemetry Systems.\"\n/>"
     },
     {
       "name": "SectionHeader",
@@ -1179,12 +1257,12 @@
           "description": "Horizontal alignment: \"between\" (default) or \"start\"."
         }
       ],
-      "example": "import { SectionHeader } from \"@kalaa/react\";\n\n<SectionHeader />"
+      "example": "import { SectionHeader } from \"@kalaa/react\";\n\n<SectionHeader\n  title=\"Engineered for predictable operations\"\n  description=\"Every layer is inspectable, schema-validated and operable from the keyboard.\"\n/>"
     },
     {
       "name": "AppShell",
       "category": "Components",
-      "purpose": "Page frame with a sticky 240px sidebar (full-page background) and a main area (max 1120px). Use it once per app, with `brand`, `AppShell.NavItem` children in `nav`, and `footer` for account or theme utilities. Pass `render={<NextLink href=",
+      "purpose": "Page frame with a sticky 240px sidebar (full-page background) and a main area (max 1120px). Use it once per app, with `brand`, `AppShell.NavItem` children in `nav`, and `footer` for account or theme utilities. Pass `render={<NextLink href=\"...\" />}` on `NavItem` for client-side routing.",
       "props": [
         {
           "name": "nav",
@@ -1215,12 +1293,12 @@
           "description": "Footer or utility slot at the bottom of the sidebar (theme toggle, account, sign out)."
         }
       ],
-      "example": "import { AppShell } from \"@kalaa/react\";\n\n<AppShell />"
+      "example": "import NextLink from \"next/link\";\nimport { AppShell } from \"@kalaa/react\";\n\n<AppShell\n  brand=\"Catalog Admin\"\n  nav={<AppShell.NavItem render={<NextLink href=\"/products\" />} active>Products</AppShell.NavItem>}\n  footer={<button type=\"button\">Sign out</button>}\n>\n  <PageHeader title=\"Products\" />\n</AppShell>"
     },
     {
       "name": "PageHeader",
       "category": "Components",
-      "purpose": "Title row for a page: optional back link, one `h1`, muted description and right-aligned actions. Pass `back={{ href, label, render: <NextLink href=",
+      "purpose": "Title row for a page: optional back link, one `h1`, muted description and right-aligned actions. Pass `back={{ href, label, render: <NextLink href=\"...\" /> }}` for client-side routing in Next.js.",
       "props": [
         {
           "name": "title",
@@ -1238,7 +1316,7 @@
         },
         {
           "name": "back",
-          "type": "{ href: string; label: string; /** Replaces the `<a>`, for client-side routing: `render: <NextLink href=\"/products\" />` with `next/link`. */ render?: useRender.RenderProp; }",
+          "type": "{ href: string; label: string; render?: useRender.RenderProp; }",
           "required": false,
           "default": null,
           "description": "Link above the title to the parent page."
@@ -1258,7 +1336,7 @@
           "description": "\"brand\" sets the title in serif for marketing pages."
         }
       ],
-      "example": "import { PageHeader } from \"@kalaa/react\";\n\n<PageHeader />"
+      "example": "import NextLink from \"next/link\";\nimport { PageHeader, Button } from \"@kalaa/react\";\n\n<PageHeader\n  title=\"Products\"\n  description=\"Manage your catalog.\"\n  back={{ href: \"/catalog\", label: \"Back to catalog\", render: <NextLink href=\"/catalog\" /> }}\n  actions={<Button variant=\"primary\">Add product</Button>}\n/>"
     },
     {
       "name": "Card",
@@ -1301,7 +1379,7 @@
           "description": "Heading level of the title (default 2). Use 3 or 4 when the card sits under a section heading."
         }
       ],
-      "example": "import { Card } from \"@kalaa/react\";\n\n<Card />"
+      "example": "import { Card } from \"@kalaa/react\";\n\n<Card title=\"Products\" description=\"Manage your catalog.\">24 products</Card>"
     },
     {
       "name": "KeyValue",
@@ -1323,7 +1401,7 @@
           "description": "\"rows\" (label column with dividers, default) or \"grid\" (compact summary)."
         }
       ],
-      "example": "import { KeyValue } from \"@kalaa/react\";\n\n<KeyValue />"
+      "example": "import { KeyValue } from \"@kalaa/react\";\n\n<KeyValue items={[{ label: \"Status\", value: \"Draft\" }, { label: \"Stock\", value: \"88 units\" }]} />"
     },
     {
       "name": "ValueComparison",
@@ -1395,7 +1473,7 @@
           "description": "One next step, usually a Button."
         }
       ],
-      "example": "import { EmptyState } from \"@kalaa/react\";\n\n<EmptyState />"
+      "example": "import { EmptyState } from \"@kalaa/react\";\n\n<EmptyState title=\"No products yet\" description=\"Add a product to start your catalog.\" />"
     },
     {
       "name": "Button",
@@ -1438,7 +1516,7 @@
           "description": "Shows a spinner, disables the button and sets `aria-busy`; keeps its width."
         }
       ],
-      "example": "import { Button } from \"@kalaa/react\";\n\n<Button />"
+      "example": "import { Button } from \"@kalaa/react\";\n\n<Button variant=\"primary\">Save changes</Button>"
     },
     {
       "name": "ButtonLink",
@@ -1472,9 +1550,16 @@
           "required": false,
           "default": null,
           "description": "Decorative icon after the label."
+        },
+        {
+          "name": "render",
+          "type": "useRender.RenderProp",
+          "required": false,
+          "default": null,
+          "description": "Replaces the `<a>` element, for client-side routing. Pass your router's link, for example `render={<NextLink href=\"/products\" />}` with `next/link`. Kalaa props and classes are merged onto it."
         }
       ],
-      "example": "import { ButtonLink } from \"@kalaa/react\";\n\n<ButtonLink />"
+      "example": "import NextLink from \"next/link\";\nimport { ButtonLink } from \"@kalaa/react\";\n\n<ButtonLink variant=\"primary\" render={<NextLink href=\"/products\" />}>\n  View products\n</ButtonLink>"
     },
     {
       "name": "Field",
@@ -1517,7 +1602,7 @@
           "description": "Exactly one control (Input, Textarea, Select)."
         }
       ],
-      "example": "import { Field } from \"@kalaa/react\";\n\n<Field />"
+      "example": "import { Field, Input } from \"@kalaa/react\";\n\n<Field label=\"Product title\" hint=\"Shown on the storefront.\">\n  <Input defaultValue=\"Cold-pressed mustard oil 1 L\" />\n</Field>"
     },
     {
       "name": "Input",
@@ -1539,7 +1624,7 @@
           "description": "Shows the danger border and sets `aria-invalid`."
         }
       ],
-      "example": "import { Input } from \"@kalaa/react\";\n\n<Input />"
+      "example": "import { Input } from \"@kalaa/react\";\n\n<Input aria-label=\"Product name\" placeholder=\"Enter product name\" />"
     },
     {
       "name": "Textarea",
@@ -1568,7 +1653,7 @@
           "description": "Grows with its content instead of scrolling."
         }
       ],
-      "example": "import { Textarea } from \"@kalaa/react\";\n\n<Textarea />"
+      "example": "import { Textarea } from \"@kalaa/react\";\n\n<Textarea aria-label=\"Product description\" autoResize />"
     },
     {
       "name": "Select",
@@ -1639,7 +1724,7 @@
           "description": "Marks the field required in forms."
         }
       ],
-      "example": "import { Select } from \"@kalaa/react\";\n\n<Select />"
+      "example": "import { Select } from \"@kalaa/react\";\n\n<Select\n  aria-label=\"Review status\"\n  options={[{ value: \"draft\", label: \"Draft\" }, { value: \"review\", label: \"Needs review\" }]}\n  defaultValue=\"draft\"\n/>"
     },
     {
       "name": "Checkbox",
@@ -1668,7 +1753,7 @@
           "description": ""
         }
       ],
-      "example": "import { Checkbox } from \"@kalaa/react\";\n\n<Checkbox />"
+      "example": "import { Checkbox } from \"@kalaa/react\";\n\n<Checkbox label=\"Show on storefront\" defaultChecked />"
     },
     {
       "name": "Switch",
@@ -1697,7 +1782,7 @@
           "description": ""
         }
       ],
-      "example": "import { Switch } from \"@kalaa/react\";\n\n<Switch />"
+      "example": "import { Switch } from \"@kalaa/react\";\n\n<Switch label=\"Track stock\" description=\"Warn when fewer than 20 units are left.\" />"
     },
     {
       "name": "Tabs",
@@ -1740,7 +1825,7 @@
           "description": "\"segmented\" (default) or \"underline\"."
         }
       ],
-      "example": "import { Tabs } from \"@kalaa/react\";\n\n<Tabs />"
+      "example": "import { Tabs } from \"@kalaa/react\";\n\n<Tabs\n  variant=\"underline\"\n  items={[\n    { value: \"details\", label: \"Details\", content: \"Product details.\" },\n    { value: \"history\", label: \"History\", content: \"3 earlier versions.\" },\n  ]}\n/>"
     },
     {
       "name": "Banner",
@@ -1769,7 +1854,7 @@
           "description": "Buttons on the right."
         }
       ],
-      "example": "import { Banner } from \"@kalaa/react\";\n\n<Banner />"
+      "example": "import { Banner } from \"@kalaa/react\";\n\n<Banner tone=\"warning\" title=\"1 field needs attention\">Fix the price before approving.</Banner>"
     },
     {
       "name": "Badge",
@@ -1784,7 +1869,7 @@
           "description": "Colour meaning: neutral (default), info, success, warning or danger."
         }
       ],
-      "example": "import { Badge } from \"@kalaa/react\";\n\n<Badge />"
+      "example": "import { Badge } from \"@kalaa/react\";\n\n<Badge tone=\"success\">Approved</Badge>"
     },
     {
       "name": "StatusBadge",
@@ -1799,7 +1884,7 @@
           "description": "Status word such as \"approved\" or \"needs review\"; unknown words render neutral."
         }
       ],
-      "example": "import { StatusBadge } from \"@kalaa/react\";\n\n<StatusBadge />"
+      "example": "import { StatusBadge } from \"@kalaa/react\";\n\n<StatusBadge status=\"needs review\" />"
     },
     {
       "name": "ProgressBar",
@@ -1842,7 +1927,7 @@
           "description": "Fill colour: accent (default), success, warning or danger."
         }
       ],
-      "example": "import { ProgressBar } from \"@kalaa/react\";\n\n<ProgressBar />"
+      "example": "import { ProgressBar } from \"@kalaa/react\";\n\n<ProgressBar label=\"Import progress\" value={45} />"
     },
     {
       "name": "Dialog",
@@ -1906,7 +1991,7 @@
           "description": "Width: sm 400px, md 560px (default), lg 720px."
         }
       ],
-      "example": "import { Dialog } from \"@kalaa/react\";\n\n<Dialog />"
+      "example": "import { Dialog, Button } from \"@kalaa/react\";\n\n<Dialog\n  trigger={<Button>Review import</Button>}\n  title=\"Review import\"\n  footer={<Button variant=\"primary\">Confirm</Button>}\n>\n  Twelve products are ready to import.\n</Dialog>"
     },
     {
       "name": "Table",
@@ -2200,7 +2285,7 @@
           "description": "Single-colour version: frame and corner both use currentColor."
         }
       ],
-      "example": "import { Logo } from \"@kalaa/react\";\n\n<Logo />"
+      "example": "import { Logo } from \"@kalaa/react\";\n\n<Logo variant=\"lockup\" size={28} />"
     },
     {
       "name": "CodeBlock",
@@ -2229,12 +2314,12 @@
           "description": "Hint for readers and tools, for example \"bash\" or \"tsx\". Not highlighted."
         }
       ],
-      "example": "import { CodeBlock } from \"@kalaa/react\";\n\n<CodeBlock />"
+      "example": "import { CodeBlock } from \"@kalaa/react\";\n\n<CodeBlock label=\"Install command\" code=\"pnpm add ./vendor/kalaa-react-0.1.0.tgz\" />"
     },
     {
       "name": "Avatar",
       "category": "Components",
-      "purpose": "Compact identity badge showing an image or initials derived from `name`. Uses `--kalaa-radius-full` for circular user badges and `--kalaa-radius-md` (`shape=",
+      "purpose": "Compact identity badge showing an image or initials derived from `name`. Uses `--kalaa-radius-full` for circular user badges and `--kalaa-radius-md` (`shape=\"square\"`) for workspaces or teams.",
       "props": [
         {
           "name": "name",
@@ -2279,12 +2364,12 @@
           "description": "True circle (`--kalaa-radius-full`, default) or theme-shaped square (`--kalaa-radius-md`)."
         }
       ],
-      "example": "import { Avatar } from \"@kalaa/react\";\n\n<Avatar />"
+      "example": "import { Avatar } from \"@kalaa/react\";\n\n<Avatar name=\"Asha Rao\" />"
     },
     {
       "name": "Breadcrumbs",
       "category": "Components",
-      "purpose": "Hierarchical trail inside a `<nav aria-label=",
+      "purpose": "Hierarchical trail inside a `<nav aria-label=\"Breadcrumb\">` landmark, marking the final item with `aria-current=\"page\"`. Supports client-side routing via `render` on each item.",
       "props": [
         {
           "name": "items",
@@ -2301,7 +2386,7 @@
           "description": "Accessible name for the `<nav>` landmark (default \"Breadcrumb\")."
         }
       ],
-      "example": "import { Breadcrumbs } from \"@kalaa/react\";\n\n<Breadcrumbs />"
+      "example": "import NextLink from \"next/link\";\nimport { Breadcrumbs } from \"@kalaa/react\";\n\n<Breadcrumbs\n  items={[\n    { label: \"Catalog\", href: \"/catalog\", render: <NextLink href=\"/catalog\" /> },\n    { label: \"Imports\", href: \"/catalog/imports\", render: <NextLink href=\"/catalog/imports\" /> },\n    { label: \"Batch #1042\" },\n  ]}\n/>"
     },
     {
       "name": "Combobox",
@@ -2358,12 +2443,12 @@
           "description": "Marks the control invalid."
         }
       ],
-      "example": "import { Combobox } from \"@kalaa/react\";\n\n<Combobox />"
+      "example": "import { Combobox } from \"@kalaa/react\";\n\n<Combobox\n  aria-label=\"Catalog category\"\n  options={[\n    { value: \"beverages\", label: \"Beverages & Roasters\" },\n    { value: \"spices\", label: \"Whole & Ground Spices\" },\n  ]}\n  defaultValue=\"beverages\"\n/>"
     },
     {
       "name": "Divider",
       "category": "Components",
-      "purpose": "1px rule in `--kalaa-border` with `role=",
+      "purpose": "1px rule in `--kalaa-border` with `role=\"separator\"`. Supports horizontal rules (with an optional centred label) and vertical rules for toolbars.",
       "props": [
         {
           "name": "orientation",
@@ -2387,7 +2472,7 @@
           "description": "Hides the separator from the accessibility tree (`role=\"none\"`)."
         }
       ],
-      "example": "import { Divider } from \"@kalaa/react\";\n\n<Divider />"
+      "example": "import { Divider } from \"@kalaa/react\";\n\n<Divider label=\"Import options\" />"
     },
     {
       "name": "DropZone",
@@ -2398,7 +2483,7 @@
           "name": "label",
           "type": "ReactNode",
           "required": false,
-          "default": "\"Drop a file here",
+          "default": "\"Drop a file here, or click to browse\"",
           "description": "Primary prompt inside the drop target."
         },
         {
@@ -2451,12 +2536,12 @@
           "description": "Called when a file is rejected (size limit exceeded or type mismatch)."
         }
       ],
-      "example": "import { DropZone } from \"@kalaa/react\";\n\n<DropZone />"
+      "example": "import { DropZone } from \"@kalaa/react\";\n\n<DropZone\n  label=\"Drop a product CSV here, or click to browse\"\n  description=\"UTF-8 comma-separated values with a header row.\"\n  accept=\".csv,text/csv\"\n  maxSizeBytes={5 * 1024 * 1024}\n  onFiles={(files) => console.log(files)}\n/>"
     },
     {
       "name": "Icon",
       "category": "Components",
-      "purpose": "Curated 24-icon set for operational interfaces: inline 24×24 SVG strokes using `currentColor`. Decorative by default (`aria-hidden=",
+      "purpose": "Curated 24-icon set for operational interfaces: inline 24×24 SVG strokes using `currentColor`. Decorative by default (`aria-hidden=\"true\"`); pass `label` when the icon stands alone without text.",
       "props": [
         {
           "name": "name",
@@ -2480,14 +2565,22 @@
           "description": "Accessible name for an icon that stands alone. Omit it for decorative icons next to text (they are hidden from screen readers)."
         }
       ],
-      "example": "import { Icon } from \"@kalaa/react\";\n\n<Icon />"
+      "example": "import { Icon, Button } from \"@kalaa/react\";\n\n<Button iconStart={<Icon name=\"upload\" size=\"sm\" />}>Import CSV</Button>"
     },
     {
       "name": "Link",
       "category": "Components",
-      "purpose": "Inline text link in the accent colour, always underlined so it does not rely on colour alone. Pass `render={<NextLink href=",
-      "props": [],
-      "example": "import { Link } from \"@kalaa/react\";\n\n<Link />"
+      "purpose": "Inline text link in the accent colour, always underlined so it does not rely on colour alone. Pass `render={<NextLink href=\"...\" />}` for client-side routing in Next.js.",
+      "props": [
+        {
+          "name": "render",
+          "type": "useRender.RenderProp",
+          "required": false,
+          "default": null,
+          "description": "Replaces the `<a>` element, for client-side routing. Pass your router's link, for example `render={<NextLink href=\"/products\" />}` with `next/link`. Kalaa props and classes are merged onto it."
+        }
+      ],
+      "example": "import NextLink from \"next/link\";\nimport { Link } from \"@kalaa/react\";\n\n<p>\n  See the <Link render={<NextLink href=\"/imports\" />}>import history</Link> for row-level errors.\n</p>"
     },
     {
       "name": "Menu",
@@ -2537,7 +2630,7 @@
           "description": "Alignment along the trigger edge (default \"start\")."
         }
       ],
-      "example": "import { Menu } from \"@kalaa/react\";\n\n<Menu />"
+      "example": "import { Menu, Button } from \"@kalaa/react\";\n\n<Menu\n  trigger={<Button>Row actions</Button>}\n  items={[\n    { label: \"Duplicate record\", onSelect: () => {} },\n    { type: \"separator\" },\n    { label: \"Delete record\", tone: \"danger\", onSelect: () => {} },\n  ]}\n/>"
     },
     {
       "name": "MultiSelect",
@@ -2587,7 +2680,7 @@
           "description": "Marks the control invalid."
         }
       ],
-      "example": "import { MultiSelect } from \"@kalaa/react\";\n\n<MultiSelect />"
+      "example": "import { MultiSelect } from \"@kalaa/react\";\n\n<MultiSelect\n  aria-label=\"Mapped source columns\"\n  options={[\n    { value: \"sku\", label: \"SKU code\" },\n    { value: \"ean\", label: \"EAN-13 barcode\" },\n    { value: \"title\", label: \"Product title\" },\n  ]}\n  defaultValue={[\"sku\", \"title\"]}\n/>"
     },
     {
       "name": "Popover",
@@ -2651,7 +2744,7 @@
           "description": "Alignment along the side (default \"start\")."
         }
       ],
-      "example": "import { Popover } from \"@kalaa/react\";\n\n<Popover />"
+      "example": "import { Popover, Button } from \"@kalaa/react\";\n\n<Popover\n  trigger={<Button>Filter columns</Button>}\n  title=\"Column visibility\"\n  description=\"Choose which fields appear in the table.\"\n>\n  <div>SKU, Title, Status</div>\n</Popover>"
     },
     {
       "name": "RadioGroup",
@@ -2715,12 +2808,12 @@
           "description": "Marks a selection required in forms."
         }
       ],
-      "example": "import { RadioGroup } from \"@kalaa/react\";\n\n<RadioGroup />"
+      "example": "import { RadioGroup } from \"@kalaa/react\";\n\n<RadioGroup\n  aria-label=\"Import mode\"\n  defaultValue=\"merge\"\n  options={[\n    { value: \"merge\", label: \"Merge with existing products\" },\n    { value: \"append\", label: \"Insert new products only\" },\n  ]}\n/>"
     },
     {
       "name": "Skeleton",
       "category": "Components",
-      "purpose": "Layout placeholder shown while records or cards load. Decorative (`aria-hidden=",
+      "purpose": "Layout placeholder shown while records or cards load. Decorative (`aria-hidden=\"true\"`); pulses gently and stops under `prefers-reduced-motion`.",
       "props": [
         {
           "name": "variant",
@@ -2744,7 +2837,7 @@
           "description": "CSS height (number in px or string)."
         }
       ],
-      "example": "import { Skeleton } from \"@kalaa/react\";\n\n<Skeleton />"
+      "example": "import { Skeleton } from \"@kalaa/react\";\n\n<div aria-busy=\"true\" aria-label=\"Loading product\">\n  <Skeleton variant=\"text\" width=\"40%\" />\n  <Skeleton variant=\"block\" />\n</div>"
     },
     {
       "name": "Slider",
@@ -2829,12 +2922,12 @@
           "description": "Form field name."
         }
       ],
-      "example": "import { Slider } from \"@kalaa/react\";\n\n<Slider />"
+      "example": "import { Slider } from \"@kalaa/react\";\n\n<Slider label=\"Minimum match confidence\" defaultValue={80} min={0} max={100} step={5} />"
     },
     {
       "name": "Spinner",
       "category": "Components",
-      "purpose": "Indeterminate activity ring using `currentColor` and `--kalaa-radius-full`. Announces `role=",
+      "purpose": "Indeterminate activity ring using `currentColor` and `--kalaa-radius-full`. Announces `role=\"status\"` with a visually hidden label unless marked `decorative` (as inside `Button loading`).",
       "props": [
         {
           "name": "size",
@@ -2858,7 +2951,7 @@
           "description": "Hides the spinner from assistive tech; use when the surrounding control already says it is busy."
         }
       ],
-      "example": "import { Spinner } from \"@kalaa/react\";\n\n<Spinner />"
+      "example": "import { Spinner } from \"@kalaa/react\";\n\n<Spinner label=\"Validating import rows\" />"
     },
     {
       "name": "Stat",
@@ -2901,14 +2994,14 @@
           "description": "Secondary context or comparison period below the value."
         }
       ],
-      "example": "import { Stat } from \"@kalaa/react\";\n\n<Stat />"
+      "example": "import { Stat } from \"@kalaa/react\";\n\n<Stat\n  label=\"Products approved\"\n  value=\"1,284\"\n  delta=\"+6.4%\"\n  deltaTone=\"success\"\n  help=\"Compared with the previous 7 days\"\n/>"
     },
     {
       "name": "Toast",
       "category": "Components",
       "purpose": "Transient status notification stack built on Base UI Toast (`ToastProvider` + `useToast()`). Mount `ToastProvider` once near the root of your app and trigger notifications with `const { toast } = useToast()`.",
       "props": [],
-      "example": "import { Toast } from \"@kalaa/react\";\n\n<Toast />"
+      "example": "import { ToastProvider, useToast, Button } from \"@kalaa/react\";\n\nfunction SaveButton() {\n  const { toast } = useToast();\n  return (\n    <Button onClick={() => toast({ title: \"Catalog saved\", tone: \"success\" })}>\n      Save\n    </Button>\n  );\n}\n\n<ToastProvider>\n  <SaveButton />\n</ToastProvider>"
     },
     {
       "name": "Tooltip",
@@ -2972,7 +3065,7 @@
           "description": "Additional class name on the popup element."
         }
       ],
-      "example": "import { Tooltip } from \"@kalaa/react\";\n\n<Tooltip />"
+      "example": "import { Tooltip, Button } from \"@kalaa/react\";\n\n<Tooltip content=\"Export filtered rows as UTF-8 CSV\">\n  <Button>Export CSV</Button>\n</Tooltip>"
     }
   ]
 }
