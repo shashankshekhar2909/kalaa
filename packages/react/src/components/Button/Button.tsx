@@ -1,5 +1,7 @@
+import { useRender } from "@base-ui/react/use-render";
 import type { ComponentPropsWithRef, ReactNode } from "react";
 import { cx } from "../../util";
+import { Spinner } from "../Spinner/Spinner";
 export type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 export type ButtonSize = "sm" | "md";
 type Shared = {
@@ -50,11 +52,18 @@ export function Button({
           </span>
         )}
       </span>
-      {loading && <span className="kl-button__spinner" aria-hidden="true" />}
+      {loading && <Spinner decorative className="kl-button__spinner" />}
     </button>
   );
 }
-export type ButtonLinkProps = ComponentPropsWithRef<"a"> & Shared;
+export type ButtonLinkProps = ComponentPropsWithRef<"a"> &
+  Shared & {
+    /**
+     * Replaces the `<a>` element, for client-side routing. Pass your router's link, for example
+     * `render={<NextLink href="/products" />}` with `next/link`. Kalaa props and classes are merged onto it.
+     */
+    render?: useRender.RenderProp;
+  };
 export function ButtonLink({
   variant = "secondary",
   size = "md",
@@ -62,23 +71,32 @@ export function ButtonLink({
   iconEnd,
   className,
   children,
+  render,
+  ref,
   ...props
 }: ButtonLinkProps) {
-  return (
-    <a {...props} className={cx("kl-button", `kl-button--${variant}`, `kl-button--${size}`, className)}>
-      <span className="kl-button__content">
-        {iconStart && (
-          <span className="kl-button__icon" aria-hidden="true">
-            {iconStart}
-          </span>
-        )}
-        {children}
-        {iconEnd && (
-          <span className="kl-button__icon" aria-hidden="true">
-            {iconEnd}
-          </span>
-        )}
-      </span>
-    </a>
-  );
+  return useRender({
+    defaultTagName: "a",
+    render,
+    ref,
+    props: {
+      ...props,
+      className: cx("kl-button", `kl-button--${variant}`, `kl-button--${size}`, className),
+      children: (
+        <span className="kl-button__content">
+          {iconStart && (
+            <span className="kl-button__icon" aria-hidden="true">
+              {iconStart}
+            </span>
+          )}
+          {children}
+          {iconEnd && (
+            <span className="kl-button__icon" aria-hidden="true">
+              {iconEnd}
+            </span>
+          )}
+        </span>
+      ),
+    },
+  });
 }

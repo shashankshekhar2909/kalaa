@@ -1,0 +1,13 @@
+.kl-link {
+  color: var(--kalaa-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.kl-link:hover {
+  color: var(--kalaa-accent-hover);
+}
+.kl-link:focus-visible {
+  outline: 2px solid var(--kalaa-focus);
+  outline-offset: 2px;
+}

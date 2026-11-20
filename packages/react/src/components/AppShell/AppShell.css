@@ -3,16 +3,42 @@
   min-height: 100vh;
   background: var(--kalaa-bg);
 }
+/* The column stretches to the full page height (background and border run to the bottom of long pages);
+   the inner wrapper stays pinned to the viewport while the page scrolls. */
 .kl-app-shell__sidebar {
+  box-sizing: border-box;
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--kalaa-surface);
+  border-right: 1px solid var(--kalaa-border);
+}
+.kl-app-shell__sidebar-inner {
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  height: 100vh;
-  width: 240px;
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  min-height: 100vh;
   padding: var(--kalaa-space-4);
-  background: var(--kalaa-surface);
-  border-right: 1px solid var(--kalaa-border);
+}
+.kl-app-shell__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--kalaa-space-2);
+}
+.kl-app-shell__brand {
+  min-width: 0;
+  margin-bottom: var(--kalaa-space-4);
+  color: var(--kalaa-text);
+  font-weight: var(--kalaa-font-weight-semibold);
+}
+.kl-app-shell__panel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
 }
 .kl-app-shell__body {
   min-width: 0;
@@ -26,7 +52,17 @@
 }
 .kl-app-shell__nav {
   display: grid;
+  flex: 1;
+  align-content: start;
   gap: var(--kalaa-space-1);
+  overflow-y: auto;
+}
+.kl-app-shell__footer {
+  display: grid;
+  gap: var(--kalaa-space-2);
+  margin-top: var(--kalaa-space-4);
+  padding-top: var(--kalaa-space-4);
+  border-top: 1px solid var(--kalaa-border);
 }
 .kl-app-shell__nav-item {
   display: flex;
@@ -58,14 +94,24 @@
     display: block;
   }
   .kl-app-shell__sidebar {
-    position: static;
     width: auto;
-    height: auto;
     border-right: 0;
     border-bottom: 1px solid var(--kalaa-border);
   }
+  .kl-app-shell__sidebar-inner {
+    position: static;
+    min-height: 0;
+    max-height: none;
+  }
+  .kl-app-shell__top {
+    min-height: var(--kalaa-control-height-md);
+  }
+  .kl-app-shell__brand {
+    margin-bottom: 0;
+  }
   .kl-app-shell__menu {
     display: block;
+    margin-inline-start: auto;
     background: var(--kalaa-surface);
     color: var(--kalaa-text);
     border: 1px solid var(--kalaa-border);
@@ -73,12 +119,12 @@
     padding: var(--kalaa-space-2);
     cursor: pointer;
   }
-  .kl-app-shell__nav {
+  .kl-app-shell__panel {
     display: none;
     margin-top: var(--kalaa-space-2);
   }
-  .kl-app-shell__nav--open {
-    display: grid;
+  .kl-app-shell__panel--open {
+    display: flex;
   }
   .kl-app-shell__main {
     padding: var(--kalaa-space-4);

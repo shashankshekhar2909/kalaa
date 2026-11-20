@@ -7,7 +7,7 @@ export default {
     docs: {
       description: {
         component:
-          'A link that looks like a Button, for navigation. Same variants and sizes; works with any router through `href`.\n\n**Do:** use it when the action changes the URL. **Don\'t:** use a Button with `onClick` for navigation.\n\n**Usage**\n\n```tsx\nimport { ButtonLink } from "@kalaa/react";\n\n<ButtonLink href="/products" variant="primary">View products</ButtonLink>\n```\n\nLoad the `@kalaa/tokens` CSS and fonts once at your app root (see Introduction, Installation).',
+          'A link that looks like a Button, for navigation. Same variants and sizes; works with any router through `href` or the Base UI `render` prop (for example `next/link`).\n\n**Do:** use it when the action changes the URL, and pass `render={<NextLink href="..." />}` in Next.js. **Don\'t:** use a Button with `onClick` for navigation.\n\n**Usage**\n\n```tsx\nimport NextLink from "next/link";\nimport { ButtonLink } from "@kalaa/react";\n\n<ButtonLink variant="primary" render={<NextLink href="/products" />}>\n  View products\n</ButtonLink>\n```\n\nLoad the `@kalaa/tokens` CSS and fonts once at your app root (see Introduction, Installation).',
       },
     },
   },

@@ -1,0 +1,33 @@
+.kl-spinner {
+  display: inline-block;
+  flex: none;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: var(--kalaa-radius-full);
+  animation: kl-spin calc(var(--kalaa-duration-base) * 4) linear infinite;
+}
+.kl-spinner--sm {
+  width: var(--kalaa-space-3);
+  height: var(--kalaa-space-3);
+}
+.kl-spinner--md {
+  width: var(--kalaa-space-4);
+  height: var(--kalaa-space-4);
+}
+.kl-spinner--lg {
+  width: var(--kalaa-space-6);
+  height: var(--kalaa-space-6);
+}
+.kl-spinner__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@keyframes kl-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

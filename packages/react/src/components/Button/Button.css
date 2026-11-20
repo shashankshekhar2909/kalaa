@@ -72,15 +72,4 @@
 }
 .kl-button__spinner {
   position: absolute;
-  width: var(--kalaa-space-4);
-  height: var(--kalaa-space-4);
-  border: 2px solid currentColor;
-  border-right-color: transparent;
-  border-radius: var(--kalaa-radius-full);
-  animation: kl-spin calc(var(--kalaa-duration-base) * 4) linear infinite;
-}
-@keyframes kl-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
+} /* the ring itself is the Spinner component */

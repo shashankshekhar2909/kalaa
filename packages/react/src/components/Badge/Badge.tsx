@@ -11,7 +11,7 @@ export function Badge({ tone = "neutral", className, ...props }: BadgeProps) {
 export const statusTone: Record<string, BadgeTone> = Object.fromEntries(
   Object.entries({
     neutral: ["found", "planned", "draft", "parked", "carried"],
-    info: ["applied", "interview", "pending", "sent", "imported"],
+    info: ["applied", "interview", "pending", "sent", "imported", "in progress"],
     success: ["done", "approved", "offer", "ok", "complete"],
     warning: ["slipped", "unverified", "needs review"],
     danger: ["rejected", "failed", "unsupported"],

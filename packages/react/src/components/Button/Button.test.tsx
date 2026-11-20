@@ -25,9 +25,18 @@ describe("Button", () => {
     expect(screen.getByRole("button", { name: "Import" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Import" })).toHaveAttribute("aria-busy", "true");
   });
-  it("renders a link", () => {
-    render(<ButtonLink href="/products">Products</ButtonLink>);
-    expect(screen.getByRole("link", { name: "Products" })).toHaveAttribute("href", "/products");
+  it("renders a link and supports the render prop for client routers", () => {
+    const ref = createRef<HTMLAnchorElement>();
+    render(
+      <ButtonLink ref={ref} variant="primary" render={<a href="/products" data-router="next" />}>
+        Products
+      </ButtonLink>,
+    );
+    const link = screen.getByRole("link", { name: "Products" });
+    expect(link).toHaveAttribute("href", "/products");
+    expect(link).toHaveAttribute("data-router", "next");
+    expect(link).toHaveClass("kl-button", "kl-button--primary");
+    expect(ref.current).toBe(link);
   });
 });
 
