@@ -5,7 +5,9 @@
   "license": "Apache-2.0",
   "type": "module",
   "sideEffects": [
-    "*.css"
+    "*.css",
+    "**/theme.js",
+    "**/theme-picker.js"
   ],
   "homepage": "https://kalaa.buildwithshashank.com",
   "repository": {
@@ -50,10 +52,27 @@
     },
     "./tokens.css": "./dist/tokens.css",
     "./fonts.css": "./dist/fonts.css",
-    "./tokens.json": "./dist/tokens.json"
+    "./tokens.json": "./dist/tokens.json",
+    "./theme.js": {
+      "types": "./dist/theme.d.ts",
+      "default": "./dist/theme.js"
+    },
+    "./theme-picker.js": {
+      "types": "./dist/theme-picker.d.ts",
+      "default": "./dist/theme-picker.js"
+    },
+    "./appearance-script": {
+      "types": "./dist/appearance-script.d.ts",
+      "import": "./dist/appearance-script.js"
+    },
+    "./appearance-script.js": {
+      "types": "./dist/appearance-script.d.ts",
+      "import": "./dist/appearance-script.js"
+    }
   },
   "scripts": {
     "build": "node scripts/ramps.mjs && node build.mjs && node scripts/check-contrast.mjs",
-    "check": "node scripts/check-contrast.mjs"
+    "check": "node scripts/check-contrast.mjs",
+    "test": "node --test test/theme.test.mjs"
   }
 }
