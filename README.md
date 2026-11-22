@@ -82,6 +82,8 @@ Run `. bin/env.sh` first to set local paths.
 - `pnpm build:site`: build static showcase website
 - `flock /tmp/kalaa-playwright.lock pnpm test:stories`: run visual regression & axe accessibility tests
 
+See [RELEASING.md](RELEASING.md) for publishing and release instructions.
+
 ## License
 
 Apache-2.0 (Copyright 2026 Shashank Shekhar). Bundled fonts use SIL Open Font License 1.1.

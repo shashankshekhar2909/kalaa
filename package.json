@@ -12,6 +12,7 @@
     "build:site": "pnpm --filter @kalaa/site run build",
     "build-storybook": "pnpm --filter @kalaa/storybook run build",
     "test": "pnpm -r run test",
+    "version-packages": "changeset version && node packages/react/scripts/version.mjs --write",
     "test:stories": "playwright test",
     "test:stories:update": "playwright test --update-snapshots",
     "format": "prettier --write .",

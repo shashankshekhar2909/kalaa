@@ -78,7 +78,7 @@ export function Hero() {
     <section className="site-hero" aria-labelledby="hero-title">
       <div className="site-container site-hero__inner">
         <div className="site-hero__copy">
-          <p className="site-hero__kicker">Kalaa · design system v{facts.version}, private preview</p>
+          <p className="site-hero__kicker">Kalaa · design system v{facts.version}, preview</p>
           <h1 id="hero-title" className="site-hero__title">
             Square, calm, and built for work.
           </h1>

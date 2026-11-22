@@ -75,7 +75,7 @@
   },
   "scripts": {
     "build": "tsup && tsc -p tsconfig.build.json --emitDeclarationOnly && node scripts/css.mjs && node scripts/ai-manifest.mjs",
-    "check": "tsc --noEmit && node scripts/css.mjs --check && node scripts/ai-manifest.mjs --check",
+    "check": "tsc --noEmit && node scripts/version.mjs && node scripts/css.mjs --check && node scripts/ai-manifest.mjs --check",
     "test": "vitest run"
   }
 }

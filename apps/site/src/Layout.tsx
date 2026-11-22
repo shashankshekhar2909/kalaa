@@ -103,7 +103,7 @@ function Footer() {
           </a>
         </nav>
         <p className="site-footer__meta">
-          Kalaa v{facts.version} (private preview) · built {facts.built}
+          Kalaa v{facts.version} (preview) · built {facts.built}
         </p>
       </div>
     </footer>

@@ -10,8 +10,7 @@ const tokens = await import(root + "packages/tokens/dist/index.js");
 const components = readdirSync(root + "packages/react/src/components", { withFileTypes: true }).filter((d) =>
   d.isDirectory(),
 ).length;
-const version =
-  /KALAA_VERSION = "([^"]+)"/.exec(readFileSync(root + "packages/react/src/util.ts", "utf8"))?.[1] ?? "0.0.0";
+const version = read("packages/react/package.json").version;
 const qualityFile = root + "apps/site/quality.json";
 const quality = existsSync(qualityFile) ? read("apps/site/quality.json").stories : null;
 const built = process.env.SOURCE_DATE_EPOCH
