@@ -1,5 +1,11 @@
 # @kalaa/react
 
+## 0.3.2
+
+### Patch Changes
+
+- c918e6f: AppearanceMenu: the trigger is a native button with Button's classes, so the popover anchors correctly in React 18 apps too.
+
 ## 0.3.1
 
 ### Patch Changes

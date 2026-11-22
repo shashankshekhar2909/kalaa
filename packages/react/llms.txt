@@ -1,4 +1,4 @@
-# Kalaa (@kalaa/react v0.3.1)
+# Kalaa (@kalaa/react v0.3.2)
 
 > Calm, accessible React components, data-driven blocks and full-page templates styled with Kalaa design tokens (`--kalaa-*`). Square by default (`data-shape="soft"` for rounded corners), three Indian-pigment accents (`neel`, `geru`, `mayur`), light and dark themes (`data-theme="light|dark"`), and A4/Letter black-on-white print stylesheets.
 
