@@ -82,6 +82,46 @@ export function ProductEditor() {
 }
 ```
 
+## Appearance options
+
+`AppearanceMenu` and `useAppearance()` let users switch **Theme** (`auto` / `light` / `dark`), **Accent colour** (`neel` / `geru` / `mayur` with palette swatch dots), and **Corners** (`square` / `soft`). Choices are stored in `localStorage` under `"kalaa.theme"`, applied to `<html>` (`data-theme`, `data-accent`, `data-shape`), and synced across tabs and plain-HTML apps.
+
+### React
+
+Inject `appearanceScript` from `@kalaa/tokens/appearance-script` in `<head>` to avoid first-paint flicker, then render `<AppearanceMenu />` or call `useAppearance()`:
+
+```tsx
+import { AppearanceMenu, useAppearance } from "@kalaa/react";
+import { appearanceScript } from "@kalaa/tokens/appearance-script";
+
+export function AppHeader() {
+  const { theme, accent, shape, setAppearance } = useAppearance();
+  return (
+    <header>
+      <script dangerouslySetInnerHTML={{ __html: appearanceScript }} />
+      <span>{`${theme} · ${accent} · ${shape}`}</span>
+      <AppearanceMenu />
+    </header>
+  );
+}
+```
+
+### Plain HTML
+
+Non-React tools can share the exact same appearance preferences by loading `@kalaa/tokens/theme.js` in `<head>` and mounting `<kalaa-theme-picker>` from `@kalaa/tokens/theme-picker.js`:
+
+```html
+<head>
+  <link rel="stylesheet" href="/vendor/kalaa/tokens.css" />
+  <link rel="stylesheet" href="/vendor/kalaa/fonts.css" />
+  <script src="/vendor/kalaa/theme.js"></script>
+  <script src="/vendor/kalaa/theme-picker.js" defer></script>
+</head>
+<body>
+  <kalaa-theme-picker label="Appearance"></kalaa-theme-picker>
+</body>
+```
+
 ## License
 
 Apache-2.0 (Copyright 2026 Shashank Shekhar).

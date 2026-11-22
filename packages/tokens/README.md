@@ -56,6 +56,61 @@ The same attributes work on any wrapper element to re-theme subtrees:
 
 Render `data-theme`, `data-accent`, and `data-shape` directly on the `<html>` element on the server, or place a synchronous script in `<head>` to read preferences before the initial render.
 
+## Appearance options
+
+`@kalaa/tokens` ships a framework-free helper (`@kalaa/tokens/theme.js`), a Shadow DOM custom element (`@kalaa/tokens/theme-picker.js`), a pre-paint inline script (`@kalaa/tokens/appearance-script`), and ESM helpers so every Kalaa app shares the same `"kalaa.theme"` `localStorage` key and `<html>` attributes (`data-theme`, `data-accent`, `data-shape`).
+
+- **Theme**: `"auto"` (removes `data-theme` to follow the OS) | `"light"` | `"dark"`
+- **Accent colour**: `"neel"` | `"geru"` | `"mayur"`
+- **Corners**: `"square"` | `"soft"`
+
+### Plain HTML
+
+Load `theme.js` synchronously in `<head>` so the first paint has the saved colours, and use `<kalaa-theme-picker>` anywhere in your header or toolbar:
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="color-scheme" content="dark light" />
+    <link rel="stylesheet" href="/vendor/kalaa/tokens.css" />
+    <link rel="stylesheet" href="/vendor/kalaa/fonts.css" />
+    <script src="/vendor/kalaa/theme.js"></script>
+    <script src="/vendor/kalaa/theme-picker.js" defer></script>
+  </head>
+  <body>
+    <kalaa-theme-picker label="Appearance"></kalaa-theme-picker>
+    <script>
+      // Programmatic access:
+      console.log(KalaaTheme.get()); // { theme: "auto", accent: "neel", shape: "square" }
+      KalaaTheme.set({ theme: "dark", accent: "geru", shape: "soft" });
+      KalaaTheme.onChange(function (next) {
+        console.log("Appearance changed:", next);
+      });
+    </script>
+  </body>
+</html>
+```
+
+### React & Bundlers
+
+For bundled apps and server components, import `appearanceScript` for zero-flicker first paint and use `KalaaTheme`, `readAppearance`, `applyAppearance` from `@kalaa/tokens` or `<AppearanceMenu />` and `useAppearance()` from `@kalaa/react`:
+
+```tsx
+import { appearanceScript } from "@kalaa/tokens/appearance-script";
+import { KalaaTheme, applyAppearance, readAppearance } from "@kalaa/tokens";
+import { AppearanceMenu } from "@kalaa/react";
+
+export function RootHeader() {
+  return (
+    <>
+      <script dangerouslySetInnerHTML={{ __html: appearanceScript }} />
+      <AppearanceMenu />
+    </>
+  );
+}
+```
+
 ## Font Licensing
 
 Bundled IBM Plex fonts (IBM Plex Sans, IBM Plex Serif, IBM Plex Mono, IBM Plex Sans Devanagari) are distributed under the SIL Open Font License 1.1. License texts are shipped in `./dist/fonts/`.

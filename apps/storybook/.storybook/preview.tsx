@@ -71,7 +71,7 @@ const preview: Preview = {
         order: [
           "Introduction",
           "Foundations",
-          ["Logo", "Colour", "Typography", "Shape", "Space", "Palette"],
+          ["Logo", "Colour", "Typography", "Shape", "Appearance", "Space", "Palette"],
           "Components",
           [
             // Layout
@@ -117,6 +117,7 @@ const preview: Preview = {
             // Overlays
             "Dialog",
             "Popover",
+            "AppearanceMenu",
             "Tooltip",
             // Content
             "Logo",
