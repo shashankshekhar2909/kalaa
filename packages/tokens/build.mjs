@@ -126,7 +126,7 @@ const appearanceOptions = {
   shape: shapes,
 };
 const accentSwatches = Object.fromEntries(accents.map((a) => [a, palette[a]["700"].$value]));
-const appearanceScript = `try{var a=JSON.parse(localStorage.getItem("kalaa.theme")||"{}"),h=document.documentElement,l=localStorage.getItem("theme"),t=a.theme||l;if(t==="auto")delete h.dataset.theme;else if(${JSON.stringify(modes)}.indexOf(t)>=0)h.dataset.theme=t;if(${JSON.stringify(accents)}.indexOf(a.accent)>=0)h.dataset.accent=a.accent;if(${JSON.stringify(shapes)}.indexOf(a.shape)>=0)h.dataset.shape=a.shape}catch(e){}`;
+const appearanceScript = `try{var a=JSON.parse(localStorage.getItem("kalaa.theme")||"{}"),h=document.documentElement,l=localStorage.getItem("theme"),D=function(k){return h.getAttribute("data-default-"+k)},t=a.theme||l||D("theme");a.accent=a.accent||D("accent");a.shape=a.shape||D("shape");if(t==="auto")delete h.dataset.theme;else if(${JSON.stringify(modes)}.indexOf(t)>=0)h.dataset.theme=t;if(${JSON.stringify(accents)}.indexOf(a.accent)>=0)h.dataset.accent=a.accent;if(${JSON.stringify(shapes)}.indexOf(a.shape)>=0)h.dataset.shape=a.shape}catch(e){}`;
 
 write(
   "appearance-script.js",
@@ -151,10 +151,13 @@ write(
   var OPTIONS = ${JSON.stringify(appearanceOptions)};
   var SWATCHES = ${JSON.stringify(accentSwatches)};
   var html = root.document.documentElement;
+  /* Per-app defaults: <html data-default-theme="dark" data-default-accent="mayur" data-default-shape="soft">.
+     A choice the viewer saved still wins. */
+  function dflt(k, list, fb) { var v = html.getAttribute("data-default-" + k); return list.indexOf(v) >= 0 ? v : fb; }
   var defaults = {
-    theme: "auto",
-    accent: OPTIONS.accent[0],
-    shape: OPTIONS.shape[0]
+    theme: dflt("theme", OPTIONS.theme, "auto"),
+    accent: dflt("accent", OPTIONS.accent, OPTIONS.accent[0]),
+    shape: dflt("shape", OPTIONS.shape, OPTIONS.shape[0])
   };
   var listeners = [];
   function readRaw() {
@@ -399,6 +402,10 @@ export function readAppearance() {
     const saved = JSON.parse(localStorage.getItem(APPEARANCE_KEY) || "{}");
     const legacy = localStorage.getItem("theme");
     const out = { ...APPEARANCE_DEFAULTS };
+    for (const k of Object.keys(appearanceOptions)) {
+      const d = document.documentElement.getAttribute("data-default-" + k);
+      if (d && appearanceOptions[k].includes(d)) out[k] = d;
+    }
     if (legacy && modes.includes(legacy)) out.theme = legacy;
     if (saved && typeof saved === "object") {
       for (const k of Object.keys(appearanceOptions)) {

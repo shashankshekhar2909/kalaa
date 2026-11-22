@@ -99,6 +99,16 @@ describe("AppearanceMenu and useAppearance", () => {
     expect(readAppearance()).toEqual({ theme: "dark", accent: "neel", shape: "square" });
   });
 
+  it("uses <html data-default-*> when nothing is saved, and a saved choice wins", () => {
+    document.documentElement.setAttribute("data-default-theme", "dark");
+    document.documentElement.setAttribute("data-default-accent", "mayur");
+    expect(readAppearance()).toEqual({ theme: "dark", accent: "mayur", shape: "square" });
+    localStorage.setItem("kalaa.theme", JSON.stringify({ theme: "light" }));
+    expect(readAppearance().theme).toBe("light");
+    document.documentElement.removeAttribute("data-default-theme");
+    document.documentElement.removeAttribute("data-default-accent");
+  });
+
   it("syncs useAppearance across components and storage events", async () => {
     const user = userEvent.setup();
     render(

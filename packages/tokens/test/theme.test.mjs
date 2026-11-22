@@ -164,6 +164,24 @@ describe("@kalaa/tokens appearance exports & theme.js", () => {
     assert.equal(html.getAttribute("data-shape"), "square");
   });
 
+  it("<html data-default-*> sets app defaults; a saved choice still wins", () => {
+    const fresh = createMockWindow({});
+    fresh.html.setAttribute("data-default-theme", "dark");
+    fresh.html.setAttribute("data-default-accent", "mayur");
+    fresh.html.setAttribute("data-default-shape", "bogus");
+    runInMockWindow(themeCode, fresh.win);
+    assert.deepEqual(fresh.win.KalaaTheme.get(), { theme: "dark", accent: "mayur", shape: "square" });
+    assert.equal(fresh.html.getAttribute("data-theme"), "dark");
+
+    const saved = createMockWindow({
+      "kalaa.theme": JSON.stringify({ theme: "light", accent: "geru", shape: "soft" }),
+    });
+    saved.html.setAttribute("data-default-theme", "dark");
+    runInMockWindow(themeCode, saved.win);
+    assert.equal(saved.win.KalaaTheme.get().theme, "light");
+    assert.equal(saved.html.getAttribute("data-theme"), "light");
+  });
+
   it("auto removes data-theme from <html>", () => {
     const { win, html, meta } = createMockWindow({
       "kalaa.theme": JSON.stringify({ theme: "dark", accent: "neel", shape: "square" }),

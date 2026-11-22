@@ -27,6 +27,12 @@ export function readAppearance(): Appearance {
     const saved = JSON.parse(localStorage.getItem(KEY) || "{}") as Partial<Appearance>;
     const legacy = localStorage.getItem("theme");
     const out: Appearance = { ...DEFAULTS };
+    // Per-app defaults from <html data-default-theme|accent|shape>; a saved choice below still wins.
+    for (const k of Object.keys(APPEARANCE_OPTIONS) as (keyof Appearance)[]) {
+      const d = document.documentElement.getAttribute(`data-default-${k}`);
+      if (d && (APPEARANCE_OPTIONS[k] as readonly string[]).includes(d))
+        (out as Record<string, string>)[k] = d;
+    }
     if (legacy === "light" || legacy === "dark") out.theme = legacy;
     if (saved && typeof saved === "object") {
       for (const k of Object.keys(APPEARANCE_OPTIONS) as (keyof Appearance)[]) {

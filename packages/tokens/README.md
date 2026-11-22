@@ -111,6 +111,14 @@ export function RootHeader() {
 }
 ```
 
+### App defaults
+
+Set the app's own defaults on `<html>`; a viewer's saved choice still wins:
+
+```html
+<html data-default-theme="dark" data-default-accent="mayur" data-default-shape="soft"></html>
+```
+
 ## Font Licensing
 
 Bundled IBM Plex fonts (IBM Plex Sans, IBM Plex Serif, IBM Plex Mono, IBM Plex Sans Devanagari) are distributed under the SIL Open Font License 1.1. License texts are shipped in `./dist/fonts/`.
