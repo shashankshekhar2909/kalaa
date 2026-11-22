@@ -1,6 +1,6 @@
 {
   "package": "@kalaa/react",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "schemas": {
     "ResumeData": "@kalaa/react/resume.schema.json",
     "PortfolioData": "@kalaa/react/portfolio.schema.json"

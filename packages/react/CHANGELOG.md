@@ -1,5 +1,12 @@
 # @kalaa/react
 
+## 0.3.1
+
+### Patch Changes
+
+- 6504379: Apps can set their own appearance defaults with `<html data-default-theme="dark" data-default-accent="mayur" data-default-shape="soft">`.
+  theme.js, the pre-paint appearance script, `readAppearance()` and `AppearanceMenu` honour them; a choice the viewer saved still wins.
+
 ## 0.3.0
 
 ### Minor Changes
