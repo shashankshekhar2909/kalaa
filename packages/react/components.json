@@ -2747,6 +2747,77 @@
       "example": "import { Popover, Button } from \"@kalaa/react\";\n\n<Popover\n  trigger={<Button>Filter columns</Button>}\n  title=\"Column visibility\"\n  description=\"Choose which fields appear in the table.\"\n>\n  <div>SKU, Title, Status</div>\n</Popover>"
     },
     {
+      "name": "AppearanceMenu",
+      "category": "Components",
+      "purpose": "Anchored appearance picker built from Kalaa `Popover` and `RadioGroup` for switching theme (`auto`, `light`, `dark`), accent colour (`neel`, `geru`, `mayur`) and corners (`square`, `soft`). Persists under the `\"kalaa.theme\"` `localStorage` key and syncs across tabs and `<kalaa-theme-picker>`.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "default": "\"Appearance\"",
+          "description": "Trigger button and popover heading label (default \"Appearance\")."
+        },
+        {
+          "name": "side",
+          "type": "PopoverSide",
+          "required": false,
+          "default": "\"bottom\"",
+          "description": "Preferred popover side relative to the trigger (default \"bottom\")."
+        },
+        {
+          "name": "align",
+          "type": "PopoverAlign",
+          "required": false,
+          "default": "\"start\"",
+          "description": "Alignment along the popover side (default \"start\")."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Controlled popover open state."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": null,
+          "description": "Initial popover open state when uncontrolled."
+        },
+        {
+          "name": "onOpenChange",
+          "type": "(open: boolean) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when the popover opens or closes."
+        },
+        {
+          "name": "triggerVariant",
+          "type": "ButtonVariant",
+          "required": false,
+          "default": "\"ghost\"",
+          "description": "Visual variant of the trigger button (default \"ghost\")."
+        },
+        {
+          "name": "triggerSize",
+          "type": "ButtonSize",
+          "required": false,
+          "default": "\"sm\"",
+          "description": "Size of the trigger button (default \"sm\")."
+        },
+        {
+          "name": "onAppearanceChange",
+          "type": "(appearance: Appearance) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when the user changes theme, accent or corner shape."
+        }
+      ],
+      "example": "import { AppearanceMenu } from \"@kalaa/react\";\n\n<AppearanceMenu />"
+    },
+    {
       "name": "RadioGroup",
       "category": "Components",
       "purpose": "Mutually exclusive choice list built on Base UI RadioGroup, with arrow-key roving focus and optional per-option descriptions. Always uses `--kalaa-radius-full` so radio buttons remain circular in both square and soft shape themes.",

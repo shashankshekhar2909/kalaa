@@ -26,5 +26,6 @@ export * from "./components/Breadcrumbs/Breadcrumbs";
 export * from "./components/Avatar/Avatar";
 export * from "./components/Divider/Divider";
 export * from "./components/Icon/Icon";
+export * from "./components/AppearanceMenu/AppearanceMenu";
 export * from "./components/charts";
 export * from "./blocks";

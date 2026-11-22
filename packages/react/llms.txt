@@ -1451,6 +1451,28 @@ import { Popover, Button } from "@kalaa/react";
 </Popover>
 ```
 
+### AppearanceMenu
+
+Anchored appearance picker built from Kalaa `Popover` and `RadioGroup` for switching theme (`auto`, `light`, `dark`), accent colour (`neel`, `geru`, `mayur`) and corners (`square`, `soft`). Persists under the `"kalaa.theme"` `localStorage` key and syncs across tabs and `<kalaa-theme-picker>`.
+
+Props:
+- `label` (`string`, optional, default: "Appearance") — Trigger button and popover heading label (default "Appearance").
+- `side` (`PopoverSide`, optional, default: "bottom") — Preferred popover side relative to the trigger (default "bottom").
+- `align` (`PopoverAlign`, optional, default: "start") — Alignment along the popover side (default "start").
+- `open` (`boolean`, optional) — Controlled popover open state.
+- `defaultOpen` (`boolean`, optional) — Initial popover open state when uncontrolled.
+- `onOpenChange` (`(open: boolean) => void`, optional) — Called when the popover opens or closes.
+- `triggerVariant` (`ButtonVariant`, optional, default: "ghost") — Visual variant of the trigger button (default "ghost").
+- `triggerSize` (`ButtonSize`, optional, default: "sm") — Size of the trigger button (default "sm").
+- `onAppearanceChange` (`(appearance: Appearance) => void`, optional) — Called when the user changes theme, accent or corner shape.
+
+Example:
+```tsx
+import { AppearanceMenu } from "@kalaa/react";
+
+<AppearanceMenu />
+```
+
 ### RadioGroup
 
 Mutually exclusive choice list built on Base UI RadioGroup, with arrow-key roving focus and optional per-option descriptions. Always uses `--kalaa-radius-full` so radio buttons remain circular in both square and soft shape themes.

@@ -1042,6 +1042,7 @@ const CANONICAL_COMPONENT_TARGETS = [
   { name: "Menu", dir: "Menu" },
   { name: "MultiSelect", dir: "MultiSelect" },
   { name: "Popover", dir: "Popover" },
+  { name: "AppearanceMenu", dir: "AppearanceMenu" },
   { name: "RadioGroup", dir: "RadioGroup" },
   { name: "Skeleton", dir: "Skeleton" },
   { name: "Slider", dir: "Slider" },

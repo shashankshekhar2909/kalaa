@@ -1,0 +1,38 @@
+.kl-appearance-menu__popover {
+  width: 320px;
+}
+.kl-appearance-menu {
+  display: grid;
+  gap: var(--kalaa-space-2);
+}
+.kl-appearance-menu__heading {
+  margin-top: var(--kalaa-space-2);
+  color: var(--kalaa-text-muted);
+  font-size: var(--kalaa-font-size-xs);
+  font-weight: var(--kalaa-font-weight-medium);
+}
+.kl-appearance-menu__heading:first-child {
+  margin-top: 0;
+}
+.kl-appearance-menu__option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--kalaa-space-2);
+}
+.kl-appearance-menu__swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: var(--kalaa-radius-full);
+  background: var(--kalaa-accent);
+}
+.kl-appearance-menu__swatch--neel {
+  background: var(--kalaa-palette-neel-700);
+}
+.kl-appearance-menu__swatch--geru {
+  background: var(--kalaa-palette-geru-700);
+}
+.kl-appearance-menu__swatch--mayur {
+  background: var(--kalaa-palette-mayur-700);
+}
