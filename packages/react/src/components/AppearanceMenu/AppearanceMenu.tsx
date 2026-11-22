@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ComponentPropsWithRef } from "react";
 import { cx } from "../../util";
-import { Button, type ButtonSize, type ButtonVariant } from "../Button/Button";
+import type { ButtonSize, ButtonVariant } from "../Button/Button";
 import { Popover, type PopoverAlign, type PopoverSide } from "../Popover/Popover";
 import { RadioGroup } from "../RadioGroup/RadioGroup";
 
@@ -268,13 +268,20 @@ export function AppearanceMenu({
       title={label}
       className={cx("kl-appearance-menu__popover", className)}
       trigger={
-        <Button variant={triggerVariant} size={triggerSize}>
-          <span
-            aria-hidden="true"
-            className={cx("kl-appearance-menu__swatch", `kl-appearance-menu__swatch--${appearance.accent}`)}
-          />
-          {label}
-        </Button>
+        // Native <button> with Button's classes: Base UI attaches its anchor ref directly, so the popover is
+        // positioned correctly on React 18 apps too (function components only receive refs on React 19).
+        <button
+          type="button"
+          className={cx("kl-button", `kl-button--${triggerVariant}`, `kl-button--${triggerSize}`)}
+        >
+          <span className="kl-button__content">
+            <span
+              aria-hidden="true"
+              className={cx("kl-appearance-menu__swatch", `kl-appearance-menu__swatch--${appearance.accent}`)}
+            />
+            {label}
+          </span>
+        </button>
       }
     >
       <div className="kl-appearance-menu">
