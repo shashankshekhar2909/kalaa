@@ -1,7 +1,7 @@
 import { Banner, ButtonLink, Card, CodeBlock, PageHeader } from "@kalaa/react";
 import { Layout } from "../Layout";
-import { page, sb } from "../config";
-import { install, styles, switches, use } from "../snippets";
+import { facts, page, sb } from "../config";
+import { appearance, install, styles, switches, use } from "../snippets";
 
 const attributes: Array<[string, string, string]> = [
   ["data-accent", "neel (default), geru, mayur", "Accent colour and the neutral ramp tinted towards it."],
@@ -17,9 +17,10 @@ export function GettingStarted() {
           description="Install the packages, load the styles once, then use components and switch accent, theme and shape with attributes."
           actions={<ButtonLink href={sb("docs", "introduction--docs")}>Open Storybook</ButtonLink>}
         />
-        <Banner tone="info" title="v0.1 preview">
-          Kalaa is private for now. Packages are vendored as tarballs and are not on npm yet. The tarball flow
-          is a decision, not a script, so the file names below are the intended ones.
+        <Banner tone="info" title={`v${facts.version} preview`}>
+          The source repository and npm packages are not public yet. Until then, try Kalaa on this site
+          (switch accent, theme and corners in the header) and in Storybook. The steps below show how apps
+          install it today, from release tarballs built with <code>scripts/release-pack.sh</code>.
         </Banner>
         <section aria-labelledby="install-title" className="site-doc__step">
           <h2 id="install-title">1. Install</h2>
@@ -54,6 +55,11 @@ export function GettingStarted() {
             <code>data-theme</code> should also set <code>data-accent</code> unless it is Neel.
           </p>
           <CodeBlock label="Accent, theme and shape attributes" language="html" code={switches} />
+          <p>
+            To let people choose for themselves, add <code>AppearanceMenu</code> to your header. It saves the
+            choice under the <code>kalaa.theme</code> key, so every Kalaa app on the same site remembers it.
+          </p>
+          <CodeBlock label="Appearance menu" language="tsx" code={appearance} />
           <div className="site-cards site-cards--tight">
             {attributes.map(([name, values, text]) => (
               <Card key={name} title={<code>{name}</code>} titleLevel={3}>
@@ -71,6 +77,7 @@ export function GettingStarted() {
             <ButtonLink variant="primary" href={sb("docs", "components-button--docs")}>
               Browse components
             </ButtonLink>
+            <ButtonLink href={sb("docs", "components-appearancemenu--docs")}>Appearance menu</ButtonLink>
             <ButtonLink href={sb("story", "foundations-colour--roles")}>Foundations</ButtonLink>
             <ButtonLink href={page("brand.html")}>Brand</ButtonLink>
           </div>

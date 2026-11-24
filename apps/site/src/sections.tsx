@@ -291,8 +291,9 @@ export function Catalog() {
 export function GetStarted() {
   return (
     <Section id="start" title="Get started">
-      <Banner tone="info" title="v0.1 preview">
-        Kalaa is private for now. Packages are vendored as tarballs and are not on npm yet.
+      <Banner tone="info" title={`v${facts.version} preview`}>
+        The source repository and npm packages are not public yet. Try it here and in Storybook in the
+        meantime.
       </Banner>
       <Tabs
         variant="underline"

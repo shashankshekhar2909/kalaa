@@ -1,6 +1,6 @@
 // Code samples shown on the Home and Get started pages. Kept in one place so both pages say the same thing.
-export const install = `# Current: vendored tarballs via scripts/release-pack.sh
-pnpm add ./vendor/kalaa-tokens-0.2.1.tgz ./vendor/kalaa-react-0.2.1.tgz
+export const install = `# Today: release tarballs from scripts/release-pack.sh, vendored into your app
+pnpm add ./vendor/kalaa-tokens-0.3.1.tgz ./vendor/kalaa-react-0.3.2.tgz
 
 # Or post-publish from npm:
 # npm install @kalaa/react @kalaa/tokens`;
@@ -21,6 +21,13 @@ export function ProductForm() {
     </Card>
   );
 }`;
+
+export const appearance = `import { AppearanceMenu } from "@kalaa/react";
+
+<header>
+  ...
+  <AppearanceMenu />
+</header>`;
 
 export const switches = `<!-- Omit an attribute for its default: neel, system theme, square. -->
 <html data-accent="geru" data-theme="dark" data-shape="soft">
