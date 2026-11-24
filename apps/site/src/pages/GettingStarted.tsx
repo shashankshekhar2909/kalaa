@@ -1,6 +1,6 @@
 import { Banner, ButtonLink, Card, CodeBlock, PageHeader } from "@kalaa/react";
 import { Layout } from "../Layout";
-import { facts, page, sb } from "../config";
+import { facts, page, releaseTag, releaseUrl, repo, sb } from "../config";
 import { appearance, install, styles, switches, use } from "../snippets";
 
 const attributes: Array<[string, string, string]> = [
@@ -18,15 +18,15 @@ export function GettingStarted() {
           actions={<ButtonLink href={sb("docs", "introduction--docs")}>Open Storybook</ButtonLink>}
         />
         <Banner tone="info" title={`v${facts.version} preview`}>
-          The source repository and npm packages are not public yet. Until then, try Kalaa on this site
-          (switch accent, theme and corners in the header) and in Storybook. The steps below show how apps
-          install it today, from release tarballs built with <code>scripts/release-pack.sh</code>.
+          The source is on <a href={repo}>GitHub</a> under Apache-2.0. Packages are not on npm yet: install
+          the tarballs from the <a href={releaseUrl}>{releaseTag} release</a>. You can also try Kalaa right
+          here (switch accent, theme and corners in the header) and in Storybook.
         </Banner>
         <section aria-labelledby="install-title" className="site-doc__step">
           <h2 id="install-title">1. Install</h2>
           <p>
-            Put the two release tarballs in your app&apos;s vendor folder and install them. Kalaa needs React
-            19.
+            Download the two tarballs from the GitHub Release into your app&apos;s <code>vendor</code> folder,
+            check them against <code>SHA256SUMS</code>, then install them. Kalaa needs React 19.
           </p>
           <CodeBlock label="Install command" language="bash" code={install} />
         </section>

@@ -20,3 +20,8 @@ export const page = (name: string) => `${base}${name}`;
 /** Link into Storybook (manager UI), for example sb("story", "foundations-shape--square-and-soft"). */
 export const sb = (kind: "story" | "docs", id: string) => `${storybook}?path=/${kind}/${id}`;
 export const asset = (file: string) => `${base}brand/${file}`;
+/** Public source repository and the GitHub Release that carries the current tarballs. */
+export const repo = "https://github.com/shashankshekhar2909/kalaa";
+export const releaseTag = "v0.3.2";
+export const tarballs = { tokens: "kalaa-tokens-0.3.1.tgz", react: "kalaa-react-0.3.2.tgz" };
+export const releaseUrl = `${repo}/releases/tag/${releaseTag}`;

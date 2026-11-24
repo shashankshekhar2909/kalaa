@@ -1,6 +1,17 @@
 // Code samples shown on the Home and Get started pages. Kept in one place so both pages say the same thing.
-export const install = `# Today: release tarballs from scripts/release-pack.sh, vendored into your app
-pnpm add ./vendor/kalaa-tokens-0.3.1.tgz ./vendor/kalaa-react-0.3.2.tgz
+import { releaseTag, repo, tarballs } from "./config";
+
+const dl = `${repo}/releases/download/${releaseTag}`;
+
+export const install = `# Download the tarballs from the GitHub Release and verify them
+mkdir -p vendor
+curl -fL --output-dir vendor -O ${dl}/${tarballs.tokens}
+curl -fL --output-dir vendor -O ${dl}/${tarballs.react}
+curl -fL --output-dir vendor -O ${dl}/SHA256SUMS
+(cd vendor && sha256sum -c --ignore-missing SHA256SUMS)
+
+# Install them into your app
+pnpm add ./vendor/${tarballs.tokens} ./vendor/${tarballs.react}
 
 # Or post-publish from npm:
 # npm install @kalaa/react @kalaa/tokens`;

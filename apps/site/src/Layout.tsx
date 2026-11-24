@@ -1,6 +1,6 @@
 import { useEffect, useId, useState, type ReactNode } from "react";
 import { Button, ButtonLink, Logo, Select } from "@kalaa/react";
-import { asset, base, facts, page, sb } from "./config";
+import { asset, base, facts, page, repo, sb } from "./config";
 import { currentPrefs, defaultPrefs, savePref, type PrefKey, type Prefs, PREFS } from "./prefs";
 
 export type PageName = "home" | "getting-started" | "brand" | "not-found";
@@ -98,6 +98,7 @@ function Footer() {
           <a href={page("getting-started.html")}>Get started</a>
           <a href={sb("docs", "introduction--docs")}>Storybook</a>
           <a href={page("brand.html")}>Brand</a>
+          <a href={repo}>GitHub</a>
           <a href={asset("logo-mark.svg")} download>
             Logo
           </a>

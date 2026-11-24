@@ -10,7 +10,7 @@ moon in Sanskrit.
 - `brand/`: logo and favicon sources (`node brand/build.mjs`).
 - `apps/catalog-admin`: sample app built only with Kalaa (planned, P2).
 
-Status: Version 0.2.1 (Apache-2.0 license, Copyright 2026 Shashank Shekhar).
+Status: Version 0.3.2 (Apache-2.0 license, Copyright 2026 Shashank Shekhar).
 
 ## Installation
 
@@ -24,15 +24,18 @@ pnpm add @kalaa/react @kalaa/tokens
 
 ### Method B: Vendored release tarballs (current / pre-publish)
 
-Packages can be packaged as release tarballs using `scripts/release-pack.sh` and vendored:
+Download the tarballs from the [GitHub Release](https://github.com/shashankshekhar2909/kalaa/releases/tag/v0.3.2),
+verify them and vendor them into your app:
 
 ```bash
-# 1. Generate release tarballs
-scripts/release-pack.sh
-
-# 2. Add to your project
-pnpm add ./vendor/kalaa-tokens-0.2.1.tgz ./vendor/kalaa-react-0.2.1.tgz
+dl=https://github.com/shashankshekhar2909/kalaa/releases/download/v0.3.2
+mkdir -p vendor
+for f in kalaa-tokens-0.3.1.tgz kalaa-react-0.3.2.tgz SHA256SUMS; do curl -fL --output-dir vendor -O "$dl/$f"; done
+(cd vendor && sha256sum -c --ignore-missing SHA256SUMS)
+pnpm add ./vendor/kalaa-tokens-0.3.1.tgz ./vendor/kalaa-react-0.3.2.tgz
 ```
+
+Maintainers build the tarballs with `scripts/release-pack.sh` (output in `release/`).
 
 ## CSS Order
 

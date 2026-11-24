@@ -17,7 +17,7 @@ import {
   Tabs,
 } from "@kalaa/react";
 import { accents, type Accent, type Mode } from "@kalaa/tokens";
-import { facts, page, sb } from "./config";
+import { facts, page, releaseTag, releaseUrl, repo, sb } from "./config";
 import { ratio } from "./contrast";
 import { install, styles, switches, use } from "./snippets";
 
@@ -292,8 +292,8 @@ export function GetStarted() {
   return (
     <Section id="start" title="Get started">
       <Banner tone="info" title={`v${facts.version} preview`}>
-        The source repository and npm packages are not public yet. Try it here and in Storybook in the
-        meantime.
+        Source on <a href={repo}>GitHub</a> (Apache-2.0). Not on npm yet: install the tarballs from the{" "}
+        <a href={releaseUrl}>{releaseTag} release</a>.
       </Banner>
       <Tabs
         variant="underline"

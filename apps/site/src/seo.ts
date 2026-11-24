@@ -12,6 +12,7 @@ export const AUTHOR_PERSON = {
   url: ORGANIZATION.url,
 } as const;
 export const LICENSE_URL = "https://spdx.org/licenses/Apache-2.0";
+export const REPO_URL = "https://github.com/shashankshekhar2909/kalaa";
 
 // Derived from Kalaa Neel role tokens (no hardcoded colour literals): light accent for light chrome, dark canvas for dark chrome.
 export const THEME_COLORS = {
@@ -73,6 +74,7 @@ export function buildJsonLd(opts: {
           runtimePlatform: "React",
           version,
           license: LICENSE_URL,
+          codeRepository: REPO_URL,
           image: socialImage,
           author: AUTHOR_PERSON,
           publisher: { "@id": orgId },
