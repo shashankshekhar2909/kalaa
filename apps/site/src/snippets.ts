@@ -10,11 +10,12 @@ curl -fL --output-dir vendor -O ${dl}/${tarballs.react}
 curl -fL --output-dir vendor -O ${dl}/SHA256SUMS
 (cd vendor && sha256sum -c --ignore-missing SHA256SUMS)
 
-# Install them into your app
-pnpm add ./vendor/${tarballs.tokens} ./vendor/${tarballs.react}
+# Install them into your app (npm or pnpm)
+npm install ./vendor/${tarballs.tokens} ./vendor/${tarballs.react}
+# pnpm add ./vendor/${tarballs.tokens} ./vendor/${tarballs.react}
 
-# Or post-publish from npm:
-# npm install @kalaa/react @kalaa/tokens`;
+# Note: "npm install @kalaa/react @kalaa/tokens" does not work yet.
+# The packages are not published to npm, so the registry returns 404 Not Found.`;
 
 export const styles = `import "@kalaa/tokens/tokens.css"; // colour, type, space, shape, motion
 import "@kalaa/tokens/fonts.css";  // IBM Plex, self-hosted

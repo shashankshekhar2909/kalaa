@@ -28,6 +28,11 @@ export function GettingStarted() {
             Download the two tarballs from the GitHub Release into your app&apos;s <code>vendor</code> folder,
             check them against <code>SHA256SUMS</code>, then install them. Kalaa needs React 19.
           </p>
+          <Banner tone="warning" title="npm install @kalaa/react does not work yet">
+            Kalaa is not published to the npm registry, so <code>npm install @kalaa/react @kalaa/tokens</code>{" "}
+            fails with <code>404 Not Found</code>. Use the release tarballs below. A plain npm install will work
+            once the first npm release is out.
+          </Banner>
           <CodeBlock label="Install command" language="bash" code={install} />
         </section>
         <section aria-labelledby="styles-title" className="site-doc__step">

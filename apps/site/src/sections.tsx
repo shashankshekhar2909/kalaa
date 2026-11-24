@@ -292,8 +292,8 @@ export function GetStarted() {
   return (
     <Section id="start" title="Get started">
       <Banner tone="info" title={`v${facts.version} preview`}>
-        Source on <a href={repo}>GitHub</a> (Apache-2.0). Not on npm yet: install the tarballs from the{" "}
-        <a href={releaseUrl}>{releaseTag} release</a>.
+        Source on <a href={repo}>GitHub</a> (Apache-2.0). Not on npm yet, so <code>npm install @kalaa/react</code> returns 404: install the
+        tarballs from the <a href={releaseUrl}>{releaseTag} release</a>.
       </Banner>
       <Tabs
         variant="underline"

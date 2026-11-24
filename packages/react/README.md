@@ -9,21 +9,19 @@ Accessible React component library, design blocks, and page templates styled wit
 
 ## Installation
 
-### Method A: Published npm package (post-publish)
+> **Not on npm yet.** `npm install @kalaa/react @kalaa/tokens` currently fails with `npm ERR! 404 Not Found`, because the packages have not been published to the npm registry. Install the tarballs from the [v0.3.2 GitHub Release](https://github.com/shashankshekhar2909/kalaa/releases/tag/v0.3.2) instead. Once Kalaa is on npm, a plain `npm install` will work and this note will go away.
+
+### Install from the GitHub Release
 
 ```bash
-npm install @kalaa/react @kalaa/tokens
-# or
-pnpm add @kalaa/react @kalaa/tokens
+dl=https://github.com/shashankshekhar2909/kalaa/releases/download/v0.3.2
+mkdir -p vendor
+for f in kalaa-tokens-0.3.1.tgz kalaa-react-0.3.2.tgz SHA256SUMS; do curl -fL --output-dir vendor -O "$dl/$f"; done
+(cd vendor && sha256sum -c --ignore-missing SHA256SUMS)
+npm install ./vendor/kalaa-tokens-0.3.1.tgz ./vendor/kalaa-react-0.3.2.tgz   # or: pnpm add ./vendor/kalaa-tokens-0.3.1.tgz ./vendor/kalaa-react-0.3.2.tgz
 ```
 
-### Method B: Vendored release tarballs (current / pre-publish)
-
-Generate tarballs using `scripts/release-pack.sh`, place them in your application's `vendor/` directory, and install:
-
-```bash
-pnpm add ./vendor/kalaa-tokens-0.2.1.tgz ./vendor/kalaa-react-0.2.1.tgz
-```
+Maintainers build the tarballs with `scripts/release-pack.sh` (output in `release/`).
 
 ## CSS Order
 
